@@ -9,20 +9,12 @@
 
   export default {
     name: 'QueryElementGroupComponent',
-    props: {
-
-    },
+    props: {},
     data: () => {
-      return {
-
-      };
+      return {};
     },
-    computed: {
-
-    },
-    methods: {
-
-    }
+    computed: {},
+    methods: {}
   };
 </script>
 

@@ -4,37 +4,37 @@ import { Enum, EnumValue } from './Enum';
  *  Enumeration of supported ConstraintGroup junctions.
  */
 export var JunctionEnum = (function () {
-    "use strict";
+  'use strict';
 
-    Junction.prototype = Object.create(EnumValue.prototype);
-    Junction.prototype.constructor = Junction;
+  Junction.prototype = Object.create(EnumValue.prototype);
+  Junction.prototype.constructor = Junction;
 
-    function Junction(key, label, alias) {
-        // Call the parent constructor
-        EnumValue.call(this, key, label, alias);
-    }
+  function Junction (key, label, alias) {
+    // Call the parent constructor
+    EnumValue.call(this, key, label, alias);
+  }
 
-    EnumDefs.prototype = Object.create(Enum.prototype);
-    EnumDefs.prototype.constructor = EnumDefs;
+  EnumDefs.prototype = Object.create(Enum.prototype);
+  EnumDefs.prototype.constructor = EnumDefs;
 
-    function EnumDefs() {
-        // Call the parent constructor
-        Enum.call(this);
+  function EnumDefs () {
+    // Call the parent constructor
+    Enum.call(this);
 
-        this.AND = new Junction('AND', 'And', 'and');
-        this.OR = new Junction('OR', 'Or', 'or');
-        this.NOT = new Junction('NOT', 'Not', 'not');
+    this.AND = new Junction('AND', 'And', 'and');
+    this.OR = new Junction('OR', 'Or', 'or');
+    this.NOT = new Junction('NOT', 'Not', 'not');
 
-      this.checkInstanceOf = function (obj) {
-        return obj instanceof Junction;
-      };
-    }
+    this.checkInstanceOf = function (obj) {
+      return obj instanceof Junction;
+    };
+  }
 
-    let returnValue = new EnumDefs();
+  let returnValue = new EnumDefs();
 
-    if (typeof Object.freeze === 'function') {
-        returnValue = Object.freeze(returnValue);
-    }
+  if (typeof Object.freeze === 'function') {
+    returnValue = Object.freeze(returnValue);
+  }
 
-    return returnValue;
+  return returnValue;
 }());

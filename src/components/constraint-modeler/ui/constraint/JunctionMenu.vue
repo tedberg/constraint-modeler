@@ -25,7 +25,7 @@
     },
     computed: {},
     methods: {
-      setJunction(enumKey) {
+      setJunction (enumKey) {
         console.log('setJunction', enumKey);
         this.$emit('setJunction', JunctionEnum.getType(enumKey));
       }

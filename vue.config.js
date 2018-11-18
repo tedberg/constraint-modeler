@@ -20,8 +20,8 @@ module.exports = {
       // you can enable and disable it yourself, i.e. with an environment variable:
       enabled: process.env.development,
       // you can also define which `data-` attributes should should be removed.
-      attrs: ['test'], // default: removes `data-test="..."`
-    },
+      attrs: ['test'] // default: removes `data-test="..."`
+    }
   },
 
   devServer: {
@@ -30,7 +30,7 @@ module.exports = {
       // rewrite strips /api from the url that the server sees.
       '/api': {
         target: 'http://localhost:8088',
-        pathRewrite: {'^/api' : ''}
+        pathRewrite: { '^/api': '' }
       }
     }
   }

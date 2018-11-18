@@ -5,7 +5,7 @@ import { DataTypeEnum } from './enum/DataTypeEnum';
  */
 export default class Property {
 
-  constructor(obj) {
+  constructor (obj) {
     let prop = obj || {};
 
     this.path = prop.path || undefined;
@@ -24,15 +24,15 @@ export default class Property {
     this.nestedMultiPropertyList = prop.nestedMultiPropertyList || undefined;  // nested list is just being set as straight JSON, not converted recursively into real Property instances.
   }
 
-  isObjectType() {
+  isObjectType () {
     return this.simpleDataType === 'object';
   }
 
-  getSimpleDataTypeEnum() {
+  getSimpleDataTypeEnum () {
     return DataTypeEnum.getTypeFromAlias(this.simpleDataType);
   }
 
-  getServerDataType() {
+  getServerDataType () {
     return this.dataType;
   }
 

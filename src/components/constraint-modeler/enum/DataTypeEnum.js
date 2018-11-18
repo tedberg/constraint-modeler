@@ -1,15 +1,15 @@
-import {Enum, EnumValue} from './Enum';
+import { Enum, EnumValue } from './Enum';
 
 /**
  *  Enumeration of supported data types used in Constraints.
  */
 export var DataTypeEnum = (function () {
-  "use strict";
+  'use strict';
 
   DataType.prototype = Object.create(EnumValue.prototype);
   DataType.prototype.constructor = DataType;
 
-  function DataType(key, label, alias) {
+  function DataType (key, label, alias) {
     // Call the parent constructor
     EnumValue.call(this, key, label, alias);
   }
@@ -17,7 +17,7 @@ export var DataTypeEnum = (function () {
   EnumDefs.prototype = Object.create(Enum.prototype);
   EnumDefs.prototype.constructor = EnumDefs;
 
-  function EnumDefs() {
+  function EnumDefs () {
     // Call the parent constructor
     Enum.call(this);
 
@@ -47,7 +47,7 @@ export var DataTypeEnum = (function () {
         return self.NUMBER;
       }
 
-      console.error("Invalid alias passed.  Alias = ", alias);
+      console.error('Invalid alias passed.  Alias = ', alias);
       return null;
     };
 

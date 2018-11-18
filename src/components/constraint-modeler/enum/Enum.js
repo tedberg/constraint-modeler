@@ -1,7 +1,7 @@
 /**
  *  Class to support the concept of Enums in JavaScript.
  */
-export var Enum = function() {
+export var Enum = function () {
   'use strict';
 
   let self = this;
@@ -43,7 +43,7 @@ export var Enum = function() {
   };
 };
 
-export var EnumValue = function(key, label, alias) {
+export var EnumValue = function (key, label, alias) {
   this.key = key;
   this.label = label;
   this.alias = alias;
@@ -56,13 +56,13 @@ export var EnumValue = function(key, label, alias) {
   };
 };
 
-export var GeneralEnum = (function() {
+export var GeneralEnum = (function () {
   'use strict';
 
   EnumDefs.prototype = Object.create(Enum.prototype);
   EnumDefs.prototype.constructor = EnumDefs;
 
-  function EnumDefs() {
+  function EnumDefs () {
     // Call the parent constructor
     Enum.call(this);
 

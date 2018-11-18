@@ -19,11 +19,11 @@
 
 <script>
   import PropertyMenuPartial from './PropertyMenuPartial';
-  import Property  from '../../Property';
+  import Property from '../../Property';
 
   export default {
     name: 'PropertyMenu',
-    components: {PropertyMenuPartial},
+    components: { PropertyMenuPartial },
     props: {
       templatePrefix: {
         type: String,
@@ -43,12 +43,12 @@
       }
     },
     computed: {
-      propertyDisplay() {
+      propertyDisplay () {
         return this.property ? this.property.displayName : 'Chosen Value';
       },
     },
     methods: {
-      setProperty(property) {
+      setProperty (property) {
         console.log('setProperty', property);
         this.$emit('setProperty', property);
       }

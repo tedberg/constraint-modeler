@@ -1,13 +1,13 @@
-export function serializeObjectToQueryStringParameters(obj, prefix) {
+export function serializeObjectToQueryStringParameters (obj, prefix) {
   let str = [];
 
   Object.keys(obj).map(property => {
     let k = prefix ? prefix + '[' + property + ']' : property;
     let v = obj[property];
 
-    str.push((v !== null && typeof v === 'object') ?
-      serializeObjectToQueryStringParameters(v, k) :
-      `${encodeURIComponent(k)}=${encodeURIComponent(v)}`);
+    str.push((v !== null && typeof v === 'object')
+      ? serializeObjectToQueryStringParameters(v, k)
+      : `${encodeURIComponent(k)}=${encodeURIComponent(v)}`);
   });
 
   return str.join('&');
@@ -18,29 +18,29 @@ export function serializeObjectToQueryStringParameters(obj, prefix) {
  */
 export default class QueryElementGroup {
 
-  constructor(objectId) {
+  constructor (objectId) {
     this.objectId = objectId;
   }
 
-// ---------- Abstract methods ----------
+  // ---------- Abstract methods ----------
 
-  initFromQueryString(queryString, pathToPropertyMap) {
+  initFromQueryString (queryString, pathToPropertyMap) {
     throw new Error('Call to abstract method initFromQueryString.');
   }
 
-  isValid() {
+  isValid () {
     throw new Error('Call to abstract method isValid.');
   }
 
-  renderSyntax() {
+  renderSyntax () {
     throw new Error('Call to abstract method renderSyntax.');
   }
 
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     throw new Error('Call to abstract method renderQueryString.');
   }
 
-  renderQueryStringDecoded(applySpecialHandlerConversions) {
+  renderQueryStringDecoded (applySpecialHandlerConversions) {
     throw new Error('Call to abstract method renderQueryStringDecoded.');
   }
 
@@ -48,17 +48,17 @@ export default class QueryElementGroup {
    * Returns a count of how many queryElements are established directly within this QueryElementGroup.
    * @return {*}
    */
-  getQueryElementCount() {
+  getQueryElementCount () {
     throw new Error('Call to abstract method getQueryElementCount.');
   }
 
   // ---------- Concrete methods ----------
 
-  getObjectId() {
+  getObjectId () {
     return this.objectId;
   }
 
-  findMaxKey(myMap) {
+  findMaxKey (myMap) {
     let keys = Object.keys(myMap);
     let maxKey = 0;
     keys.map(key => {
@@ -70,7 +70,7 @@ export default class QueryElementGroup {
   }
 
   // TODO: Need to review
-  renderJSON() {
+  renderJSON () {
     return JSON.stringify(this);
   }
 }

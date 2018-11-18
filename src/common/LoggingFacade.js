@@ -1,4 +1,4 @@
-function LoggingFacade() {
+function LoggingFacade () {
 
   const DEBUG = 'DEBUG';
   const INFO = 'INFO';

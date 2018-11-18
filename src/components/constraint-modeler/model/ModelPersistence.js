@@ -29,7 +29,7 @@ const DEFAULT_SAVE_FUNCTION = (filterObject, formData) => {
  */
 export default class ModelPersistence {
 
-  constructor(saveFunction) {
+  constructor (saveFunction) {
     // Values for saving constraint models (if supported)
     this.saveFunction = saveFunction || DEFAULT_SAVE_FUNCTION;
     this.persistentId = null;    // If we load constraint model from persistence layer, set the id and name.
@@ -39,18 +39,18 @@ export default class ModelPersistence {
   /**
    * Save the current constraint model.
    */
-  save(model, isValid = true) {
+  save (model, isValid = true) {
     return this.saveInternal(this.persistentId, model, isValid);
   }
 
   /**
    * Save the current constraint model as a newly saved instance.
    */
-  saveAs(model, isValid = true) {
+  saveAs (model, isValid = true) {
     return this.saveInternal(null, model, isValid);
   }
 
-  saveInternal(persistentId, model, isValid) {
+  saveInternal (persistentId, model, isValid) {
     let applySpecialHandlerConversions = false; // Don't save with server conversions
 
     // Convert to 2.8 format
@@ -75,7 +75,6 @@ export default class ModelPersistence {
     return this.saveFunction(filterObject, formData); // Call the registered save function.
   }
 
-
   /**
    * Takes simple object arguments representing separate constraint and/or projection definitions,
    * and returns them wrapped in the modeler object format.
@@ -86,7 +85,7 @@ export default class ModelPersistence {
    * @param projectionGroupSimpleObject output of ProjectionGroup.renderSimpleObject(false)
    * @return {object}
    */
-  static convertToModelerObjectFromSimpleObjects(constraintGroupSimpleObject, projectionGroupSimpleObject) {
+  static convertToModelerObjectFromSimpleObjects (constraintGroupSimpleObject, projectionGroupSimpleObject) {
     let modelerObject = {};
 
     if (constraintGroupSimpleObject && constraintGroupSimpleObject.constraintGroup) {
@@ -116,7 +115,7 @@ export default class ModelPersistence {
    * @param projectionJSON A JSON String modeling the projection
    * @return {object}
    */
-  static convertToModelerObjectFromJSON(constraintJSON, projectionJSON) {
+  static convertToModelerObjectFromJSON (constraintJSON, projectionJSON) {
     let constraintObject = parseJSON(constraintJSON);
     let projectionObject = parseJSON(projectionJSON);
     return ModelPersistence.convertToModelerObjectFromSimpleObjects(constraintObject, projectionObject);
@@ -141,7 +140,7 @@ export default class ModelPersistence {
    *
    * @returns {Object}
    */
-  static convertToModelerObject({rootConstraintGroup, projectionGroup}) {
+  static convertToModelerObject ({ rootConstraintGroup, projectionGroup }) {
     let applySpecialHandlerConversions = false; // For UI not server
 
     let constraintGroupSimpleObject = rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions);
@@ -158,7 +157,7 @@ export default class ModelPersistence {
    * @param modelerObject
    * @returns {Object}
    */
-  static extractProjectionFromModelerObject(modelerObject) {
+  static extractProjectionFromModelerObject (modelerObject) {
     return {
       projectionGroup: modelerObject.projectionGroup
     };
@@ -169,7 +168,7 @@ export default class ModelPersistence {
    * @param modelerObject
    * @returns {Object}
    */
-  static extractConstraintFromModelerObject(modelerObject) {
+  static extractConstraintFromModelerObject (modelerObject) {
     return {
       constraintGroup: modelerObject.constraintGroup
     };

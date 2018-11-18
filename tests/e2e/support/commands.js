@@ -8,5 +8,5 @@ Cypress.Commands.add('componentsAreRenderedCorrectly', () => {
 
   cy.contains('div', 'HelloB')
     .should('have.css', 'color')
-    .and('equal', 'rgb(0, 128, 0)')
+    .and('equal', 'rgb(0, 128, 0)');
 });

@@ -5,24 +5,24 @@ import ApiResource from '../../common/ApiResource';
  */
 export default class AbstractConstraintModelerResource extends ApiResource {
 
-  constructor() {
+  constructor () {
     super();
   }
 
-  loadValueList(serverDataType) {
-    throw new Error("Must not call abstract method directly.");
+  loadValueList (serverDataType) {
+    throw new Error('Must not call abstract method directly.');
   }
 
-  loadProperties(objectName) {
-    throw new Error("Must not call abstract method directly.");
+  loadProperties (objectName) {
+    throw new Error('Must not call abstract method directly.');
   }
 
-  validateConstraintModeler(className, constraintList) {
-    throw new Error("Must not call abstract method directly.");
+  validateConstraintModeler (className, constraintList) {
+    throw new Error('Must not call abstract method directly.');
   }
 
-  loadResultWithConstraints(className, urlEncodedConstraintQueryString) {
-    throw new Error("Must not call abstract method directly.");
+  loadResultWithConstraints (className, urlEncodedConstraintQueryString) {
+    throw new Error('Must not call abstract method directly.');
   }
 
 }

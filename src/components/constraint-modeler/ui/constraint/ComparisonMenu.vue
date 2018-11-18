@@ -9,7 +9,7 @@
   import { DataTypeEnum } from '../../enum/DataTypeEnum';
   import { QueryFunctionEnum } from '../../enum/QueryFunctionEnum';
   import { PropertyTypeEnum } from '../../enum/PropertyTypeEnum';
-  import Property  from '../../Property';
+  import Property from '../../Property';
 
   // TODO: Constraint and ConstraintModeler render this with differing logic
 
@@ -60,7 +60,7 @@
       return {};
     },
     computed: {
-      comparisonTypeArray() {
+      comparisonTypeArray () {
         console.log('comparisonTypeArray recompute');
 
         console.log('recompute dataType', this.dataType);
@@ -96,13 +96,13 @@
       }
     },
     methods: {
-      setComparator(enumKey) {
+      setComparator (enumKey) {
         console.log('setComparator', enumKey);
         this.$emit('setComparator', ComparisonTypeEnum.getType(enumKey));
       }
     },
     watch: {
-      dataType(newValue, oldValue) {
+      dataType (newValue, oldValue) {
         console.log('dataType changed', this.dataType);
       }
     }

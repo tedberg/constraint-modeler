@@ -8,7 +8,7 @@ import { GeneralEnum } from '../enum/Enum';
  */
 export default class QueryElement {
 
-  constructor(objectId) {
+  constructor (objectId) {
     this.objectId = objectId;
 
     this.property = null;                 // The Property instance that this element is based on.
@@ -20,36 +20,35 @@ export default class QueryElement {
     this.serverDataType = null;           // The server/java data type, such as Person.
   }
 
-
   // ---------- Abstract methods ----------
 
-  setValuesFromToken(token) {
+  setValuesFromToken (token) {
     throw new Error('Call to abstract method setValuesFromToken.');
   }
 
-  renderSyntax() {
+  renderSyntax () {
     throw new Error('Call to abstract method renderSyntax.');
   };
 
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     throw new Error('Call to abstract method renderQueryString.');
   }
 
   // ---------- Concrete methods ----------
 
-  getObjectId() {
+  getObjectId () {
     return this.objectId;
   }
 
-  getReasonInvalid() {
+  getReasonInvalid () {
     return '';
   }
 
-  getProperty() {
+  getProperty () {
     return this.property;
   }
 
-  setProperty(property) {
+  setProperty (property) {
     this.property = property;
 
     this.key = property.path;
@@ -58,23 +57,23 @@ export default class QueryElement {
     this.serverDataType = property.dataType;
   }
 
-  getQueryFunction() {
+  getQueryFunction () {
     return this.queryFunction;
   }
 
-  getKey() {
+  getKey () {
     return this.key;
   }
 
-  getLabel() {
+  getLabel () {
     return this.label;
   }
 
-  getDataType() {
+  getDataType () {
     return this.dataType;
   }
 
-  getServerDataType() {
+  getServerDataType () {
     return this.serverDataType;
   }
 
@@ -84,7 +83,7 @@ export default class QueryElement {
    *
    * @param theKey the key to check. Examples are: lower(contact.lastname) or just contact.lastname
    */
-  splitFunctionFromKey(theKey) {
+  splitFunctionFromKey (theKey) {
     if (theKey !== null && theKey.indexOf('(') !== -1) { // Must be an aggregate or queryFunction
       let functionKeyPair = theKey.split('('); // Split function and property
       let functionAlias = functionKeyPair[0];
@@ -107,7 +106,7 @@ export default class QueryElement {
   }
 
   // TODO: Review usage of GeneralEnum.
-  setQueryFunction(enumKey) {
+  setQueryFunction (enumKey) {
     if (enumKey === GeneralEnum.NONE.key) {
       this.queryFunction = null;
     } else {

@@ -3,13 +3,13 @@ import QueryElement from './QueryElement';
 
 let projectionId = 1000;
 
-function projectionIdGenerator() {
+function projectionIdGenerator () {
   projectionId += 100;
   return projectionId;
 }
 
 // used for testing
-export function resetProjectionIdGenerator() {
+export function resetProjectionIdGenerator () {
   projectionId = 1000;
 }
 
@@ -20,20 +20,20 @@ export default class ProjectionModel extends QueryElement {
 
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 
-  constructor() {
+  constructor () {
     super(projectionIdGenerator());
   }
 
-  isValid() {
+  isValid () {
     return !(typeof this.key === 'undefined' || this.key === null);
   }
 
-  getReasonInvalid() {
+  getReasonInvalid () {
     return !this.isValid() ? 'Property must be defined.' : '';
   }
 
   // TODO: Need to review
-  setValuesFromToken(token) {
+  setValuesFromToken (token) {
     let keyValuePair = token.split(':');  // [0] = contact.lastname
 
     if (keyValuePair.length !== 1) {
@@ -45,7 +45,7 @@ export default class ProjectionModel extends QueryElement {
     log.debug('In setValuesFromToken', 'keyValuePair = ', keyValuePair, keyValuePair.length);
   }
 
-  renderSyntax() {
+  renderSyntax () {
     let syntax;
     if (typeof this.queryFunction !== 'undefined' && this.queryFunction !== null) {
       syntax = `${this.queryFunction}(${this.key})`;
@@ -62,7 +62,7 @@ export default class ProjectionModel extends QueryElement {
    * False for preserving saved filter definitions as entered.
    * @returns {string} The syntax of the constraint in query string format.
    */
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     let queryString;
     let projectionName = this.key;
 

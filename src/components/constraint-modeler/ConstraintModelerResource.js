@@ -1,9 +1,8 @@
-import ApiResource from '../../common/ApiResource';
 import AbstractConstraintModelerResource from './AbstractConstraintModelerResource';
 
 export default class ConstraintModelerResource extends AbstractConstraintModelerResource {
 
-  constructor() {
+  constructor () {
     super();
   }
 
@@ -17,7 +16,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   "data": [{"identifyingValue": "DISABLED", "displayValue": "Disabled"}, {"identifyingValue": "ENABLED", "displayValue": "Enabled"}],
    * }
    */
-  loadValueList(serverDataType) {
+  loadValueList (serverDataType) {
     return this.getJson(`/objects/${serverDataType}/values`);
   }
 
@@ -73,7 +72,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   ]
    * }
    */
-  loadProperties(objectName) {
+  loadProperties (objectName) {
     return this.getJson(`/api/objects/${objectName}/classInfo`);
   }
 
@@ -91,7 +90,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   ]
    * }
    */
-  validateConstraintModeler(className, constraintList) {
+  validateConstraintModeler (className, constraintList) {
     let url = `/objects/${className}/constraintModeler/validate`;
     let queryString = 'constraintList=' + encodeURIComponent(constraintList);
     return this.getJson(`${url}?${queryString}`);
@@ -114,7 +113,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *  ]
    * }
    */
-  loadResultWithConstraints(className, urlEncodedConstraintQueryString) {
+  loadResultWithConstraints (className, urlEncodedConstraintQueryString) {
     let url = `/objects/${className}`;
     return this.getJson(`${url}?${urlEncodedConstraintQueryString}`);
   }

@@ -31,7 +31,7 @@
   import ProjectionGroupModel from '../../model/ProjectionGroupModel';
 
   export default {
-    components: {ProjectionComponent},
+    components: { ProjectionComponent },
     extends: QueryElementGroupComponent,
     name: 'ProjectionGroupComponent',
     props: {
@@ -57,20 +57,18 @@
       }
     },
     computed: {
-      projectionList() {
+      projectionList () {
         return this.projectionGroupModel.getProjectionList();
       },
-      projectionGroupId() {
+      projectionGroupId () {
         return this.templatePrefix + '_projection-group-bar-' + this.projectionGroupModel.getObjectId();
       }
     },
     methods: {
-      addProjection() {
-        console.log('addProjection');
+      addProjection () {
         this.$emit('addProjection');
       },
-      removeProjection(projection, index) {
-        console.log('removeProjection', projection, index);
+      removeProjection (projection, index) {
         this.$emit('removeProjection', projection, index);
       }
     }

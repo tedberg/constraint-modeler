@@ -5,13 +5,13 @@ import QueryElement from './QueryElement';
 
 let constraintId = 10000;
 
-function constraintIdGenerator() {
+function constraintIdGenerator () {
   constraintId += 1000;
   return constraintId;
 }
 
 // used for testing
-export function resetConstraintIdGenerator() {
+export function resetConstraintIdGenerator () {
   constraintId = 10000;
 }
 
@@ -20,7 +20,7 @@ export function resetConstraintIdGenerator() {
  */
 export default class ConstraintModel extends QueryElement {
 
-  constructor() {
+  constructor () {
     super(constraintIdGenerator());
     this.comparisonType = ComparisonTypeEnum.EQUAL;
     this.valueArray = [];
@@ -28,7 +28,7 @@ export default class ConstraintModel extends QueryElement {
   }
 
   // was constraintGroup.initConstraintsFromString
-  static buildModelFromString(constraintToken, pathToPropertyMap) {
+  static buildModelFromString (constraintToken, pathToPropertyMap) {
     log.debug('buildModelFromString, constraintToken = ', constraintToken);
 
     // contact.address.city:eq:Springfield
@@ -51,7 +51,7 @@ export default class ConstraintModel extends QueryElement {
     return constraintModel;
   }
 
-  isValid() {
+  isValid () {
     if (this.verifiedValidity) {
       return this.verifiedValidity.valid;
     } else { // Do a more basic check of syntax.
@@ -74,7 +74,7 @@ export default class ConstraintModel extends QueryElement {
     }
   }
 
-  getReasonInvalid() {
+  getReasonInvalid () {
     if (this.verifiedValidity) {
       return this.verifiedValidity.reason;
     } else {
@@ -82,7 +82,7 @@ export default class ConstraintModel extends QueryElement {
     }
   }
 
-  setVerifiedValidity(valid, reason) {
+  setVerifiedValidity (valid, reason) {
     log.log('constraint setVerifiedValidity', this.getObjectId(), valid, reason);
     this.verifiedValidity = {
       valid: valid,
@@ -90,39 +90,39 @@ export default class ConstraintModel extends QueryElement {
     };
   }
 
-  getComparisonType() {
+  getComparisonType () {
     return this.comparisonType;
   }
 
-  setComparisonType(comparisonType) {
+  setComparisonType (comparisonType) {
     this.comparisonType = comparisonType;
   }
 
-  getValueArray() {
+  getValueArray () {
     return this.valueArray;
   }
 
-  get value() {
+  get value () {
     return this.valueArray[0];
   }
 
-  getValueArrayItem(index) {
+  getValueArrayItem (index) {
     return this.valueArray[index];
   }
 
-  setValue(value) {
+  setValue (value) {
     this.setValueArrayItem(0, value);
   }
 
-  setValueArrayItem(index, value) {
+  setValueArrayItem (index, value) {
     this.valueArray[index] = value;
   }
 
-  setValueArray(newValues) {
+  setValueArray (newValues) {
     this.valueArray = newValues;
   }
 
-  setValuesFromToken(constraintToken) {
+  setValuesFromToken (constraintToken) {
     let keyValuePair = constraintToken.split(':');  // [0] = lower(contact.lastname)    [1] = eq    [2] = simpson
 
     if (keyValuePair.length < 2 || keyValuePair.length > 3) {
@@ -151,7 +151,7 @@ export default class ConstraintModel extends QueryElement {
     }
   }
 
-  renderSyntax() {
+  renderSyntax () {
     let syntax;
     if (typeof this.queryFunction !== 'undefined' && this.queryFunction !== null) {
       syntax = `${this.queryFunction}(${this.key}) ${this.comparisonType}`;
@@ -192,7 +192,7 @@ export default class ConstraintModel extends QueryElement {
     return syntax;
   }
 
-  renderSyntaxForValue(value) {
+  renderSyntaxForValue (value) {
     log.log('renderSyntaxForValue', value, this.dataType, this.dataType === DataTypeEnum.STRING);
     let syntax;
     if (this.dataType === DataTypeEnum.STRING) {
@@ -210,7 +210,7 @@ export default class ConstraintModel extends QueryElement {
    * False for preserving saved filter definitions as entered.
    * @returns {string} The syntax of the constraint in query string format.
    */
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     // sum(version.versionNumber):eq:3
     // version.filesize:null
     // version.versionNumber:between:2,4
@@ -271,7 +271,7 @@ export default class ConstraintModel extends QueryElement {
    * standard choice or one that is tied to a specialHandlerFunction?
    * @returns {boolean} true if there is a configured special handler that applies to the current comparator
    */
-  isSpecialHandlerApplicable() {
+  isSpecialHandlerApplicable () {
     if (this.specialHandlerFunction && this.specialHandlerFunction.applicableComparisonTypeArray) {
       // SpecialHandler is in play.  Thus, only apply enhancement function to comparators that are tied to it.
       if (this.specialHandlerFunction.applicableComparisonTypeArray.indexOf(this.comparisonType) > -1) {

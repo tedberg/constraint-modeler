@@ -11,7 +11,7 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
   ComparisonType.prototype = Object.create(EnumValue.prototype);
   ComparisonType.prototype.constructor = ComparisonType;
 
-  function ComparisonType(key, label, alias, expectedNumberOfObjectValues, dataTypeRestrictionGroup, propertyTypeRestrictionGroup) {
+  function ComparisonType (key, label, alias, expectedNumberOfObjectValues, dataTypeRestrictionGroup, propertyTypeRestrictionGroup) {
     // Call the parent constructor
     EnumValue.call(this, key, label, alias);
 
@@ -34,7 +34,7 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
     OBJECT: [DataTypeEnum.OBJECT]
   };
 
-  function isDataTypeInGroup(dataType, group) {
+  function isDataTypeInGroup (dataType, group) {
     if (typeof dataType === 'undefined' || typeof group === 'undefined' || dataType === null || group === null) {
       return false;
     } else if (group === dataTypeGroup.ALL) {
@@ -56,7 +56,7 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
     }
   }
 
-  function isPropertyTypeInGroup(propertyType, group) {
+  function isPropertyTypeInGroup (propertyType, group) {
     if (typeof propertyType === 'undefined' || propertyType === null) {
       return true;
     } else if (group === PropertyTypeEnum.ALL) {
@@ -73,7 +73,7 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
   EnumDefs.prototype = Object.create(Enum.prototype);
   EnumDefs.prototype.constructor = EnumDefs;
 
-  function EnumDefs() {
+  function EnumDefs () {
     // Call the parent constructor
     Enum.call(this);
 

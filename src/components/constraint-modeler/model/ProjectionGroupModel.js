@@ -7,7 +7,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
 
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 
-  constructor(obj) {
+  constructor (obj) {
     super(1000);
     this.projectionList = [];
 
@@ -23,29 +23,29 @@ export default class ProjectionGroupModel extends QueryElementGroup {
   // &
   // projectionAsMap=true
 
-  getQueryElementCount() {
+  getQueryElementCount () {
     return this.projectionList.length;
   }
 
-  getProjectionList() {
+  getProjectionList () {
     return this.projectionList;
   }
 
-  isGrouped() {
+  isGrouped () {
     return this.grouped;
   }
 
-  isProjectionAsMap() {
+  isProjectionAsMap () {
     return this.projectionAsMap;
   }
 
-  addProjection() {
+  addProjection () {
     let projection = new ProjectionModel();
     this.projectionList.push(projection);
     return projection;
   }
 
-  removeProjection(projectionId) {
+  removeProjection (projectionId) {
     log.log('removeProjection with id', projectionId);
     let index = this.projectionList.findIndex(projection => projection.getObjectId() === projectionId);
     log.log('removeProjection index', index);
@@ -56,15 +56,15 @@ export default class ProjectionGroupModel extends QueryElementGroup {
     }
   }
 
-  isValid() {
+  isValid () {
     return this.projectionList.every(projection => projection.isValid());
   }
 
-  findProjectionById(projectionId) {
+  findProjectionById (projectionId) {
     return this.projectionList.find(projection => projection.getObjectId() === projectionId);
   }
 
-  buildModelFromJson(jsonObject, pathToPropertyMap) {
+  buildModelFromJson (jsonObject, pathToPropertyMap) {
     log.info('ProjectionGroup buildModelFromJson', jsonObject);
 
     if (!(typeof jsonObject === 'undefined' || jsonObject === null)) {
@@ -96,7 +96,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
     }
   }
 
-  initProjectionsFromString(projectionString, pathToPropertyMap) {
+  initProjectionsFromString (projectionString, pathToPropertyMap) {
     let projectionTokenArray = projectionString.split(';');   // [0] = contact.lastname  [1] = contact.address.city [2] = name
 
     log.info('ProjectionGroup initProjectionsFromString', projectionString);
@@ -116,7 +116,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
     }
   }
 
-  renderSyntax() {
+  renderSyntax () {
     let syntax = '(';
 
     let count = 0;
@@ -133,7 +133,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
     return syntax;
   }
 
-  renderSimpleObject(applySpecialHandlerConversions) {
+  renderSimpleObject (applySpecialHandlerConversions) {
     let simple = {};
     simple.property = this.renderProjectionsAsString(applySpecialHandlerConversions);
     simple.grouped = this.grouped;
@@ -145,7 +145,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
    * Renders the ConstraintGroup as a complex queryString parameter, supporting many constraints and subConstraintGroups.
    * @return String parameter
    */
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     let simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
     return serializeObjectToQueryStringParameters(simpleObject);
   }
@@ -155,7 +155,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
    * This is used for viewing and debugging.
    * @return String parameter
    */
-  renderQueryStringDecoded(applySpecialHandlerConversions) {
+  renderQueryStringDecoded (applySpecialHandlerConversions) {
     return decodeURIComponent(this.renderQueryString(applySpecialHandlerConversions));
   }
 
@@ -165,7 +165,7 @@ export default class ProjectionGroupModel extends QueryElementGroup {
    * False for preserving saved filter definitions as entered.
    * @return {string}
    */
-  renderProjectionsAsString(applySpecialHandlerConversions) {
+  renderProjectionsAsString (applySpecialHandlerConversions) {
     let queryString = '';
     let count = 0;
     for (let projection of this.projectionList) {

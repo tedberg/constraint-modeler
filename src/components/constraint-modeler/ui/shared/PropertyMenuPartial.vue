@@ -1,31 +1,31 @@
 <template>
-    <ul v-if="hasNestedList" class="dropdown-menu">
-      <li v-for="nestedProperty in nestedPropertyList" :key="nestedProperty.path">
-        <a @click.prevent="setProperty">{{propertyDisplay(nestedProperty)}}</a>
+  <ul v-if="hasNestedList" class="dropdown-menu">
+    <li v-for="nestedProperty in nestedPropertyList" :key="nestedProperty.path">
+      <a @click.prevent="setProperty">{{propertyDisplay(nestedProperty)}}</a>
 
-        <!--{{#$$ ../objectId ../templatePrefix }}-->
+      <!--{{#$$ ../objectId ../templatePrefix }}-->
 
-        <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop. TODO, don't show >> if at max level.}}-->
-        <!--{{> propertyMenuPartial}}-->
+      <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop. TODO, don't show >> if at max level.}}-->
+      <!--{{> propertyMenuPartial}}-->
 
-        <!--{{/$$}}-->
+      <!--{{/$$}}-->
 
-      </li>
+    </li>
 
-      <li v-if="nestedMultiPropertyList"  class="divider"></li>
-      <li v-if="nestedMultiPropertyList"  class="nav-header">Multi Properties</li>
-      <li v-for="nestedProperty in nestedMultiPropertyList" :key="nestedProperty.path">
-        <a @click.prevent="setMultiProperty">{{propertyDisplay(nestedProperty)}}</a>
+    <li v-if="nestedMultiPropertyList" class="divider"></li>
+    <li v-if="nestedMultiPropertyList" class="nav-header">Multi Properties</li>
+    <li v-for="nestedProperty in nestedMultiPropertyList" :key="nestedProperty.path">
+      <a @click.prevent="setMultiProperty">{{propertyDisplay(nestedProperty)}}</a>
 
-        <!--{{#$$ ../objectId ../templatePrefix }}-->
+      <!--{{#$$ ../objectId ../templatePrefix }}-->
 
-        <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop.}}-->
-        <!--{{> propertyMenuPartial}}-->
+      <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop.}}-->
+      <!--{{> propertyMenuPartial}}-->
 
-        <!--{{/$$}}-->
+      <!--{{/$$}}-->
 
-      </li>
-    </ul>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -56,20 +56,20 @@
       return {};
     },
     computed: {
-      hasNestedList() {
+      hasNestedList () {
         return (this.nestedPropertyList !== null && this.nestedPropertyList.length > 0) ||
           (this.nestedMultiPropertyList !== null && this.nestedMultiPropertyList.length > 0);
       }
     },
     methods: {
-      propertyDisplay(property) {
+      propertyDisplay (property) {
         return property.displayName + ' ' + typeof property.simpleDataType === 'object' ? '&raquo;' : '';
       },
-      setProperty() {
+      setProperty () {
 
         // TODO: javascript:{{../templatePrefix}}ConstraintModeler.setProperty({{../objectId}}, '{{path}}');
       },
-      setMultiProperty() {
+      setMultiProperty () {
 
         // TODO: javascript:{{../templatePrefix}}ConstraintModeler.setMultiProperty({{../objectId}}, '{{path}}');
       }

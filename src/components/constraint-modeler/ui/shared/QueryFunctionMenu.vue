@@ -15,9 +15,8 @@
   import { QueryFunctionEnum } from '../../enum/QueryFunctionEnum';
   import { DataTypeEnum } from '../../enum/DataTypeEnum';
   import { GeneralEnum } from '../../enum/Enum';
-  import Property  from '../../Property';
+  import Property from '../../Property';
   import ConstraintModel from '../../model/ConstraintModel';
-
 
   // TODO: Constraint and ConstraintModeler render this with differing logic
 
@@ -52,7 +51,7 @@
       };
     },
     // TODO: May need this when props change or later in lifecycle
-    created() {
+    created () {
       if (this.property) {
         if (this.property.multiProperty) {
           console.log('this.property == multiProperty');
@@ -77,7 +76,7 @@
       this.aggregateArray.unshift(GeneralEnum.NONE);
     },
     computed: {
-      queryFunctionDisplay() {
+      queryFunctionDisplay () {
         return this.queryFunction ? this.queryFunction.label : 'None';
       }
     },
@@ -85,7 +84,7 @@
       // Have to set my own info and fire event as old code called ConstraintModeler, which then found this element
       // and called its function.
 
-      setQueryFunction(enumKey) {
+      setQueryFunction (enumKey) {
         console.log('setQueryFunction enumKey = ', enumKey);
         this.$emit('setQueryFunction', enumKey);
       }

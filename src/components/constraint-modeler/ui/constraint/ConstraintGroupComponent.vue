@@ -28,7 +28,7 @@
 
 
     <!-- This is a list of many new nav bars -->
-    <constraint-component v-for="(constraint, index) in constraintList"
+    <constraint-component v-for="constraint in constraintList"
                           :key="constraint.getObjectId()"
                           :constraint-model="constraint"
                           :template-prefix="templatePrefix"
@@ -38,7 +38,7 @@
                           v-on:removeConstraint="removeConstraint"/>
 
     <!-- This is a list of many new nav bars -->
-    <constraint-group-component v-for="(constraintGroup, index) in constraintGroupList"
+    <constraint-group-component v-for="constraintGroup in constraintGroupList"
                                 :key="constraintGroup.getObjectId()"
                                 :constraint-group-model="constraintGroup"
                                 :template-prefix="templatePrefix"
@@ -59,7 +59,7 @@
   export default {
     extends: QueryElementGroupComponent,
     name: 'ConstraintGroupComponent',
-    components: {ConstraintComponent, JunctionMenu},
+    components: { ConstraintComponent, JunctionMenu },
     inject: ['modelListener'],
     props: {
       templatePrefix: {
@@ -86,61 +86,51 @@
     data: () => {
       return {};
     },
-    created() {
-      console.log('ConstraintGroupComponent created...', this.constraintGroupModel);
-      console.log('Junction', this.constraintGroupModel.getJunction());
-      console.log('Constraint List', this.constraintGroupModel.getConstraintList());
-
-      console.log('Constraint List Computed', this.constraintList);
+    created () {
     },
     computed: {
-      junction() {
+      junction () {
         return this.constraintGroupModel.getJunction();
       },
-      constraintList() {
+      constraintList () {
         return this.constraintGroupModel.getConstraintList();
       },
-      constraintGroupList() {
+      constraintGroupList () {
         return this.constraintGroupModel.getConstraintGroupList();
       },
-      objectId() {
+      objectId () {
         return this.constraintGroupModel.getObjectId();
       },
-      isRoot() {
+      isRoot () {
         return this.constraintGroupModel.isRoot();
       },
-      constraintGroupId() {
+      constraintGroupId () {
         return this.templatePrefix + '_constraint-group-bar-' + this.objectId;
       },
-      junctionMenuId() {
+      junctionMenuId () {
         return this.templatePrefix + '_junction-menu-' + this.objectId;
       },
-      propertyId() {
+      propertyId () {
         return this.templatePrefix + '_property-menu-' + this.objectId;
       }
     },
     methods: {
-      setJunction(junctionEnum) {
-        console.log('Constraint Group received event for setJunction', junctionEnum);
+      setJunction (junctionEnum) {
         this.modelListener.$emit('setJunction', this.constraintGroupModel, junctionEnum);
       },
-      addConstraint() {
-        console.log('addConstraint');
+      addConstraint () {
         this.modelListener.$emit('addConstraint', this.constraintGroupModel);
       },
-      removeConstraint(constraintModel) {
+      removeConstraint (constraintModel) {
         this.modelListener.$emit('removeConstraint', this.constraintGroupModel, constraintModel);
       },
-      addConstraintGroup() {
-        console.log('addConstraintGroup');
+      addConstraintGroup () {
         this.modelListener.$emit('addConstraintGroup', this.constraintGroupModel);
       },
-      apply() {
-        console.log('apply');
+      apply () {
         this.modelListener.$emit('apply');
       },
-      removeSelf() {
-        console.log('removeSelf');
+      removeSelf () {
         this.modelListener.$emit('removeConstraintGroup', this.constraintGroupModel);
       }
     }

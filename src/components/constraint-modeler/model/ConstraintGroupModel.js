@@ -7,13 +7,13 @@ export const ROOT_CONSTRAINT_GROUP_ID = 1000000;
 
 let constraintGroupId = ROOT_CONSTRAINT_GROUP_ID;
 
-function constraintGroupIdGenerator() {
+function constraintGroupIdGenerator () {
   constraintGroupId += 100000;
   return constraintGroupId;
 }
 
 // used for testing
-export function resetConstraintGroupIdGenerator() {
+export function resetConstraintGroupIdGenerator () {
   constraintGroupId = ROOT_CONSTRAINT_GROUP_ID;
 }
 
@@ -23,40 +23,40 @@ export function resetConstraintGroupIdGenerator() {
 export default class ConstraintGroupModel extends QueryElementGroup {
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 
-  constructor(constraintGroupId) {
+  constructor (constraintGroupId) {
     super(constraintGroupId);
     this.junction = JunctionEnum.AND;
     this.constraintList = [];
     this.constraintGroupList = [];
   }
 
-  isRoot() {
+  isRoot () {
     return Number(this.getObjectId()) === ROOT_CONSTRAINT_GROUP_ID;
   }
 
-  getJunction() {
+  getJunction () {
     return this.junction;
   }
 
-  setJunction(junction) {
+  setJunction (junction) {
     this.junction = junction;
   }
 
-  getConstraintList() {
+  getConstraintList () {
     return this.constraintList;
   }
 
-  setConstraintList(constraintList) {
+  setConstraintList (constraintList) {
     this.constraintList = constraintList;
   }
 
-  addConstraint() {
+  addConstraint () {
     let constraint = new ConstraintModel();
     this.constraintList.push(constraint);
     return constraint;
   }
 
-  removeConstraint(constraintId) {
+  removeConstraint (constraintId) {
     let index = this.constraintList.findIndex(constraint => constraint.getObjectId() === constraintId);
     if (index >= 0) {
       this.constraintList.splice(index, 1);
@@ -65,17 +65,17 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     }
   }
 
-  getConstraintGroupList() {
+  getConstraintGroupList () {
     return this.constraintGroupList;
   }
 
-  addConstraintGroup(subConstraintGroup) {
+  addConstraintGroup (subConstraintGroup) {
     let constraintGroup = subConstraintGroup || new ConstraintGroupModel(constraintGroupIdGenerator());
     this.constraintGroupList.push(constraintGroup);
     return constraintGroup;
   }
 
-  findConstraintGroupById(constraintGroupId) {
+  findConstraintGroupById (constraintGroupId) {
     let constraintGroup = this.constraintGroupList.find(constraintGroup => constraintGroup.getObjectId() === Number(constraintGroupId));
     if (constraintGroup) {
       return constraintGroup;
@@ -90,7 +90,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     return constraintGroup;
   }
 
-  removeConstraintGroup(constraintGroupId) {
+  removeConstraintGroup (constraintGroupId) {
     let index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
     if (index >= 0) {
       this.constraintGroupList.splice(index, 1);
@@ -99,7 +99,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     }
   }
 
-  removeConstraintGroupRecursively(constraintGroupId) {
+  removeConstraintGroupRecursively (constraintGroupId) {
     let index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
     if (index >= 0) {
       this.constraintGroupList.splice(index, 1);
@@ -113,7 +113,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * Returns a count of how many constraints are established directly within this ConstraintGroup.
    * @return {*}
    */
-  getQueryElementCount() {
+  getQueryElementCount () {
     return this.constraintList.length;
   }
 
@@ -121,7 +121,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * Returns a count of how many constraints are established directly within this ConstraintGroup.
    * @return {*}
    */
-  getConstraintCount() {
+  getConstraintCount () {
     return this.constraintList.length;
   }
 
@@ -129,7 +129,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * Returns a count of how many constraints are established within any subgroups of this ConstraintGroup.
    * @return {*}
    */
-  getNestedConstraintCount() {
+  getNestedConstraintCount () {
     let count = 0;
     this.constraintGroupList.forEach(constraintGroup => {
       count += constraintGroup.getConstraintCount();
@@ -144,16 +144,16 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * and within any subgroups.
    * @return {*}
    */
-  getTotalConstraintCount() {
+  getTotalConstraintCount () {
     return this.getConstraintCount() + this.getNestedConstraintCount();
   }
 
-  isValid() {
+  isValid () {
     return this.constraintList.every(constraint => constraint.isValid()) &&
       this.constraintGroupList.every(constraintGroup => constraintGroup.isValid());
   }
 
-  findConstraintById(constraintId) {
+  findConstraintById (constraintId) {
     let constraint = this.constraintList.find(constraint => constraint.getObjectId() === Number(constraintId));
     if (constraint) {
       return constraint;
@@ -168,7 +168,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     return constraint;
   }
 
-  static buildModelFromJson(constraintGroupId, constraintObject, pathToPropertyMap) {
+  static buildModelFromJson (constraintGroupId, constraintObject, pathToPropertyMap) {
     log.debug('buildModelFromJson, constraintObject = ', constraintObject);
 
     let constraintGroupModel = new ConstraintGroupModel(constraintGroupId);
@@ -194,15 +194,15 @@ export default class ConstraintGroupModel extends QueryElementGroup {
   }
 
   // Builds the constraint list from the token string.
-  static buildConstraintList(constraintGroupModel, constraintString, pathToPropertyMap) {
+  static buildConstraintList (constraintGroupModel, constraintString, pathToPropertyMap) {
     let constraintModelList = [];
 
-//       junction:or (Can appear in index 0)
-// [0] = contact.lastname:eq:Simpson
-// [1] = contact.address.city:eq:Springfield
-// [2] = (name:notnull
-// [3] = (id:notnull
-// [4] =  description:null))
+    //       junction:or (Can appear in index 0)
+    // [0] = contact.lastname:eq:Simpson
+    // [1] = contact.address.city:eq:Springfield
+    // [2] = (name:notnull
+    // [3] = (id:notnull
+    // [4] =  description:null))
     let constraintTokenArray = constraintString.split(';');
 
     for (let constraintToken of constraintTokenArray) {
@@ -219,7 +219,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     return constraintModelList;
   }
 
-  renderSyntax() {
+  renderSyntax () {
     let junction = ` ${this.junction.label} `;
     let syntax = '(';
 
@@ -244,7 +244,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
     return syntax;
   }
 
-  renderSimpleObject(applySpecialHandlerConversions) {
+  renderSimpleObject (applySpecialHandlerConversions) {
     let simple = {};
     let constraint = {};
 
@@ -278,7 +278,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * False for preserving saved filter definitions as entered.
    * @return {string}
    */
-  renderConstraintsAsString(applySpecialHandlerConversions) {
+  renderConstraintsAsString (applySpecialHandlerConversions) {
     let queryString = '';
 
     let count = 0;
@@ -298,7 +298,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * Renders the ConstraintGroup as a complex queryString parameter, supporting many constraints and subConstraintGroups.
    * @return String parameter
    */
-  renderQueryString(applySpecialHandlerConversions) {
+  renderQueryString (applySpecialHandlerConversions) {
     let simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
     return serializeObjectToQueryStringParameters(simpleObject);
   }
@@ -308,7 +308,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * This is used for viewing and debugging.
    * @return String parameter
    */
-  renderQueryStringDecoded(applySpecialHandlerConversions) {
+  renderQueryStringDecoded (applySpecialHandlerConversions) {
     return decodeURIComponent(this.renderQueryString(applySpecialHandlerConversions));
   }
 
@@ -316,7 +316,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * Renders the group's direct child constraints as a list of objects, with objects containing and objectId and constraint rendered as a string.
    * @return {Array}
    */
-  renderConstraintsAsList(applySpecialHandlerConversions) {
+  renderConstraintsAsList (applySpecialHandlerConversions) {
     let list = [];
     for (let constraint of this.constraintList) {
       list.push({
@@ -332,7 +332,7 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * objectId and and constraint rendered as a string.  List will have object entries and sub-lists of entries.
    * @return {Array}
    */
-  renderStructuredObjectList(applySpecialHandlerConversions) {
+  renderStructuredObjectList (applySpecialHandlerConversions) {
     let list = this.renderConstraintsAsList(applySpecialHandlerConversions);
     for (let constraintGroup of this.constraintGroupList) {
       list.push(constraintGroup.renderStructuredObjectList(applySpecialHandlerConversions));
@@ -345,14 +345,13 @@ export default class ConstraintGroupModel extends QueryElementGroup {
    * objectId and and constraint rendered as a string.
    * @return {Array}
    */
-  renderFlattenedObjectList(applySpecialHandlerConversions) {
+  renderFlattenedObjectList (applySpecialHandlerConversions) {
     let list = this.renderConstraintsAsList(applySpecialHandlerConversions);
     for (let constraintGroup of this.constraintGroupList) {
       list = list.concat(constraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions));
     }
     return list;
   }
-
 
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark bg-dark projection-bar mb-1" :id="projectionId">
+  <div class="navbar navbar-expand-lg navbar-dark bg-dark projection-bar mb-1" :id="projectionId" data-test="projection">
     <div class="collapse navbar-collapse">
 
       <ul class="navbar-nav">

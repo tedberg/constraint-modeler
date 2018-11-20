@@ -1,15 +1,15 @@
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-bar mb-1" :id="constraintId">
+  <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-bar mb-1" :id="constraintId" data-test="constraint">
     <div class="collapse navbar-collapse">
 
       <ul class="navbar-nav">
-        <li class="nav-item dropdown" :id="aggregateId">
+        <li class="nav-item dropdown" :id="aggregateId" data-test="query-function-menu">
           <query-function-menu :query-function="queryFunctionEnum"
                                :template-prefix="templatePrefix"
                                v-on:setQueryFunction="setQueryFunctionEnum"/>
         </li>
 
-        <li class="nav-item active dropdown" :id="propertyId">
+        <li class="nav-item active dropdown" :id="propertyId" data-test="property-menu">
           <property-menu :property="property"
                          :property-list="propertyList"
                          :multi-property-list="multiPropertyList"
@@ -17,7 +17,7 @@
                          v-on:setProperty="setProperty"/>
         </li>
 
-        <li class="nav-item dropdown" :id="comparisonId">
+        <li class="nav-item dropdown" :id="comparisonId" data-test="comparison-menu">
           <comparison-menu :comparison-type="comparisonType"
                            :data-type="dataType"
                            :query-function="queryFunctionEnum"
@@ -27,7 +27,7 @@
         </li>
       </ul>
 
-      <form class="form-inline navbar-search pull-left" :id="valueEntriesId">
+      <form class="form-inline navbar-search pull-left" :id="valueEntriesId" data-test="value-input">
         <value-input :property="property"
                      :comparison-type="comparisonType"
                      :value-array="valueArray"

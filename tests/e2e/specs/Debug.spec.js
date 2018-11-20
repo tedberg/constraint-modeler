@@ -5,15 +5,13 @@ describe('Demo - Debug Page Tests', () => {
     // We should not see projections for this setup
     cy.get('div.projection-group').should('not.exist');
 
-    // Click to add a constraint (Not robust selector method)
-    cy.contains('+ C').click();
+    // Click to add a constraint
+    cy.get('[data-test=add-constraint]').click();   // +C button
 
-    cy.get('#test_constraint-bar-11000');
-
-    cy.get('#test_property-menu-11000').click();
+    cy.get('[data-test=property-menu]').click();
     cy.contains('Age').click();
 
-    cy.get('#test_comparison-menu-11000').click();
+    cy.get('[data-test=comparison-menu]').click();
     cy.contains('Greater Than').click();
 
     cy.get('#test_valueEntry-11000')

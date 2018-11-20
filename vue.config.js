@@ -24,9 +24,9 @@ module.exports = {
   pluginOptions: {
     testAttrs: {
       // you can enable and disable it yourself, i.e. with an environment variable:
-      enabled: process.env.development,
+      enabled: true, //process.env.NODE_ENV !== 'production' || process.env.VUE_CLI_KEEP_TEST_ATTRS= 'true',
       // you can also define which `data-` attributes should should be removed.
-      attrs: ['test'] // default: removes `data-test="..."`
+      attrs: ['cy', 'xtest'] // default: removes `data-test="..."`
     }
   },
 

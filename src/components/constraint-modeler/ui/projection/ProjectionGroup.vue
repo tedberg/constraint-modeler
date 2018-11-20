@@ -1,11 +1,11 @@
 <template>
-  <div :class="['projection-group']">
+  <div class="projection-group" data-test="projection-group">
     <div class="navbar navbar-expand-lg navbar-dark bg-dark projection-group-bar mb-1" :id="projectionGroupId">
 
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
           <form class="form-inline">
-            <button class="btn btn-sm btn-secondary" @click.prevent="addProjection()">+ P</button>
+            <button class="btn btn-sm btn-secondary" data-test="add-projection" @click.prevent="addProjection()">+ P</button>
           </form>
         </ul>
       </div>

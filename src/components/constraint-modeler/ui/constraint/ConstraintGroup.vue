@@ -1,5 +1,5 @@
 <template>
-  <div :class="['constraint-group', {'root': isRoot}]">
+  <div :class="['constraint-group', {'root': isRoot}]" data-test="constraint-group">
     <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-group-bar mb-1" :id="constraintGroupId">
 
       <div class="collapse navbar-collapse">
@@ -9,15 +9,15 @@
           </li>
 
           <li class="nav-item btn-group btn-group-sm">
-            <button class="btn btn-sm btn-secondary" @click.prevent="addConstraint">+ C</button>
-            <button class="btn btn-sm btn-secondary" @click.prevent="addConstraintGroup">+ CG</button>
+            <button class="btn btn-sm btn-secondary" data-test="add-constraint" @click.prevent="addConstraint">+ C</button>
+            <button class="btn btn-sm btn-secondary" data-test="add-constraint-group" @click.prevent="addConstraintGroup">+ CG</button>
           </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
           <form class="form-inline">
-            <button v-if="isRoot" class="btn btn-sm btn-secondary" @click.prevent="apply">Apply</button>
-            <button v-else class="btn btn-sm btn-secondary" @click.prevent="removeSelf">X</button>
+            <button v-if="isRoot" class="btn btn-sm btn-secondary" data-test="apply" @click.prevent="apply">Apply</button>
+            <button v-else class="btn btn-sm btn-secondary" data-test="remove-constraint" @click.prevent="removeSelf">X</button>
           </form>
         </ul>
 
@@ -29,22 +29,22 @@
 
     <!-- This is a list of many new nav bars -->
     <constraint v-for="constraint in constraintList"
-                          :key="constraint.getObjectId()"
-                          :constraint-model="constraint"
-                          :template-prefix="templatePrefix"
-                          :propertyList="propertyList"
-                          :multiPropertyList="multiPropertyList"
-                          :pathToPropertyMap="pathToPropertyMap"
-                          v-on:removeConstraint="removeConstraint"/>
+                :key="constraint.getObjectId()"
+                :constraint-model="constraint"
+                :template-prefix="templatePrefix"
+                :propertyList="propertyList"
+                :multiPropertyList="multiPropertyList"
+                :pathToPropertyMap="pathToPropertyMap"
+                v-on:removeConstraint="removeConstraint"/>
 
     <!-- This is a list of many new nav bars -->
     <constraint-group v-for="constraintGroup in constraintGroupList"
-                                :key="constraintGroup.getObjectId()"
-                                :constraint-group-model="constraintGroup"
-                                :template-prefix="templatePrefix"
-                                :propertyList="propertyList"
-                                :multiPropertyList="multiPropertyList"
-                                :pathToPropertyMap="pathToPropertyMap"/>
+                      :key="constraintGroup.getObjectId()"
+                      :constraint-group-model="constraintGroup"
+                      :template-prefix="templatePrefix"
+                      :propertyList="propertyList"
+                      :multiPropertyList="multiPropertyList"
+                      :pathToPropertyMap="pathToPropertyMap"/>
 
   </div>
 </template>

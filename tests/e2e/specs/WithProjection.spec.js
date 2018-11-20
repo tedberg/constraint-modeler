@@ -45,5 +45,7 @@ describe('Demo - Projection Page Tests', () => {
       .find('span.syntaxDisplay')
       .should('contain.text', '(name,age)(age Greater Than 25)');
 
+    cy.screenshot('projection_with_syntax', { capture: 'fullPage' });
+
   });
 });

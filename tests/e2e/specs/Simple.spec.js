@@ -23,5 +23,7 @@ describe('Demo - Simple Page Tests', () => {
     cy.get('div.alerts')
       .find('span.syntaxDisplay')
       .should('contain.text', '(age Greater Than 25)');
+
+    cy.screenshot('simple_with_syntax', { capture: 'fullPage' });
   });
 });

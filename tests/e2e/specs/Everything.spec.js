@@ -11,6 +11,8 @@ describe('Demo - Everything Page Tests', () => {
       .find('span.syntaxDisplay')
       .should('contain.text', '(name,age)(status Equal ENABLED And age Greater Than 50 And (age Less Than or Equal 35 Or Upper(name) Like \'*Y\'))');
 
+    cy.screenshot('everything_with_syntax', { capture: 'fullPage' });
+
     cy.contains('Render Query String').click();
 
     cy.get('div.alerts')

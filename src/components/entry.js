@@ -1,10 +1,10 @@
-import ConstraintModelerComponent from './constraint-modeler/ui/ConstraintModelerComponent.vue';
+import ConstraintModeler from './constraint-modeler/ui/ConstraintModeler.vue';
 
 // What should happen if the user installs the library as a plugin
 function install (Vue) {
   if (install.installed) return;
   install.installed = true;
-  Vue.component('ConstraintModelerComponent', ConstraintModelerComponent);
+  Vue.component('ConstraintModeler', ConstraintModeler);
 }
 
 // Create module definition for Vue.use()
@@ -25,7 +25,7 @@ if (GlobalVue) {
 }
 
 // Export components individually
-export { ConstraintModelerComponent };
+export { ConstraintModeler };
 
 // Export the library as a plugin
 export default { install: install };

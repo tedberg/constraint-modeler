@@ -33,12 +33,12 @@
 </template>
 
 <script>
-  import QueryFunctionMenu from '../shared/QueryFunctionMenu';
-  import PropertyMenu from '../shared/PropertyMenu';
+  import QueryFunctionMenu from '../shared/QueryFunctionMenu.vue';
+  import PropertyMenu from '../shared/PropertyMenu.vue';
   import ProjectionModel from '../../model/ProjectionModel';
 
   export default {
-    name: 'ProjectionComponent',
+    name: 'Projection',
     components: { PropertyMenu, QueryFunctionMenu },
     inject: ['modelListener'],
     props: {
@@ -68,7 +68,6 @@
     },
     computed: {
       property () {
-        console.error('this.projectionModel.getProperty()', this.projectionModel.getProperty());
         return this.projectionModel.getProperty() || null;
       },
       objectId () {

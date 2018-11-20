@@ -1,9 +1,8 @@
 import { log } from '@/common/LoggingFacade';
-import QueryElementGroup, { serializeObjectToQueryStringParameters } from './QueryElementGroup';
+import QueryElementGroupModel, { serializeObjectToQueryStringParameters } from './QueryElementGroupModel';
 import ProjectionModel from './ProjectionModel';
-import { DataTypeEnum } from '../enum/DataTypeEnum';
 
-export default class ProjectionGroupModel extends QueryElementGroup {
+export default class ProjectionGroupModel extends QueryElementGroupModel {
 
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 

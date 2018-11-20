@@ -1,14 +1,14 @@
 <template>
   <div>
 
-    <constraint-modeler-component title="Everything Constraint Modeler"
-                                  :objectName="objectName"
-                                  :showDebug="true"
-                                  :expose-projection-modeler="true"
-                                  :initial-model-json-object="initialModel"
-                                  v-on:applyConstraintsToData="applyDataGrid"
-                                  :saveFunction="uiSaveFunction"
-                                  :constraintModelerResource="constraintModelerResource"/>
+    <constraint-modeler title="Everything Constraint Modeler"
+                        :objectName="objectName"
+                        :showDebug="true"
+                        :expose-projection-modeler="true"
+                        :initial-model-json-object="initialModel"
+                        v-on:applyConstraintsToData="applyDataGrid"
+                        :saveFunction="uiSaveFunction"
+                        :constraintModelerResource="constraintModelerResource"/>
 
     <list-grid :objectName="objectName"
                :fields="fields"
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import ConstraintModelerComponent from '@/components/constraint-modeler/ui/ConstraintModelerComponent.vue';
+  import ConstraintModeler from '@/components/constraint-modeler/ui/ConstraintModeler.vue';
   import StubConstraintModelerResource from '@/components/constraint-modeler/StubConstraintModelerResource';
   import ListGrid from './ListGrid.vue';
 
@@ -27,7 +27,7 @@
   export default {
     name: 'persistent',
     components: {
-      ConstraintModelerComponent, ListGrid
+      ConstraintModeler, ListGrid
     },
     data: () => {
       return {

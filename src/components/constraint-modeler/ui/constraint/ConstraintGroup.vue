@@ -28,7 +28,7 @@
 
 
     <!-- This is a list of many new nav bars -->
-    <constraint-component v-for="constraint in constraintList"
+    <constraint v-for="constraint in constraintList"
                           :key="constraint.getObjectId()"
                           :constraint-model="constraint"
                           :template-prefix="templatePrefix"
@@ -38,7 +38,7 @@
                           v-on:removeConstraint="removeConstraint"/>
 
     <!-- This is a list of many new nav bars -->
-    <constraint-group-component v-for="constraintGroup in constraintGroupList"
+    <constraint-group v-for="constraintGroup in constraintGroupList"
                                 :key="constraintGroup.getObjectId()"
                                 :constraint-group-model="constraintGroup"
                                 :template-prefix="templatePrefix"
@@ -50,16 +50,16 @@
 </template>
 
 <script>
-  import QueryElementGroupComponent from '../shared/QueryElementGroupComponent';
+  import QueryElementGroup from '../shared/QueryElementGroup.vue';
 
-  import JunctionMenu from './JunctionMenu';
-  import ConstraintComponent from './ConstraintComponent';
+  import JunctionMenu from './JunctionMenu.vue';
+  import Constraint from './Constraint.vue';
   import ConstraintGroupModel from '../../model/ConstraintGroupModel';
 
   export default {
-    extends: QueryElementGroupComponent,
-    name: 'ConstraintGroupComponent',
-    components: { ConstraintComponent, JunctionMenu },
+    extends: QueryElementGroup,
+    name: 'ConstraintGroup',
+    components: { Constraint, JunctionMenu },
     inject: ['modelListener'],
     props: {
       templatePrefix: {

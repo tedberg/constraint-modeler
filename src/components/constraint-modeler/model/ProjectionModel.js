@@ -1,5 +1,5 @@
 import { log } from '@/common/LoggingFacade';
-import QueryElement from './QueryElement';
+import QueryElementModel from './QueryElementModel';
 
 let projectionId = 1000;
 
@@ -16,7 +16,7 @@ export function resetProjectionIdGenerator () {
 /**
  *  A Projection models a single property or function used in selecting/projecting data.
  */
-export default class ProjectionModel extends QueryElement {
+export default class ProjectionModel extends QueryElementModel {
 
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 

@@ -16,7 +16,6 @@
   import { DataTypeEnum } from '../../enum/DataTypeEnum';
   import { GeneralEnum } from '../../enum/Enum';
   import Property from '../../Property';
-  import ConstraintModel from '../../model/ConstraintModel';
 
   // TODO: Constraint and ConstraintModeler render this with differing logic
 
@@ -54,24 +53,17 @@
     created () {
       if (this.property) {
         if (this.property.multiProperty) {
-          console.log('this.property == multiProperty');
           this.queryFunctionArray = QueryFunctionEnum.getQueryFunctionValueListForInputType(DataTypeEnum.COLLECTION);
           this.aggregateArray = [];
         } else {
-          console.log('this.property == singleProperty');
           let inputType = DataTypeEnum.getTypeFromAlias(this.property.simpleDataType);
           this.queryFunctionArray = QueryFunctionEnum.getQueryFunctionValueListForInputType(inputType);
           this.aggregateArray = QueryFunctionEnum.getAggregateFunctionValueListForInputType(inputType);
         }
       } else {
-        console.log('this.property == null');
         this.queryFunctionArray = QueryFunctionEnum.getQueryFunctionValueList();
         this.aggregateArray = QueryFunctionEnum.getAggregateFunctionValueList();
       }
-
-      console.log('renderFunctionMenu - property = ', this.property);
-
-      console.log('this.queryFunctionArray', this.queryFunctionArray);
 
       this.aggregateArray.unshift(GeneralEnum.NONE);
     },
@@ -85,7 +77,6 @@
       // and called its function.
 
       setQueryFunction (enumKey) {
-        console.log('setQueryFunction enumKey = ', enumKey);
         this.$emit('setQueryFunction', enumKey);
       }
     }

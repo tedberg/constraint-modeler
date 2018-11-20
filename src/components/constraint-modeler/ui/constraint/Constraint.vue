@@ -55,15 +55,15 @@
 </template>
 
 <script>
-  import ComparisonMenu from './ComparisonMenu';
-  import QueryFunctionMenu from '../shared/QueryFunctionMenu';
-  import ValueInput from './ValueInput';
+  import ComparisonMenu from './ComparisonMenu.vue';
+  import QueryFunctionMenu from '../shared/QueryFunctionMenu.vue';
+  import ValueInput from './ValueInput.vue';
 
-  import PropertyMenu from '../shared/PropertyMenu';
+  import PropertyMenu from '../shared/PropertyMenu.vue';
   import ConstraintModel from '../../model/ConstraintModel';
 
   export default {
-    name: 'ConstraintComponent',
+    name: 'Constraint',
     components: { PropertyMenu, ValueInput, QueryFunctionMenu, ComparisonMenu },
     inject: ['modelListener'],
     props: {

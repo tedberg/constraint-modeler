@@ -8,7 +8,7 @@
 <script>
 
   export default {
-    name: 'QueryElementGroupComponent',
+    name: 'QueryElementGroup',
     props: {},
     data: () => {
       return {};

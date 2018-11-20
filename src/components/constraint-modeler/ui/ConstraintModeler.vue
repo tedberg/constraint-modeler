@@ -7,13 +7,13 @@
 
     <div v-if="componentReady">  <!-- else loading animation? -->
 
-      <constraint-group-component :constraint-group-model="rootConstraintGroup"
+      <constraint-group :constraint-group-model="rootConstraintGroup"
                                   :templatePrefix="templatePrefix"
                                   :propertyList="propertyList"
                                   :multiPropertyList="multiPropertyList"
                                   :pathToPropertyMap="pathToPropertyMap"/>
 
-      <projection-group-component v-if="exposeProjectionModeler"
+      <projection-group v-if="exposeProjectionModeler"
                                   :projection-group-model="model.getProjectionGroup()"
                                   :templatePrefix="templatePrefix"
                                   :propertyList="propertyList"
@@ -64,15 +64,15 @@
 </template>
 
 <script>
-  import ConstraintGroupComponent from './constraint/ConstraintGroupComponent';
-  import ProjectionGroupComponent from './projection/ProjectionGroupComponent';
+  import ConstraintGroup from './constraint/ConstraintGroup.vue';
+  import ProjectionGroup from './projection/ProjectionGroup.vue';
   import Model from '../model/Model';
   import ConstraintModelerResource from '../ConstraintModelerResource';
   import AbstractConstraintModelerResource from '../AbstractConstraintModelerResource';
 
   export default {
-    name: 'ConstraintModelerComponent',
-    components: { ProjectionGroupComponent, ConstraintGroupComponent },
+    name: 'ConstraintModeler',
+    components: { ProjectionGroup, ConstraintGroup },
     props: {
       title: {
         type: String,

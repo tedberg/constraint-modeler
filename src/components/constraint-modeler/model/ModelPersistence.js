@@ -51,7 +51,7 @@ export default class ModelPersistence {
   }
 
   saveInternal (persistentId, model, isValid) {
-    let applySpecialHandlerConversions = false; // Don't save with server conversions
+    //let applySpecialHandlerConversions = false; // Don't save with server conversions
 
     // Convert to 2.8 format
     let modelerObject = ModelPersistence.convertToModelerObject(model);

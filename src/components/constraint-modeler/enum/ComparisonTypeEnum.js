@@ -103,16 +103,17 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
 
     this.getAllForDataType = function (dataType, propertyType) {
       let valueArray = [];
-      let prop;
-      for (prop in self) {
-        let item = self[prop];
-        if (typeof item !== 'function' && isDataTypeInGroup(dataType, item.dataTypeGroup)) {
-          if (propertyType) { // Caller wants to restrict to propertyType
-            if (isPropertyTypeInGroup(propertyType, item.propertyType)) {
+      for (const prop in self) {
+        if (self.hasOwnProperty(prop)) {
+          let item = self[prop];
+          if (typeof item !== 'function' && isDataTypeInGroup(dataType, item.dataTypeGroup)) {
+            if (propertyType) { // Caller wants to restrict to propertyType
+              if (isPropertyTypeInGroup(propertyType, item.propertyType)) {
+                valueArray.push(item);
+              }
+            } else { // Caller didn't specify propertyType to restrict on
               valueArray.push(item);
             }
-          } else { // Caller didn't specify propertyType to restrict on
-            valueArray.push(item);
           }
         }
       }

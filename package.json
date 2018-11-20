@@ -1,6 +1,6 @@
 {
   "name": "@tedberg/constraint-modeler",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "",
   "keywords": "",
   "homepage": "https://github.com/tedberg/constraint-modeler#readme",
@@ -8,6 +8,14 @@
     "name": "Ted Bergeron"
   },
   "license": "Apache-2.0",
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "main": "dist/constraint-modeler.umd.js",
+  "module": "dist/constraint-modeler.common.js",
+  "unpkg": "dist/constraint-modeler.umd.min.js",
   "engines": {
     "node": ">=8.11.0",
     "npm": ">=5.6.0"
@@ -22,22 +30,31 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:lib": "vue-cli-service build --target lib --name constraint-modeler --dest dist/ src/components/entry.js",
+    "build:wc": "vue-cli-service build --target wc --name constraint-modeler 'src/components/*.vue'",
+    "build:wc-async": "vue-cli-service build --target wc-async --name constraint-modeler 'src/components/*.vue'",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "cross-env VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
     "test": "npm run test:unit && npm run test:e2e",
     "cypress": "./node_modules/cypress/bin/cypress open",
-    "docker-build": "npm run build --buildNumber ${BUILD_NUMBER} && ./docker-build.sh $npm_package_name $npm_package_version",
-    "docker-push": "npm run docker-build && ./docker-push.sh $npm_package_name $npm_package_version"
+    "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/constraint-modeler.umd.js",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/constraint-modeler.esm.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/constraint-modeler.min.js"
+  },
+  "gitHooksX": {
+    "pre-commit": "foo"
   },
   "peerDependencies": {
-    "vue": "^2.5.17"
+    "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "date-fns": "^1.29.0",
-    "eslint-to-editorconfig": "^1.2.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
@@ -54,7 +71,12 @@
     "babel-plugin-jsx-v-model": "^2.0.3",
     "cross-env": "^5.2.0",
     "eslint-plugin-cypress": "^2.1.2",
+    "minimist": "^1.2.0",
     "node-sass": "^4.10.0",
+    "rollup": "^0.67.3",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-uglify-es": "0.0.1",
+    "rollup-plugin-vue": "^4.3.0",
     "sass-loader": "^7.0.1",
     "vue-cli-plugin-test-attrs": "^0.1.1",
     "vue-template-compiler": "^2.5.17"

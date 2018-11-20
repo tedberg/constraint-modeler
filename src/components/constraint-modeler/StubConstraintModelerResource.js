@@ -1,7 +1,7 @@
 import AbstractConstraintModelerResource from './AbstractConstraintModelerResource';
 
 const VALUE_LIST = {
-  'data': [{ 'identifyingValue': 'DISABLED', 'displayValue': 'Disabled' }, { 'identifyingValue': 'ENABLED', 'displayValue': 'Enabled' }],
+  'data': [{ 'identifyingValue': 'DISABLED', 'displayValue': 'Disabled' }, { 'identifyingValue': 'ENABLED', 'displayValue': 'Enabled' }]
 };
 
 const PROPERTIES_LIST = {
@@ -71,10 +71,6 @@ const RESULT_RESPONSE = {
  * necessary API calls that a backend server would provide.
  */
 export default class StubConstraintModelerResource extends AbstractConstraintModelerResource {
-
-  constructor () {
-    super();
-  }
 
   // Used by ValueInput.vue
   /**

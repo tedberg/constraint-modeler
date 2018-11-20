@@ -15,6 +15,12 @@ module.exports = {
   productionSourceMap: undefined,
   parallel: undefined,
 
+  // Allows for source scanning the listed entries from node-modules, which is ignored by default.
+  // Used when making granular imports from these libraries.
+  transpileDependencies: [
+    /bootstrap-vue/
+  ],
+
   pluginOptions: {
     testAttrs: {
       // you can enable and disable it yourself, i.e. with an environment variable:

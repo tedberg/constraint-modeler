@@ -1,10 +1,10 @@
 <template>
   <div>
 
-    <constraint-modeler-component title="Simple Constraint Modeler"
-                                  :objectName="objectName"
-                                  v-on:applyConstraintsToData="applyDataGrid"
-                                  :constraintModelerResource="constraintModelerResource"/>
+    <constraint-modeler title="Simple Constraint Modeler"
+                        :objectName="objectName"
+                        v-on:applyConstraintsToData="applyDataGrid"
+                        :constraintModelerResource="constraintModelerResource"/>
 
     <list-grid :objectName="objectName"
                :fields="fields"
@@ -14,14 +14,14 @@
 </template>
 
 <script>
-  import ConstraintModelerComponent from '@/components/constraint-modeler/ui/ConstraintModelerComponent.vue';
+  import ConstraintModeler from '@/components/constraint-modeler/ui/ConstraintModeler.vue';
   import StubConstraintModelerResource from '@/components/constraint-modeler/StubConstraintModelerResource';
   import ListGrid from './ListGrid.vue';
 
   export default {
     name: 'simple',
     components: {
-      ConstraintModelerComponent, ListGrid
+      ConstraintModeler, ListGrid
     },
     data: () => {
       return {
@@ -50,17 +50,17 @@
         ]
       };
     },
-    created() {
+    created () {
       this.result = {};
       this.constraintModelerResource = new StubConstraintModelerResource();
     },
     computed: {
-      queryResultData() {
+      queryResultData () {
         return this.result.data;
       }
     },
     methods: {
-      applyDataGrid(result) {
+      applyDataGrid (result) {
         this.result = result;
       }
     }

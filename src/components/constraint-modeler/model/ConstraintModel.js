@@ -1,7 +1,7 @@
 import { log } from '@/common/LoggingFacade';
 import { DataTypeEnum } from '../enum/DataTypeEnum';
 import { ComparisonTypeEnum } from '../enum/ComparisonTypeEnum';
-import QueryElement from './QueryElement';
+import QueryElementModel from './QueryElementModel';
 
 let constraintId = 10000;
 
@@ -18,7 +18,7 @@ export function resetConstraintIdGenerator () {
 /**
  *  A Constraint models a single condition used in filtering data.
  */
-export default class ConstraintModel extends QueryElement {
+export default class ConstraintModel extends QueryElementModel {
 
   constructor () {
     super(constraintIdGenerator());

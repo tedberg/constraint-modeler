@@ -1,6 +1,6 @@
 import { log } from '@/common/LoggingFacade';
 import { JunctionEnum } from '../enum/JunctionEnum';
-import QueryElementGroup, { serializeObjectToQueryStringParameters } from './QueryElementGroup';
+import QueryElementGroupModel, { serializeObjectToQueryStringParameters } from './QueryElementGroupModel';
 import ConstraintModel from './ConstraintModel';
 
 export const ROOT_CONSTRAINT_GROUP_ID = 1000000;
@@ -20,7 +20,7 @@ export function resetConstraintGroupIdGenerator () {
 /**
  *  A ConstraintGroup models a group of Constraints that are used collectively to filter data.
  */
-export default class ConstraintGroupModel extends QueryElementGroup {
+export default class ConstraintGroupModel extends QueryElementGroupModel {
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 
   constructor (constraintGroupId) {

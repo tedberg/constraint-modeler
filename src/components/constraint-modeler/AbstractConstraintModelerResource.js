@@ -5,10 +5,6 @@ import ApiResource from '../../common/ApiResource';
  */
 export default class AbstractConstraintModelerResource extends ApiResource {
 
-  constructor () {
-    super();
-  }
-
   loadValueList (serverDataType) {
     throw new Error('Must not call abstract method directly.');
   }

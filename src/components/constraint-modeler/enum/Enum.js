@@ -33,9 +33,11 @@ export var Enum = function () {
   this.getTypeFromAlias = alias => {
     let prop;
     for (prop in self) {
-      let item = self[prop];
-      if (typeof item !== 'function' && item.alias === alias) {
-        return item;
+      if (self.hasOwnProperty(prop)) {
+        let item = self[prop];
+        if (typeof item !== 'function' && item.alias === alias) {
+          return item;
+        }
       }
     }
     console.error('Invalid alias passed.  Alias = ', alias);

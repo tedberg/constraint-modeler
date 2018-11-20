@@ -14,7 +14,7 @@
     <!-- Must close the nav bar-->
 
     <!-- This is a list of many new nav bars -->
-    <projection-component v-for="(projection, index) in projectionList"
+    <projection v-for="(projection, index) in projectionList"
                           :key="projection.getObjectId()"
                           :projection-model="projection"
                           :template-prefix="templatePrefix"
@@ -26,14 +26,14 @@
 </template>
 
 <script>
-  import QueryElementGroupComponent from '../shared/QueryElementGroupComponent';
-  import ProjectionComponent from './ProjectionComponent';
+  import QueryElementGroup from '../shared/QueryElementGroup.vue';
+  import Projection from './Projection.vue';
   import ProjectionGroupModel from '../../model/ProjectionGroupModel';
 
   export default {
-    components: { ProjectionComponent },
-    extends: QueryElementGroupComponent,
-    name: 'ProjectionGroupComponent',
+    components: { Projection },
+    extends: QueryElementGroup,
+    name: 'ProjectionGroup',
     props: {
       templatePrefix: {
         type: String,

@@ -16,7 +16,7 @@ export function serializeObjectToQueryStringParameters (obj, prefix) {
 /**
  *  A QueryElementGroup models a container for a group of elements to be used in a Query.
  */
-export default class QueryElementGroup {
+export default class QueryElementGroupModel {
 
   constructor (objectId) {
     this.objectId = objectId;

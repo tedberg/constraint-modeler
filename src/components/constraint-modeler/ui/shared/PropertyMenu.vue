@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import PropertyMenuPartial from './PropertyMenuPartial';
+  import PropertyMenuPartial from './PropertyMenuPartial.vue';
   import Property from '../../Property';
 
   export default {
@@ -45,7 +45,7 @@
     computed: {
       propertyDisplay () {
         return this.property ? this.property.displayName : 'Chosen Value';
-      },
+      }
     },
     methods: {
       setProperty (property) {

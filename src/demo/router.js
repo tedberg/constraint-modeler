@@ -3,7 +3,7 @@ import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Simple from './views/Simple.vue';
 import Debug from './views/Debug.vue';
-import Projection from './views/Projection.vue';
+import WithProjection from './views/WithProjection.vue';
 import Persistent from './views/Persistent.vue';
 import Everything from './views/Everything.vue';
 import NotFound from './views/NotFound.vue';
@@ -34,7 +34,7 @@ const router = new Router({
     {
       path: '/projection',
       name: 'projection',
-      component: Projection,
+      component: WithProjection,
       meta: { title: 'Projection' }
     },
     {

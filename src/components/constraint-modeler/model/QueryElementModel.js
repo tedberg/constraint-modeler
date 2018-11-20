@@ -6,7 +6,7 @@ import { GeneralEnum } from '../enum/Enum';
 /**
  *  A QueryElement models an element to be used in a Query.  It may be a projection, constraint, etc.
  */
-export default class QueryElement {
+export default class QueryElementModel {
 
   constructor (objectId) {
     this.objectId = objectId;

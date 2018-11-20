@@ -2,10 +2,6 @@ import AbstractConstraintModelerResource from './AbstractConstraintModelerResour
 
 export default class ConstraintModelerResource extends AbstractConstraintModelerResource {
 
-  constructor () {
-    super();
-  }
-
   // Used by ValueInput.vue
   /**
    * Loads a list of values, each having an identifyingValue and displayValue attribute.

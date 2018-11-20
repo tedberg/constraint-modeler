@@ -36,9 +36,11 @@ export var DataTypeEnum = (function () {
     this.getTypeFromAlias = function (alias) {
       let prop;
       for (prop in self) {
-        let item = self[prop];
-        if (typeof item !== 'function' && item.alias === alias) {
-          return item;
+        if (self.hasOwnProperty(prop)) {
+          let item = self[prop];
+          if (typeof item !== 'function' && item.alias === alias) {
+            return item;
+          }
         }
       }
 

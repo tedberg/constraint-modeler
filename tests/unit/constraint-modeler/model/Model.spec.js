@@ -27,7 +27,6 @@ const FULL_JSON_OBJECT =
     }
   };
 
-
 let personModel;
 
 beforeEach(() => {
@@ -151,7 +150,6 @@ describe('Model simple tests', () => {
     });
   });
 
-
   it('builds Model From Full Json correctly', () => {
     expect.assertions(7);
 
@@ -175,7 +173,6 @@ describe('Model simple tests', () => {
     });
   });
 });
-
 
 describe('Model simple tests', () => {
   beforeEach(() => {
@@ -233,6 +230,5 @@ describe('Model simple tests', () => {
 
     expect(personModel.renderSimpleJSON()).toMatch(JSON.stringify(simpleJsonObject));
   });
-
 
 });

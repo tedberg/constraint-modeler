@@ -1,4 +1,4 @@
-import QueryElement from '@/components/constraint-modeler/model/QueryElement';
+import QueryElementModel from '@/components/constraint-modeler/model/QueryElementModel';
 import Property from '@/components/constraint-modeler/Property';
 import { DataTypeEnum } from '@/components/constraint-modeler/enum/DataTypeEnum';
 import { QueryFunctionEnum } from '@/components/constraint-modeler/enum/QueryFunctionEnum';
@@ -48,12 +48,12 @@ const PROPERTIES_LIST = {
 
 describe('QueryElement.js', () => {
   it('constructs correctly', () => {
-    const queryElement = new QueryElement(123);
+    const queryElement = new QueryElementModel(123);
     expect(queryElement.getObjectId()).toEqual(123);
   });
 
   it('sets property correctly', () => {
-    let queryElement = new QueryElement(123);
+    let queryElement = new QueryElementModel(123);
     const property = new Property(PROPERTIES_LIST.propertyList[1]);
     queryElement.setProperty(property);
 
@@ -64,7 +64,7 @@ describe('QueryElement.js', () => {
   });
 
   it('splits function from key for a simple key correctly', () => {
-    let queryElement = new QueryElement(123);
+    let queryElement = new QueryElementModel(123);
     queryElement.splitFunctionFromKey('contact.lastname');
 
     expect(queryElement.key).toMatch('contact.lastname');
@@ -72,7 +72,7 @@ describe('QueryElement.js', () => {
   });
 
   it('splits function from key for a function key correctly', () => {
-    let queryElement = new QueryElement(123);
+    let queryElement = new QueryElementModel(123);
     queryElement.splitFunctionFromKey('lower(contact.lastname)');
 
     expect(queryElement.key).toMatch('contact.lastname');

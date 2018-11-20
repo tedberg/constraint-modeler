@@ -1,4 +1,4 @@
-import ConstraintModelerComponent from '@/components/constraint-modeler/ui/ConstraintModelerComponent';
+import ConstraintModeler from '@/components/constraint-modeler/ui/ConstraintModeler';
 
 beforeEach(() => {
 
@@ -11,7 +11,7 @@ afterEach(() => {
 describe('Model simple tests', () => {
 
   it('exports a valid component', () => {
-    expect(ConstraintModelerComponent).toBeAComponent();
+    expect(ConstraintModeler).toBeAComponent();
   });
 //
 // test('renders the text "HelloA"', () => {

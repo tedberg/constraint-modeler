@@ -8,7 +8,9 @@ module.exports = {
     sourceMap: true
   },
 
-  baseUrl: '/',
+  baseUrl: process.env.NODE_ENV === 'production'
+    ? '/constraint-modeler/'
+    : '/',
   outputDir: 'dist',
   assetsDir: 'assets',
   runtimeCompiler: undefined,

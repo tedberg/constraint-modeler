@@ -6,7 +6,6 @@ import Debug from './views/Debug.vue';
 import WithProjection from './views/WithProjection.vue';
 import Persistent from './views/Persistent.vue';
 import Everything from './views/Everything.vue';
-import NotFound from './views/NotFound.vue';
 
 Vue.use(Router);
 
@@ -51,7 +50,8 @@ const router = new Router({
     },
     {
       path: '*',
-      component: NotFound
+      component: Home,
+      meta: { title: 'Home' }
     }
   ]
 });

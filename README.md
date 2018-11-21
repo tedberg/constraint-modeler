@@ -3,6 +3,10 @@
 > A visual component used for building constraints and/or projections, to be used
 with a database.  Implemented with Vue and modern Javascript.
 
+## Demo
+
+[View Demo](https://tedberg.github.io/constraint-modeler/index.html)
+
 ## Usage
 
 ### Directly in the browser

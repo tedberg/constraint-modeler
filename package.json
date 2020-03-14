@@ -2,85 +2,93 @@
   "name": "@tedberg/constraint-modeler",
   "version": "0.0.3",
   "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/tedberg/constraint-modeler#readme",
   "author": {
     "name": "Ted Bergeron"
   },
-  "license": "Apache-2.0",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "cross-env VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
+    "lint": "vue-cli-service lint",
+    "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
+    "build-and-publish": "npm run build:lib && npm publish --access public",
+    "build:es": "rollup --config rollup.config.js --format es --file dist/constraint-modeler.esm.js",
+    "build:lib": "vue-cli-service build --target lib --name constraint-modeler --dest dist/ src/components/entry.js",
+    "build:umd": "rollup --config rollup.config.js --format umd --file dist/constraint-modeler.umd.js",
+    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/constraint-modeler.min.js",
+    "build:wc": "vue-cli-service build --target wc --name constraint-modeler 'src/components/*.vue'",
+    "build:wc-async": "vue-cli-service build --target wc-async --name constraint-modeler 'src/components/*.vue'",
+    "cypress": "vue-cli-service test:e2e --mode e2e",
+    "test": "npm run test:unit && npm run test:e2e"
+  },
+  "main": "dist/constraint-modeler.umd.js",
+  "module": "dist/constraint-modeler.common.js",
+  "unpkg": "dist/constraint-modeler.umd.min.js",
   "files": [
     "dist",
     "LICENSE",
     "README.md"
   ],
-  "main": "dist/constraint-modeler.umd.js",
-  "module": "dist/constraint-modeler.common.js",
-  "unpkg": "dist/constraint-modeler.umd.min.js",
-  "engines": {
-    "node": ">=8.11.0",
-    "npm": ">=5.6.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tedberg/constraint-modeler.git"
-  },
-  "bugs": {
-    "url": "https://github.com/tedberg/constraint-modeler/issues"
-  },
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:lib": "vue-cli-service build --target lib --name constraint-modeler --dest dist/ src/components/entry.js",
-    "build:wc": "vue-cli-service build --target wc --name constraint-modeler 'src/components/*.vue'",
-    "build:wc-async": "vue-cli-service build --target wc-async --name constraint-modeler 'src/components/*.vue'",
-    "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "cross-env VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
-    "test": "npm run test:unit && npm run test:e2e",
-    "cypress": "vue-cli-service test:e2e --mode e2e",
-    "build-and-publish": "npm run build:lib && npm publish --access public",
-    "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/constraint-modeler.umd.js",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/constraint-modeler.esm.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/constraint-modeler.min.js"
-  },
-  "gitHooksX": {
-    "pre-commit": "foo"
-  },
-  "peerDependencies": {
-    "axios": "^0.18.1",
-    "bootstrap-vue": "^2.0.0-rc.11",
-    "vue": "2.5.17",
-    "vue-router": "3.0.1"
-  },
   "dependencies": {
-    "axios": "^0.18.1",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "axios": "^0.19.2",
+    "bootstrap-vue": "^2.7.0",
+    "core-js": "^3.6.4",
     "vue": "2.5.17",
     "vue-router": "3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "3.1.1",
-    "@vue/cli-plugin-e2e-cypress": "3.1.0",
-    "@vue/cli-plugin-eslint": "3.1.5",
-    "@vue/cli-plugin-unit-jest": "3.1.1",
-    "@vue/cli-service": "3.1.4",
-    "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/cli-plugin-babel": "~4.2.3",
+    "@vue/cli-plugin-e2e-cypress": "~4.2.3",
+    "@vue/cli-plugin-eslint": "~4.2.3",
+    "@vue/cli-plugin-unit-jest": "~4.2.3",
+    "@vue/cli-service": "~4.2.3",
+    "@vue/eslint-config-standard": "^5.1.0",
     "@vue/test-utils": "1.0.0-beta.30",
     "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.3",
     "babel-jest": "^23.6.0",
     "babel-plugin-jsx-v-model": "^2.0.3",
     "cross-env": "^5.2.1",
     "cypress": "^4.1.0",
+    "eslint": "^6.7.2",
     "eslint-plugin-cypress": "^2.10.3",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-vue": "^6.1.2",
     "minimist": "^1.2.5",
     "node-sass": "^4.13.1",
     "rollup": "^0.67.4",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-uglify-es": "0.0.1",
     "rollup-plugin-vue": "^4.7.2",
-    "sass-loader": "^7.3.1",
+    "sass-loader": "^8.0.2",
     "vue-cli-plugin-test-attrs": "^0.1.4",
     "vue-template-compiler": "2.5.17"
+  },
+  "peerDependencies": {
+    "axios": "^0.19.2",
+    "bootstrap-vue": "^2.7.0",
+    "vue": "2.5.17",
+    "vue-router": "3.0.1"
+  },
+  "bugs": {
+    "url": "https://github.com/tedberg/constraint-modeler/issues"
+  },
+  "engines": {
+    "node": ">=8.11.0",
+    "npm": ">=5.6.0"
+  },
+  "gitHooksX": {
+    "pre-commit": "foo"
+  },
+  "homepage": "https://github.com/tedberg/constraint-modeler#readme",
+  "keywords": [],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tedberg/constraint-modeler.git"
   }
 }

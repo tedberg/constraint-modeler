@@ -16,7 +16,7 @@ module.exports = {
   setupFiles: [
     "<rootDir>/tests/unit/setup"
   ],
-  setupTestFrameworkScriptFile: "<rootDir>/tests/unit/matchers",
+  setupFilesAfterEnv: ["<rootDir>/tests/unit/matchers"],
   snapshotSerializers: [
     'jest-serializer-vue'
   ],

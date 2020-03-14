@@ -13,10 +13,10 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
-  "setupFiles": [
+  setupFiles: [
     "<rootDir>/tests/unit/setup"
   ],
-  "setupTestFrameworkScriptFile": "<rootDir>/tests/unit/matchers",
+  setupTestFrameworkScriptFile: "<rootDir>/tests/unit/matchers",
   snapshotSerializers: [
     'jest-serializer-vue'
   ],

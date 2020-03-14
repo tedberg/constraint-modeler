@@ -21,12 +21,12 @@ global.mount = vueTestUtils.mount;
 global.shallowMount = vueTestUtils.shallowMount;
 
 // A helper for creating Vue component mocks
-global.createComponentMocks = ({mocks, stubs}) => {
+global.createComponentMocks = ({ mocks, stubs }) => {
   // Use a local version of Vue, to avoid polluting the global
   // Vue and thereby affecting other tests.
   // https://vue-test-utils.vuejs.org/api/#createlocalvue
   const localVue = vueTestUtils.createLocalVue();
-  const returnOptions = {localVue};
+  const returnOptions = { localVue };
 
   // https://vue-test-utils.vuejs.org/api/options.html#stubs
   returnOptions.stubs = stubs || {};

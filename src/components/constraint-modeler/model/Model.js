@@ -35,7 +35,7 @@ export default class Model {
       throw new Error('Model must be instantiated with a valid objectName.');
     }
 
-    if (!(constraintModelerResource instanceof AbstractConstraintModelerResource)) {
+    if (!(AbstractConstraintModelerResource.isValidImplementation(constraintModelerResource))) {
       throw new Error('Model must be instantiated with a valid ConstraintModelerResource.');
     }
 

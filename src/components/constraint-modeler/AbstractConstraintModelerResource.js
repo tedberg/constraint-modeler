@@ -21,4 +21,23 @@ export default class AbstractConstraintModelerResource extends ApiResource {
     throw new Error('Must not call abstract method directly.');
   }
 
+  static implementsRequiredMethods (obj) {
+    if (!obj) {
+      return false;
+    }
+
+    return (
+      typeof obj.loadValueList === 'function' &&
+      typeof obj.loadProperties === 'function' &&
+      typeof obj.validateConstraintModeler === 'function' &&
+      typeof obj.loadResultWithConstraints === 'function'
+    );
+
+  }
+
+  static isValidImplementation(obj) {
+    return (obj instanceof AbstractConstraintModelerResource ||
+      AbstractConstraintModelerResource.implementsRequiredMethods(obj));
+  }
+
 }

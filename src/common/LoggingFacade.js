@@ -69,7 +69,7 @@ const instance = new LoggingFacade();
 
 // instance.setLogLevel('WARN');
 
-instance.setLogLevel('DEBUG');
+instance.setLogLevel('INFO');
 
 export {
   instance as log

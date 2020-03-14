@@ -8,19 +8,19 @@
     <div v-if="componentReady">  <!-- else loading animation? -->
 
       <constraint-group :constraint-group-model="rootConstraintGroup"
-                                  :templatePrefix="templatePrefix"
-                                  :propertyList="propertyList"
-                                  :multiPropertyList="multiPropertyList"
-                                  :pathToPropertyMap="pathToPropertyMap"/>
+                        :templatePrefix="templatePrefix"
+                        :propertyList="propertyList"
+                        :multiPropertyList="multiPropertyList"
+                        :pathToPropertyMap="pathToPropertyMap"/>
 
       <projection-group v-if="exposeProjectionModeler"
-                                  :projection-group-model="model.getProjectionGroup()"
-                                  :templatePrefix="templatePrefix"
-                                  :propertyList="propertyList"
-                                  :multiPropertyList="multiPropertyList"
-                                  :pathToPropertyMap="pathToPropertyMap"
-                                  v-on:addProjection="addProjection"
-                                  v-on:removeProjection="removeProjection"/>
+                        :projection-group-model="model.getProjectionGroup()"
+                        :templatePrefix="templatePrefix"
+                        :propertyList="propertyList"
+                        :multiPropertyList="multiPropertyList"
+                        :pathToPropertyMap="pathToPropertyMap"
+                        v-on:addProjection="addProjection"
+                        v-on:removeProjection="removeProjection"/>
 
       <div v-if="showDebug" style="width: 250px;" class="debug-panel">
         <div class="header" id="toggle-constraintModelerDebug">Debug Options</div>
@@ -102,7 +102,7 @@
           return new ConstraintModelerResource();
         },
         validator: model => {
-          return model instanceof AbstractConstraintModelerResource;
+          return AbstractConstraintModelerResource.isValidImplementation(model);
         }
       },
       saveFunction: {

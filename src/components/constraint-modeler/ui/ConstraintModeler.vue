@@ -298,31 +298,31 @@
 
 <style scoped lang="scss">
 
-  /deep/ div.nest {
+  ::v-deep div.nest {
     margin-left: 25px;
   }
 
   div.constraint-modeler {
 
-    /deep/ .navbar .btn,
-    /deep/ .navbar .btn-group .btn {
+    ::v-deep .navbar .btn,
+    ::v-deep .navbar .btn-group .btn {
       padding: 1px 4px;
     }
 
-    /deep/ .nav-link {
+    ::v-deep .nav-link {
       padding-top: 0;
       padding-bottom: 0;
     }
 
-    /deep/ div.navbar {
+    ::v-deep div.navbar {
       border-radius: 7px;
     }
 
-    /deep/ input[type='text'] {
+    ::v-deep input[type='text'] {
       width: 100px;
     }
 
-    /deep/ .buttons {
+    ::v-deep .buttons {
       text-align: center;
     }
 

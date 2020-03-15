@@ -7,7 +7,7 @@
 
         <b-collapse is-nav id="nav_collapse">
 
-          <b-navbar-nav class="nav nav-pills">
+          <b-navbar-nav pills class="nav nav-pills">
             <b-nav-item to="/" exact>Home</b-nav-item>
             <b-nav-item to="/simple">Simple</b-nav-item>
             <b-nav-item to="/debug">Debug</b-nav-item>
@@ -21,7 +21,7 @@
 
             <b-nav-item-dropdown right>
               <!-- Using button-content slot -->
-              <template slot="button-content">
+              <template v-slot:button-content>
                 <em>User</em>
               </template>
               <b-dropdown-item href="#">Profile</b-dropdown-item>

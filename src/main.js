@@ -1,18 +1,19 @@
 import Vue from 'vue';
 import App from './demo/App.vue';
 import router from './demo/router';
-import { Alert, Button, Dropdown, Navbar, Table, Tooltip } from 'bootstrap-vue/es/components';
+
+import { AlertPlugin, ButtonPlugin, DropdownPlugin, NavbarPlugin, TablePlugin, TooltipPlugin } from 'bootstrap-vue';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 // import '@/assets/css/style.scss';
 
-Vue.use(Alert);
-Vue.use(Button);
-Vue.use(Dropdown);
-Vue.use(Navbar);
-Vue.use(Table);
-Vue.use(Tooltip);
+Vue.use(AlertPlugin);
+Vue.use(ButtonPlugin);
+Vue.use(DropdownPlugin);
+Vue.use(NavbarPlugin);
+Vue.use(TablePlugin);
+Vue.use(TooltipPlugin);
 
 Vue.config.productionTip = false;
 

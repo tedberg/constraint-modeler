@@ -14,8 +14,8 @@ export default class ApiResource {
       apiUrl = API_PREFIX + url;
     }
 
-    let config = {
-      headers: { 'Accept': 'application/json' },
+    const config = {
+      headers: { Accept: 'application/json' },
       paramsSerializer: function (params) {
         console.log('paramsSerializer params', params);
         //return Qs.stringify(params, {arrayFormat: 'brackets'})

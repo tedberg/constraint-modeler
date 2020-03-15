@@ -87,8 +87,8 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    * }
    */
   validateConstraintModeler (className, constraintList) {
-    let url = `/objects/${className}/constraintModeler/validate`;
-    let queryString = 'constraintList=' + encodeURIComponent(constraintList);
+    const url = `/objects/${className}/constraintModeler/validate`;
+    const queryString = 'constraintList=' + encodeURIComponent(constraintList);
     return this.getJson(`${url}?${queryString}`);
   }
 
@@ -110,7 +110,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    * }
    */
   loadResultWithConstraints (className, urlEncodedConstraintQueryString) {
-    let url = `/objects/${className}`;
+    const url = `/objects/${className}`;
     return this.getJson(`${url}?${urlEncodedConstraintQueryString}`);
   }
 

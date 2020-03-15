@@ -31,13 +31,13 @@ export var DataTypeEnum = (function () {
     this.LOB = new DataType('LOB', 'Lob', 'lob');
     this.COLLECTION = new DataType('COLLECTION', 'Collection', 'collection');
 
-    let self = this;
+    const self = this;
 
     this.getTypeFromAlias = function (alias) {
       let prop;
       for (prop in self) {
         if (self.hasOwnProperty(prop)) {
-          let item = self[prop];
+          const item = self[prop];
           if (typeof item !== 'function' && item.alias === alias) {
             return item;
           }

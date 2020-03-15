@@ -61,7 +61,7 @@ describe('ConstraintGroupModel simple tests', () => {
   });
 
   it('finds simple constraint correctly', () => {
-    let constraint12000 = rootConstraintGroup.findConstraintById(12000);
+    const constraint12000 = rootConstraintGroup.findConstraintById(12000);
     expect(constraint12000).not.toBeUndefined();
     expect(constraint12000).not.toBeNull();
 
@@ -86,17 +86,17 @@ describe('ConstraintGroupModel simple tests', () => {
   });
 
   it('renders simple queryString correctly', () => {
-    let expectedSyntax = 'constraint[value]=c1:eq:val1;c2:eq:val2;c3:eq:val3';
+    const expectedSyntax = 'constraint[value]=c1:eq:val1;c2:eq:val2;c3:eq:val3';
     expect(rootConstraintGroup.renderQueryStringDecoded(false)).toMatch(expectedSyntax);
   });
 
   it('builds constraint list from simple string token correctly', () => {
-    let token = 'c1:eq:val1;c2:eq:val2;c3:eq:val3';
-    let constraintGroup = new ConstraintGroupModel();
+    const token = 'c1:eq:val1;c2:eq:val2;c3:eq:val3';
+    const constraintGroup = new ConstraintGroupModel();
 
     constraintGroup.setConstraintList(ConstraintGroupModel.buildConstraintList(constraintGroup, token, pathToPropertyMap));
 
-    let expectedSyntax = '(c1 Equal \'val1\' And c2 Equal \'val2\' And c3 Equal \'val3\')';
+    const expectedSyntax = '(c1 Equal \'val1\' And c2 Equal \'val2\' And c3 Equal \'val3\')';
     expect(constraintGroup.renderSyntax()).toMatch(expectedSyntax);
   });
 
@@ -243,7 +243,7 @@ describe('ConstraintGroup with subgroups', () => {
     // expect(subCg1).not.toBeNull();
     // expect(subCg1.getConstraintCount()).toEqual(2);
 
-    let constraint12 = rootConstraintGroup.findConstraintById(17000);
+    const constraint12 = rootConstraintGroup.findConstraintById(17000);
     expect(constraint12).not.toBeUndefined();
     expect(constraint12).not.toBeNull();
     expect(constraint12.renderSyntax()).toMatch('c22 Equal \'val22\'');
@@ -270,7 +270,7 @@ describe('ConstraintGroup with subgroups', () => {
     subConstraintGroup2.removeConstraint(17000);
     expect(rootConstraintGroup.getTotalConstraintCount()).toEqual(8);
 
-    let deletedConstraint = rootConstraintGroup.findConstraintById(17000);
+    const deletedConstraint = rootConstraintGroup.findConstraintById(17000);
     expect(deletedConstraint).toBeUndefined();
 
     // expect(subCg1).not.toBeUndefined();
@@ -278,7 +278,7 @@ describe('ConstraintGroup with subgroups', () => {
     // expect(subCg1.getConstraintCount()).toEqual(1);
 
     subCg1 = rootConstraintGroup.removeConstraintGroup(SUB_CG1_ID);
-    let deletedConstraintGroup = rootConstraintGroup.findConstraintGroupById(SUB_CG1_ID);
+    const deletedConstraintGroup = rootConstraintGroup.findConstraintGroupById(SUB_CG1_ID);
     expect(deletedConstraintGroup).toBeUndefined();
 
     expect(rootConstraintGroup.getTotalConstraintCount()).toEqual(5);

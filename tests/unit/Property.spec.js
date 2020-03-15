@@ -3,42 +3,42 @@ import Property from '@/components/constraint-modeler/Property';
 import { DataTypeEnum } from '../../src/components/constraint-modeler/enum/DataTypeEnum';
 
 const PROPERTIES_LIST = {
-  'propertyList': [
+  propertyList: [
     {
-      'path': 'name',
-      'displayName': 'Name',
-      'simpleDataType': 'string',
-      'dataType': 'java.lang.String'
+      path: 'name',
+      displayName: 'Name',
+      simpleDataType: 'string',
+      dataType: 'java.lang.String'
     },
     {
-      'path': 'age',
-      'displayName': 'Age',
-      'simpleDataType': 'number',
-      'dataType': 'java.lang.Integer'
+      path: 'age',
+      displayName: 'Age',
+      simpleDataType: 'number',
+      dataType: 'java.lang.Integer'
     },
     {
-      'path': 'status',
-      'displayName': 'Status',
-      'simpleDataType': 'enum',
-      'dataType': 'com.xyz.model.Status'
+      path: 'status',
+      displayName: 'Status',
+      simpleDataType: 'enum',
+      dataType: 'com.xyz.model.Status'
     }
   ],
-  'multiPropertyList': [
+  multiPropertyList: [
     {
-      'path': 'alert',
-      'displayName': 'alert',
-      'simpleDataType': 'object',
-      'dataType': 'com.xyz.Alert',
-      'expectedDataMagnitude': 10000,
-      'keyDisplayPropertyPath': null,
-      'relationship': true,
-      'multiProperty': true,
-      'nestedPropertyList': [
+      path: 'alert',
+      displayName: 'alert',
+      simpleDataType: 'object',
+      dataType: 'com.xyz.Alert',
+      expectedDataMagnitude: 10000,
+      keyDisplayPropertyPath: null,
+      relationship: true,
+      multiProperty: true,
+      nestedPropertyList: [
         {
-          'path': 'alert.message',
-          'displayName': 'Message',
-          'simpleDataType': 'string',
-          'dataType': 'java.lang.String'
+          path: 'alert.message',
+          displayName: 'Message',
+          simpleDataType: 'string',
+          dataType: 'java.lang.String'
         }
       ]
     }

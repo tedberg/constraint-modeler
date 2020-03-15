@@ -12,7 +12,7 @@ const config = {
     name: 'ConstraintModeler',
     exports: 'named'
   },
-  external: [ 'axios', 'vue', 'bootstrap-vue' ],
+  external: ['axios', 'vue', 'bootstrap-vue'],
   plugins: [
     vue({
       css: true, // Dynamically inject css as a <style> tag

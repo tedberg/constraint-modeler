@@ -14,9 +14,9 @@ module.exports = {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
   setupFiles: [
-    "<rootDir>/tests/unit/setup"
+    '<rootDir>/tests/unit/setup'
   ],
-  setupFilesAfterEnv: ["<rootDir>/tests/unit/matchers"],
+  setupFilesAfterEnv: ['<rootDir>/tests/unit/matchers'],
   snapshotSerializers: [
     'jest-serializer-vue'
   ],
@@ -27,8 +27,8 @@ module.exports = {
 
   collectCoverage: true,
   collectCoverageFrom: [
-    "src/**/*.{js,jsx,vue}",
-    "!tests/**"
+    'src/**/*.{js,jsx,vue}',
+    '!tests/**'
   ],
   coverageDirectory: '<rootDir>/target'
 };

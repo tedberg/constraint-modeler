@@ -68,11 +68,11 @@ export var QueryFunctionEnum = (function (DataTypeEnum) {
     this.SIZE = new QueryFunction('SIZE', 'Size', 'size', false, DataTypeEnum.COLLECTION, DataTypeEnum.NUMBER); // size(collection) -- returns an integer (0 if empty)
 
     this.getAggregateFunctionValueList = function () {
-      let self = this;
-      let valueArray = [];
-      let keys = Object.keys(self);
+      const self = this;
+      const valueArray = [];
+      const keys = Object.keys(self);
       keys.map(function (key) {
-        let item = self[key];
+        const item = self[key];
         if (typeof item !== 'function' && item.isAggregate()) {
           valueArray.push(item);
         }
@@ -82,12 +82,12 @@ export var QueryFunctionEnum = (function (DataTypeEnum) {
     };
 
     this.getAggregateFunctionValueListForInputType = function (inputDataType) {
-      let self = this;
-      let valueArray = [];
+      const self = this;
+      const valueArray = [];
       if (inputDataType) {
-        let keys = Object.keys(self);
+        const keys = Object.keys(self);
         keys.map(function (key) {
-          let item = self[key];
+          const item = self[key];
           if (item === QueryFunctionEnum.COUNT) {
             if (inputDataType !== DataTypeEnum.OBJECT && inputDataType !== DataTypeEnum.LOB && inputDataType !== DataTypeEnum.COLLECTION) {
               valueArray.push(item);
@@ -104,11 +104,11 @@ export var QueryFunctionEnum = (function (DataTypeEnum) {
     };
 
     this.getQueryFunctionValueList = function () {
-      let self = this;
-      let valueArray = [];
-      let keys = Object.keys(self);
+      const self = this;
+      const valueArray = [];
+      const keys = Object.keys(self);
       keys.map(function (key) {
-        let item = self[key];
+        const item = self[key];
         if (typeof item !== 'function' && !item.isAggregate()) {
           valueArray.push(item);
         }
@@ -118,12 +118,12 @@ export var QueryFunctionEnum = (function (DataTypeEnum) {
     };
 
     this.getQueryFunctionValueListForInputType = function (inputDataType) {
-      let self = this;
-      let valueArray = [];
+      const self = this;
+      const valueArray = [];
       if (inputDataType) {
-        let keys = Object.keys(self);
+        const keys = Object.keys(self);
         keys.map(function (key) {
-          let item = self[key];
+          const item = self[key];
           if (typeof item !== 'function' && !item.isAggregate() && item.getInputDataType() === inputDataType) {
             valueArray.push(item);
           }

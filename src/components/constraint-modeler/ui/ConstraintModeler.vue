@@ -249,11 +249,11 @@
         });
       },
       addProjection () {
-        let projectionGroup = this.model.getProjectionGroup();
+        const projectionGroup = this.model.getProjectionGroup();
         projectionGroup.addProjection();
       },
       removeProjection (projection, index) {
-        let projectionGroup = this.model.getProjectionGroup();
+        const projectionGroup = this.model.getProjectionGroup();
         projectionGroup.removeProjection(projection.getObjectId());
       },
       save () {

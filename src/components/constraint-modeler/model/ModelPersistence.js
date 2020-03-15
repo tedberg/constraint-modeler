@@ -54,10 +54,10 @@ export default class ModelPersistence {
     //let applySpecialHandlerConversions = false; // Don't save with server conversions
 
     // Convert to 2.8 format
-    let modelerObject = ModelPersistence.convertToModelerObject(model);
-    let constraintSyntax = model.rootConstraintGroup.renderSyntax();
+    const modelerObject = ModelPersistence.convertToModelerObject(model);
+    const constraintSyntax = model.rootConstraintGroup.renderSyntax();
 
-    let filterObject = {
+    const filterObject = {
       rootObject: model.objectName,
       constraintValue: JSON.stringify(ModelPersistence.extractConstraintFromModelerObject(modelerObject)),
       logicalSyntax: constraintSyntax,
@@ -68,7 +68,7 @@ export default class ModelPersistence {
       filterObject.projectionValue = JSON.stringify(ModelPersistence.extractProjectionFromModelerObject(modelerObject));
     }
 
-    let formData = {
+    const formData = {
       id: persistentId
     };
 
@@ -86,7 +86,7 @@ export default class ModelPersistence {
    * @return {object}
    */
   static convertToModelerObjectFromSimpleObjects (constraintGroupSimpleObject, projectionGroupSimpleObject) {
-    let modelerObject = {};
+    const modelerObject = {};
 
     if (constraintGroupSimpleObject && constraintGroupSimpleObject.constraintGroup) {
       // Already in new format, prevent double wrapping.
@@ -116,8 +116,8 @@ export default class ModelPersistence {
    * @return {object}
    */
   static convertToModelerObjectFromJSON (constraintJSON, projectionJSON) {
-    let constraintObject = parseJSON(constraintJSON);
-    let projectionObject = parseJSON(projectionJSON);
+    const constraintObject = parseJSON(constraintJSON);
+    const projectionObject = parseJSON(projectionJSON);
     return ModelPersistence.convertToModelerObjectFromSimpleObjects(constraintObject, projectionObject);
   }
 
@@ -141,9 +141,9 @@ export default class ModelPersistence {
    * @returns {Object}
    */
   static convertToModelerObject ({ rootConstraintGroup, projectionGroup }) {
-    let applySpecialHandlerConversions = false; // For UI not server
+    const applySpecialHandlerConversions = false; // For UI not server
 
-    let constraintGroupSimpleObject = rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions);
+    const constraintGroupSimpleObject = rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions);
     let projectionGroupSimpleObject = null;
     if (projectionGroup) {
       projectionGroupSimpleObject = projectionGroup.renderSimpleObject(applySpecialHandlerConversions);

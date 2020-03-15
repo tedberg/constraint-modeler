@@ -4,16 +4,16 @@
 export var Enum = function () {
   'use strict';
 
-  let self = this;
+  const self = this;
 
   /**
    * Takes an Enum object and returns a value Array.
    */
   this.enumToValueList = () => {
-    let valueArray = [];
-    let keys = Object.keys(self);
+    const valueArray = [];
+    const keys = Object.keys(self);
     keys.map(key => {
-      let item = self[key];
+      const item = self[key];
       if (typeof item !== 'function') {
         valueArray.push(item);
       }
@@ -23,7 +23,7 @@ export var Enum = function () {
   };
 
   this.getType = key => {
-    let val = self[key] || null;
+    const val = self[key] || null;
     if (!val) {
       console.error('Invalid key passed.  Key = ', key);
     }
@@ -34,7 +34,7 @@ export var Enum = function () {
     let prop;
     for (prop in self) {
       if (self.hasOwnProperty(prop)) {
-        let item = self[prop];
+        const item = self[prop];
         if (typeof item !== 'function' && item.alias === alias) {
           return item;
         }
@@ -80,10 +80,10 @@ export var GeneralEnum = (function () {
      * @param obj the Enum object used to supply the values.
      */
     this.enumToValueList = obj => {
-      let valueArray = [];
-      let keys = Object.keys(obj);
+      const valueArray = [];
+      const keys = Object.keys(obj);
       keys.map(key => {
-        let item = obj[key];
+        const item = obj[key];
         if (typeof item !== 'function') {
           valueArray.push(item);
         }

@@ -24,7 +24,7 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
     }
   }
 
-  let dataTypeGroup = {  // TODO: Collection type was added, not covered here
+  const dataTypeGroup = {  // TODO: Collection type was added, not covered here
     ALL: [DataTypeEnum.STRING, DataTypeEnum.NUMBER, DataTypeEnum.BOOLEAN, DataTypeEnum.DATE, DataTypeEnum.ENUM, DataTypeEnum.URL, DataTypeEnum.OBJECT, DataTypeEnum.LOB],
     NON_BOOLEAN: [DataTypeEnum.STRING, DataTypeEnum.NUMBER, DataTypeEnum.DATE, DataTypeEnum.ENUM, DataTypeEnum.URL],
     NON_OBJECT: [DataTypeEnum.STRING, DataTypeEnum.NUMBER, DataTypeEnum.BOOLEAN, DataTypeEnum.DATE, DataTypeEnum.ENUM, DataTypeEnum.URL],
@@ -99,13 +99,13 @@ export var ComparisonTypeEnum = (function (DataTypeEnum, PropertyTypeEnum) {
     //this.NOT_MEMBER_OF = new ComparisonType('NOT_MEMBER_OF', 'Does not Contain', 'notmemberof', 1, dataTypeGroup.NON_OBJECT, PropertyTypeEnum.SINGLE);
     // TODO: MemberOf applies to single fields whose parent object is a multi property.
 
-    let self = this;
+    const self = this;
 
     this.getAllForDataType = function (dataType, propertyType) {
-      let valueArray = [];
+      const valueArray = [];
       for (const prop in self) {
         if (self.hasOwnProperty(prop)) {
-          let item = self[prop];
+          const item = self[prop];
           if (typeof item !== 'function' && isDataTypeInGroup(dataType, item.dataTypeGroup)) {
             if (propertyType) { // Caller wants to restrict to propertyType
               if (isPropertyTypeInGroup(propertyType, item.propertyType)) {

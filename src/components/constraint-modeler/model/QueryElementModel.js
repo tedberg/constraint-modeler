@@ -85,11 +85,11 @@ export default class QueryElementModel {
    */
   splitFunctionFromKey (theKey) {
     if (theKey !== null && theKey.indexOf('(') !== -1) { // Must be an aggregate or queryFunction
-      let functionKeyPair = theKey.split('('); // Split function and property
-      let functionAlias = functionKeyPair[0];
-      let fieldName = functionKeyPair[1];
+      const functionKeyPair = theKey.split('('); // Split function and property
+      const functionAlias = functionKeyPair[0];
+      const fieldName = functionKeyPair[1];
 
-      let queryFunction = QueryFunctionEnum.getTypeFromAlias(functionAlias);
+      const queryFunction = QueryFunctionEnum.getTypeFromAlias(functionAlias);
 
       log.log('splitFunctionFromKey queryFunction', functionAlias, queryFunction);
 

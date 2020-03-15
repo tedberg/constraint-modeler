@@ -34,7 +34,7 @@ export default class ProjectionModel extends QueryElementModel {
 
   // TODO: Need to review
   setValuesFromToken (token) {
-    let keyValuePair = token.split(':');  // [0] = contact.lastname
+    const keyValuePair = token.split(':');  // [0] = contact.lastname
 
     if (keyValuePair.length !== 1) {
       log.error('Invalid projection token passed.  Was = ', token);
@@ -64,7 +64,7 @@ export default class ProjectionModel extends QueryElementModel {
    */
   renderQueryString (applySpecialHandlerConversions) {
     let queryString;
-    let projectionName = this.key;
+    const projectionName = this.key;
 
     if (typeof this.queryFunction !== 'undefined' && this.queryFunction !== null) {
       queryString = `${this.queryFunction.alias}(${projectionName})`;

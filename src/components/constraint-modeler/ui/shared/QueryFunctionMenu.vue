@@ -56,7 +56,7 @@
           this.queryFunctionArray = QueryFunctionEnum.getQueryFunctionValueListForInputType(DataTypeEnum.COLLECTION);
           this.aggregateArray = [];
         } else {
-          let inputType = DataTypeEnum.getTypeFromAlias(this.property.simpleDataType);
+          const inputType = DataTypeEnum.getTypeFromAlias(this.property.simpleDataType);
           this.queryFunctionArray = QueryFunctionEnum.getQueryFunctionValueListForInputType(inputType);
           this.aggregateArray = QueryFunctionEnum.getAggregateFunctionValueListForInputType(inputType);
         }

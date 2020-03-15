@@ -25,7 +25,7 @@ describe('ProjectionGroupModel.js', () => {
       c32: new Property({ path: 'c32', displayName: 'c32', simpleDataType: 'string', dataType: 'java.lang.String' })
     };
 
-    let settings = { projectionAsMap: true };
+    const settings = { projectionAsMap: true };
     projectionGroup = new ProjectionGroupModel(settings);
 
     projection1 = projectionGroup.addProjection();
@@ -50,7 +50,7 @@ describe('ProjectionGroupModel.js', () => {
   });
 
   it('finds simple projection correctly', () => {
-    let projection1200 = projectionGroup.findProjectionById(1200);
+    const projection1200 = projectionGroup.findProjectionById(1200);
     expect(projection1200).not.toBeUndefined();
     expect(projection1200).not.toBeNull();
     expect(projection1200.getObjectId()).toEqual(1200);
@@ -72,22 +72,22 @@ describe('ProjectionGroupModel.js', () => {
   });
 
   it('renders simple queryString correctly', () => {
-    let expectedSyntax = 'property=c1;c2;c3&grouped=false&projectionAsMap=true';
+    const expectedSyntax = 'property=c1;c2;c3&grouped=false&projectionAsMap=true';
     expect(projectionGroup.renderQueryStringDecoded(false)).toMatch(expectedSyntax);
   });
 
   it('init from simple json correctly', () => {
-    let projectionGroupJsonObject = {
-      'property': 'c1;c2;c3',
-      'grouped': false,
-      'projectionAsMap': true
+    const projectionGroupJsonObject = {
+      property: 'c1;c2;c3',
+      grouped: false,
+      projectionAsMap: true
     };
 
-    let projectionGroup = new ProjectionGroupModel();
+    const projectionGroup = new ProjectionGroupModel();
 
     projectionGroup.buildModelFromJson(projectionGroupJsonObject, pathToPropertyMap);
 
-    let expectedSyntax = '(c1,c2,c3)';
+    const expectedSyntax = '(c1,c2,c3)';
     expect(projectionGroup.renderSyntax()).toMatch(expectedSyntax);
   });
 

@@ -88,10 +88,10 @@ export default class Model {
   }
 
   loadProperties () {
-    let successFunction = data => {
+    const successFunction = data => {
       if (data.propertyList) {
         data.propertyList.forEach(prop => {
-          let property = new Property(prop);
+          const property = new Property(prop);
           this.propertyList.push(property);
           this.recursivePropertyListScan(property);
         });
@@ -99,7 +99,7 @@ export default class Model {
 
       if (data.multiPropertyList) {
         data.multiPropertyList.forEach(prop => {
-          let property = new Property(prop);
+          const property = new Property(prop);
           this.multiPropertyList.push(property);
           this.recursivePropertyListScan(property);
         });
@@ -122,13 +122,13 @@ export default class Model {
     this.pathToPropertyMap[property.path] = property;
 
     if (!(typeof property.nestedPropertyList === 'undefined' || property.nestedPropertyList === null)) {
-      for (let prop of property.nestedPropertyList) {
+      for (const prop of property.nestedPropertyList) {
         this.recursivePropertyListScan(prop);
       }
     }
 
     if (!(typeof property.nestedMultiPropertyList === 'undefined' || property.nestedMultiPropertyList === null)) {
-      for (let prop of property.nestedMultiPropertyList) {
+      for (const prop of property.nestedMultiPropertyList) {
         this.recursivePropertyListScan(prop);
       }
     }
@@ -138,7 +138,7 @@ export default class Model {
     log.debug('buildModelFromJson, jsonObject = ', jsonObject);
 
     if (jsonObject) { // If null or undefined, model remains in vanilla state.
-      let pathToPropertyMap = this.pathToPropertyMap;
+      const pathToPropertyMap = this.pathToPropertyMap;
 
       let constraintSimpleObject;
 
@@ -162,7 +162,7 @@ export default class Model {
 
       if (constraintSimpleObject) {
         // Needed at Root level
-        let constraintObject = constraintSimpleObject.constraint;
+        const constraintObject = constraintSimpleObject.constraint;
 
         if (typeof constraintObject === 'object') {
           this.rootConstraintGroup = ConstraintGroupModel.buildModelFromJson(ROOT_CONSTRAINT_GROUP_ID, constraintObject, pathToPropertyMap);
@@ -243,7 +243,7 @@ export default class Model {
   }
 
   renderQueryString () {
-    let applySpecialHandlerConversions = false; // For UI not server
+    const applySpecialHandlerConversions = false; // For UI not server
     return this.buildQueryString(applySpecialHandlerConversions, false);
   }
 
@@ -270,9 +270,9 @@ export default class Model {
   }
 
   renderSimpleJSON () {
-    let applySpecialHandlerConversions = false; // For UI not server
+    const applySpecialHandlerConversions = false; // For UI not server
 
-    let modelerObject = {
+    const modelerObject = {
       constraintGroup: this.rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions)
     };
 
@@ -284,22 +284,22 @@ export default class Model {
   }
 
   renderFlattenedObjectList () {
-    let applySpecialHandlerConversions = false;
-    let list = this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions);
+    const applySpecialHandlerConversions = false;
+    const list = this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions);
     log.dir(list);
     return this.renderObjectArray(list);
   }
 
   renderStructuredObjectList () {
-    let applySpecialHandlerConversions = false;
-    let list = this.rootConstraintGroup.renderStructuredObjectList(applySpecialHandlerConversions);
+    const applySpecialHandlerConversions = false;
+    const list = this.rootConstraintGroup.renderStructuredObjectList(applySpecialHandlerConversions);
     log.dir(list);
     return this.renderObjectArray(list);
   }
 
   renderObjectArray (list) {
     let syntax = '<ol>';
-    for (let entry of list) {
+    for (const entry of list) {
       syntax += '<li>';
       if (Array.isArray(entry)) {
         syntax += this.renderObjectArray(entry);
@@ -321,12 +321,12 @@ export default class Model {
     }
 
     if (validProjectionGroup) {
-      let applySpecialHandlerConversions = true; // Sending to server
+      const applySpecialHandlerConversions = true; // Sending to server
 
-      let successFunction = data => {
-        let list = data.data;
+      const successFunction = data => {
+        const list = data.data;
         list.forEach(entry => {
-          let constraint = this.findConstraintById(entry.objectId);
+          const constraint = this.findConstraintById(entry.objectId);
           if (constraint) {
             constraint.setVerifiedValidity(entry.valid, entry.invalidReason);
           } else {
@@ -337,7 +337,7 @@ export default class Model {
         return data;
       };
 
-      let constraintList = JSON.stringify(this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions));
+      const constraintList = JSON.stringify(this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions));
 
       log.log('validate - constraintList', constraintList);
 
@@ -354,10 +354,10 @@ export default class Model {
   }
 
   apply () {
-    let applySpecialHandlerConversions = true; // Server side call
-    let urlEncodedConstraintQueryString = this.buildQueryString(applySpecialHandlerConversions, true);
+    const applySpecialHandlerConversions = true; // Server side call
+    const urlEncodedConstraintQueryString = this.buildQueryString(applySpecialHandlerConversions, true);
 
-    let successFunction = data => data;
+    const successFunction = data => data;
     return this.constraintModelerResource
       .loadResultWithConstraints(this.objectName, urlEncodedConstraintQueryString)
       .then(successFunction)

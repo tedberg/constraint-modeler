@@ -65,7 +65,7 @@
       }
     },
     render (h) {
-      let params = {
+      const params = {
         id: `${this.templatePrefix}_valueEntry-${this.objectId}`,
         name: `valueEntry-${this.objectId}`,
         inputClass: 'inputClass',
@@ -82,7 +82,7 @@
       //   dataAttribute = ` data-customvalue='${customString}'`;
       // }
 
-      let inputArray = [];
+      const inputArray = [];
 
       if (this.numberOfObjects === 1) {
         inputArray.push(this.renderWithJSX(params));
@@ -341,8 +341,8 @@
           // choice is an object with identifyingValue and displayValue properties.
 
           let selected = false;
-          let choiceId = this.findChoiceIdFromChoice(choice);
-          let choiceLabel = this.findChoiceLabelFromChoice(choice);
+          const choiceId = this.findChoiceIdFromChoice(choice);
+          const choiceLabel = this.findChoiceLabelFromChoice(choice);
           if (String(choiceId) === String(this.defaultValue)) {
             selected = true;
           }

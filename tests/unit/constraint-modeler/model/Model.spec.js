@@ -5,23 +5,23 @@ import { JunctionEnum } from '../../../../src/components/constraint-modeler/enum
 
 const FULL_JSON_OBJECT =
   {
-    'projectionGroup': {
-      'property': 'id;name;age',
-      'grouped': false,
-      'projectionAsMap': false
+    projectionGroup: {
+      property: 'id;name;age',
+      grouped: false,
+      projectionAsMap: false
     },
-    'constraintGroup': {
-      'constraint': {
-        'value': 'c1:eq:val1;c2:eq:val2;c3:eq:val3',    // This is 3 constraints
-        'sub1': {                                       // First sub constraint Group
-          'value': 'c11:eq:val11;c12:notnull',         // Two more constraints
-          'sub1': {                                     // First sub constraint Group under previous Constraint group
-            'junction': 'or',                          // Defines junction OR instead of default AND
-            'value': 'lower(c21):eq:val21;c22:eq:val22'       // Two more constraints which will use the OR junction
+    constraintGroup: {
+      constraint: {
+        value: 'c1:eq:val1;c2:eq:val2;c3:eq:val3',    // This is 3 constraints
+        sub1: {                                       // First sub constraint Group
+          value: 'c11:eq:val11;c12:notnull',         // Two more constraints
+          sub1: {                                     // First sub constraint Group under previous Constraint group
+            junction: 'or',                          // Defines junction OR instead of default AND
+            value: 'lower(c21):eq:val21;c22:eq:val22'       // Two more constraints which will use the OR junction
           }
         },
-        'sub2': {                                       // Second sub constraint group
-          'value': 'c31:eq:val31;c32:in:val32a,val32b'          // Two more constraints (AND Junction)
+        sub2: {                                       // Second sub constraint group
+          value: 'c31:eq:val31;c32:in:val32a,val32b'          // Two more constraints (AND Junction)
         }
       }
     }
@@ -59,20 +59,20 @@ describe('Model simple tests', () => {
     expect(sampleModel.objectName).toMatch('Sample');
     expect(sampleModel.constraintModelerResource).toBeInstanceOf(StubConstraintModelerResource);
 
-    let cg = sampleModel.getRootConstraintGroup();
+    const cg = sampleModel.getRootConstraintGroup();
     expect(cg.getObjectId()).toEqual(ROOT_CONSTRAINT_GROUP_ID);
     expect(cg.isRoot()).toBe(true);
   });
 
   it('loads Properties correctly', () => {
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     promise.then(data => {
       expect(data).toBeDefined();
       expect(data.propertyList).toBeDefined();
       expect(data.multiPropertyList).toBeDefined();
 
-      let propertyList = personModel.getPropertyList();
-      let multiPropertyList = personModel.getMultiPropertyList();
+      const propertyList = personModel.getPropertyList();
+      const multiPropertyList = personModel.getMultiPropertyList();
 
       expect(propertyList).toHaveLength(3);
       expect(multiPropertyList).toHaveLength(1);
@@ -84,13 +84,13 @@ describe('Model simple tests', () => {
 
     expect.assertions(4);
 
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     return promise.then(data => {
       personModel.buildModelFromJson(nullJsonObject);
 
       expect(personModel.getProjectionGroup()).toBeNull();
 
-      let cg = personModel.getRootConstraintGroup();
+      const cg = personModel.getRootConstraintGroup();
       expect(cg.getJunction()).toEqual(JunctionEnum.AND);
       expect(cg.getConstraintList()).toHaveLength(0);
       expect(cg.getConstraintGroupList()).toHaveLength(0);
@@ -102,13 +102,13 @@ describe('Model simple tests', () => {
 
     expect.assertions(4);
 
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     return promise.then(data => {
       personModel.buildModelFromJson(emptyJsonObject);
 
       expect(personModel.getProjectionGroup()).toBeNull();
 
-      let cg = personModel.getRootConstraintGroup();
+      const cg = personModel.getRootConstraintGroup();
       expect(cg.getJunction()).toEqual(JunctionEnum.AND);
       expect(cg.getConstraintList()).toHaveLength(0);
       expect(cg.getConstraintGroupList()).toHaveLength(0);
@@ -117,30 +117,30 @@ describe('Model simple tests', () => {
 
   it('builds Model From Older Json correctly', () => {
     const olderJsonObject = {
-      'constraint': {
-        'value': 'c1:eq:val1;c2:eq:val2;c3:eq:val3',    // This is 3 constraints
-        'sub1': {                                       // First sub constraint Group
-          'value': 'c11:eq:val11;c12:eq:val12',         // Two more constraints
-          'sub1': {                                     // First sub constraint Group under previous Constraint group
-            'junction': 'or',                          // Defines junction OR instead of default AND
-            'value': 'c21:eq:val21;c22:eq:val22'       // Two more constraints which will use the OR junction
+      constraint: {
+        value: 'c1:eq:val1;c2:eq:val2;c3:eq:val3',    // This is 3 constraints
+        sub1: {                                       // First sub constraint Group
+          value: 'c11:eq:val11;c12:eq:val12',         // Two more constraints
+          sub1: {                                     // First sub constraint Group under previous Constraint group
+            junction: 'or',                          // Defines junction OR instead of default AND
+            value: 'c21:eq:val21;c22:eq:val22'       // Two more constraints which will use the OR junction
           }
         },
-        'sub2': {                                       // Second sub constraint group
-          'value': 'c31:eq:val31;c32:eq:val32'          // Two more constraints (AND Junction)
+        sub2: {                                       // Second sub constraint group
+          value: 'c31:eq:val31;c32:eq:val32'          // Two more constraints (AND Junction)
         }
       }
     };
 
     expect.assertions(4);
 
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     return promise.then(data => {
       personModel.buildModelFromJson(olderJsonObject);
 
       expect(personModel.getProjectionGroup()).toBeNull();
 
-      let rootCg = personModel.getRootConstraintGroup();
+      const rootCg = personModel.getRootConstraintGroup();
       expect(rootCg.getJunction()).toEqual(JunctionEnum.AND);
       expect(rootCg.getConstraintList()).toHaveLength(3);
       expect(rootCg.getConstraintGroupList()).toHaveLength(2);
@@ -153,17 +153,17 @@ describe('Model simple tests', () => {
   it('builds Model From Full Json correctly', () => {
     expect.assertions(7);
 
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     return promise.then(data => {
       personModel.buildModelFromJson(FULL_JSON_OBJECT);
 
-      let projectionGroup = personModel.getProjectionGroup();
+      const projectionGroup = personModel.getProjectionGroup();
       expect(projectionGroup).not.toBeNull();
       expect(projectionGroup.getProjectionList()).toHaveLength(3);
       expect(projectionGroup.isGrouped()).toBe(false);
       expect(projectionGroup.isProjectionAsMap()).toBe(false);
 
-      let rootCg = personModel.getRootConstraintGroup();
+      const rootCg = personModel.getRootConstraintGroup();
       expect(rootCg.getJunction()).toEqual(JunctionEnum.AND);
       expect(rootCg.getConstraintList()).toHaveLength(3);
       expect(rootCg.getConstraintGroupList()).toHaveLength(2);
@@ -176,7 +176,7 @@ describe('Model simple tests', () => {
 
 describe('Model simple tests', () => {
   beforeEach(() => {
-    let promise = personModel.loadProperties();
+    const promise = personModel.loadProperties();
     return promise.then(data => {
       personModel.buildModelFromJson(FULL_JSON_OBJECT);
     });
@@ -206,25 +206,25 @@ describe('Model simple tests', () => {
 
   it('renders simple JSON correctly', () => {
     const simpleJsonObject = {
-      'constraintGroup': {
-        'constraint': {
-          'value': 'c1:eq:val1;c2:eq:val2;c3:eq:val3',
-          'sub1': {
-            'value': 'c11:eq:val11;c12:notnull',
-            'sub1': {
-              'junction': 'or',
-              'value': 'lower(c21):eq:val21;c22:eq:val22'
+      constraintGroup: {
+        constraint: {
+          value: 'c1:eq:val1;c2:eq:val2;c3:eq:val3',
+          sub1: {
+            value: 'c11:eq:val11;c12:notnull',
+            sub1: {
+              junction: 'or',
+              value: 'lower(c21):eq:val21;c22:eq:val22'
             }
           },
-          'sub2': {
-            'value': 'c31:eq:val31;c32:in:val32a,val32b'
+          sub2: {
+            value: 'c31:eq:val31;c32:in:val32a,val32b'
           }
         }
       },
-      'projectionGroup': {
-        'property': 'id;name;age',
-        'grouped': false,
-        'projectionAsMap': false
+      projectionGroup: {
+        property: 'id;name;age',
+        grouped: false,
+        projectionAsMap: false
       }
     };
 

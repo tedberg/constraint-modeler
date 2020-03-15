@@ -3,7 +3,7 @@ module.exports = (api) => {
 
   const presets = [
     ['@vue/cli-plugin-babel/preset', {
-      'useBuiltIns': 'entry' // Recommended to set to false for libs, but causes error
+      useBuiltIns: 'entry' // Recommended to set to false for libs, but causes error
     }]
   ];
 

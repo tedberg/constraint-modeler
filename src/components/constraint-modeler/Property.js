@@ -6,7 +6,7 @@ import { DataTypeEnum } from './enum/DataTypeEnum';
 export default class Property {
 
   constructor (obj) {
-    let prop = obj || {};
+    const prop = obj || {};
 
     this.path = prop.path || undefined;
     this.displayName = prop.displayName || undefined;

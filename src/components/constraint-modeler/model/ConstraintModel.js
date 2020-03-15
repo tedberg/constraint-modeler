@@ -33,11 +33,11 @@ export default class ConstraintModel extends QueryElementModel {
 
     // contact.address.city:eq:Springfield
 
-    let constraintModel = new ConstraintModel();
+    const constraintModel = new ConstraintModel();
     constraintModel.setValuesFromToken(constraintToken);
     log.log('initial constraint model', constraintModel);
 
-    let property = pathToPropertyMap[constraintModel.key];
+    const property = pathToPropertyMap[constraintModel.key];
     log.log('property', property);
 
     if (!(typeof property === 'undefined' || property === null)) {
@@ -59,16 +59,16 @@ export default class ConstraintModel extends QueryElementModel {
         return false;
       } else {
         switch (this.comparisonType.expectedNumberOfObjectValues) {
-          case 0:
-            return true;
-          case 1:
-            return (typeof this.value !== 'undefined' && this.value !== null);
-          default:
-            if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
-              return false;
-            } else {
-              return (typeof this.valueArray[0] !== 'undefined' && this.valueArray[0] !== null && typeof this.valueArray[1] !== 'undefined' && this.valueArray[1] !== null);
-            }
+        case 0:
+          return true;
+        case 1:
+          return (typeof this.value !== 'undefined' && this.value !== null);
+        default:
+          if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
+            return false;
+          } else {
+            return (typeof this.valueArray[0] !== 'undefined' && this.valueArray[0] !== null && typeof this.valueArray[1] !== 'undefined' && this.valueArray[1] !== null);
+          }
         }
       }
     }
@@ -123,7 +123,7 @@ export default class ConstraintModel extends QueryElementModel {
   }
 
   setValuesFromToken (constraintToken) {
-    let keyValuePair = constraintToken.split(':');  // [0] = lower(contact.lastname)    [1] = eq    [2] = simpson
+    const keyValuePair = constraintToken.split(':');  // [0] = lower(contact.lastname)    [1] = eq    [2] = simpson
 
     if (keyValuePair.length < 2 || keyValuePair.length > 3) {
       log.error(`Invalid constraint token passed.  Was = ${constraintToken}`);
@@ -160,33 +160,33 @@ export default class ConstraintModel extends QueryElementModel {
     }
 
     switch (this.comparisonType.expectedNumberOfObjectValues) {
-      case 1:
-        syntax += ` ${this.renderSyntaxForValue(this.value)}`;
-        break;
-      case 0:
-        break;
-      case 2:
-        if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
-          syntax += ' undefined AND undefined';
-        } else {
-          syntax += ` ${this.renderSyntaxForValue(this.valueArray[0])} AND ${this.renderSyntaxForValue(this.valueArray[1])}`;
-        }
-        break;
-      default:
-        if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
-          syntax += ' (undefined)';
-        } else {
-          syntax += ' (';
-          let count = 0;
-          for (let val of this.valueArray) {
-            count++;
-            syntax += this.renderSyntaxForValue(val);
-            if (count !== this.valueArray.length) {
-              syntax += ', ';
-            }
+    case 1:
+      syntax += ` ${this.renderSyntaxForValue(this.value)}`;
+      break;
+    case 0:
+      break;
+    case 2:
+      if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
+        syntax += ' undefined AND undefined';
+      } else {
+        syntax += ` ${this.renderSyntaxForValue(this.valueArray[0])} AND ${this.renderSyntaxForValue(this.valueArray[1])}`;
+      }
+      break;
+    default:
+      if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
+        syntax += ' (undefined)';
+      } else {
+        syntax += ' (';
+        let count = 0;
+        for (const val of this.valueArray) {
+          count++;
+          syntax += this.renderSyntaxForValue(val);
+          if (count !== this.valueArray.length) {
+            syntax += ', ';
           }
-          syntax += ')';
         }
+        syntax += ')';
+      }
 
     }
     return syntax;
@@ -235,32 +235,32 @@ export default class ConstraintModel extends QueryElementModel {
     }
 
     switch (this.comparisonType.expectedNumberOfObjectValues) {
-      case 1:
-        syntax += `:${this.value}`;
-        break;
-      case 0:
-        break;
-      case 2:
-        if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
-          syntax += ':undefined';
-        } else {
-          syntax += `:${this.valueArray[0]},${this.valueArray[1]}`;
-        }
-        break;
-      default:
-        if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
-          syntax += ':undefined';
-        } else {
-          syntax += ':';
-          let count = 0;
-          for (let val of this.valueArray) {
-            count++;
-            syntax += val;
-            if (count !== this.valueArray.length) {
-              syntax += ',';
-            }
+    case 1:
+      syntax += `:${this.value}`;
+      break;
+    case 0:
+      break;
+    case 2:
+      if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
+        syntax += ':undefined';
+      } else {
+        syntax += `:${this.valueArray[0]},${this.valueArray[1]}`;
+      }
+      break;
+    default:
+      if (typeof this.valueArray === 'undefined' || this.valueArray === null) {
+        syntax += ':undefined';
+      } else {
+        syntax += ':';
+        let count = 0;
+        for (const val of this.valueArray) {
+          count++;
+          syntax += val;
+          if (count !== this.valueArray.length) {
+            syntax += ',';
           }
         }
+      }
 
     }
     return syntax;

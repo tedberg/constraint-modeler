@@ -70,9 +70,9 @@ describe('ConstraintModel simple tests', () => {
   });
 
   it('splitFunctionFromKey correctly', () => {
-    let simpleKey = 'contact.lastname';
-    let functionKey = 'upper(contact.lastname)';
-    let aggregateKey = 'max(contact.lastname)';
+    const simpleKey = 'contact.lastname';
+    const functionKey = 'upper(contact.lastname)';
+    const aggregateKey = 'max(contact.lastname)';
 
     constraint1.splitFunctionFromKey(simpleKey);
     expect(constraint1.key).toEqual(simpleKey);

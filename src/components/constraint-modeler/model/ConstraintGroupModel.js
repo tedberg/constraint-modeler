@@ -51,13 +51,13 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   addConstraint () {
-    let constraint = new ConstraintModel();
+    const constraint = new ConstraintModel();
     this.constraintList.push(constraint);
     return constraint;
   }
 
   removeConstraint (constraintId) {
-    let index = this.constraintList.findIndex(constraint => constraint.getObjectId() === constraintId);
+    const index = this.constraintList.findIndex(constraint => constraint.getObjectId() === constraintId);
     if (index >= 0) {
       this.constraintList.splice(index, 1);
     } else {
@@ -70,13 +70,13 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   addConstraintGroup (subConstraintGroup) {
-    let constraintGroup = subConstraintGroup || new ConstraintGroupModel(constraintGroupIdGenerator());
+    const constraintGroup = subConstraintGroup || new ConstraintGroupModel(constraintGroupIdGenerator());
     this.constraintGroupList.push(constraintGroup);
     return constraintGroup;
   }
 
   findConstraintGroupById (constraintGroupId) {
-    let constraintGroup = this.constraintGroupList.find(constraintGroup => constraintGroup.getObjectId() === Number(constraintGroupId));
+    const constraintGroup = this.constraintGroupList.find(constraintGroup => constraintGroup.getObjectId() === Number(constraintGroupId));
     if (constraintGroup) {
       return constraintGroup;
     }
@@ -91,7 +91,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   removeConstraintGroup (constraintGroupId) {
-    let index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
+    const index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
     if (index >= 0) {
       this.constraintGroupList.splice(index, 1);
     } else {
@@ -100,7 +100,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   removeConstraintGroupRecursively (constraintGroupId) {
-    let index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
+    const index = this.constraintGroupList.findIndex(constraintGroup => constraintGroup.getObjectId() === constraintGroupId);
     if (index >= 0) {
       this.constraintGroupList.splice(index, 1);
       return true;
@@ -171,7 +171,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   static buildModelFromJson (constraintGroupId, constraintObject, pathToPropertyMap) {
     log.debug('buildModelFromJson, constraintObject = ', constraintObject);
 
-    let constraintGroupModel = new ConstraintGroupModel(constraintGroupId);
+    const constraintGroupModel = new ConstraintGroupModel(constraintGroupId);
 
     if (constraintObject.junction) {
       constraintGroupModel.setJunction(JunctionEnum.getTypeFromAlias(constraintObject.junction));
@@ -182,10 +182,10 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
       constraintGroupModel.setConstraintList(ConstraintGroupModel.buildConstraintList(constraintGroupModel, constraintObject.value, pathToPropertyMap));
     }
 
-    let keys = Object.keys(constraintObject);
+    const keys = Object.keys(constraintObject);
     keys.map(key => {
       if (key !== 'value' && key !== 'junction') {
-        let subConstraintGroup = ConstraintGroupModel.buildModelFromJson(constraintGroupIdGenerator(), constraintObject[key], pathToPropertyMap);
+        const subConstraintGroup = ConstraintGroupModel.buildModelFromJson(constraintGroupIdGenerator(), constraintObject[key], pathToPropertyMap);
         constraintGroupModel.addConstraintGroup(subConstraintGroup);
       }
     });
@@ -195,7 +195,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
 
   // Builds the constraint list from the token string.
   static buildConstraintList (constraintGroupModel, constraintString, pathToPropertyMap) {
-    let constraintModelList = [];
+    const constraintModelList = [];
 
     //       junction:or (Can appear in index 0)
     // [0] = contact.lastname:eq:Simpson
@@ -203,11 +203,11 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
     // [2] = (name:notnull
     // [3] = (id:notnull
     // [4] =  description:null))
-    let constraintTokenArray = constraintString.split(';');
+    const constraintTokenArray = constraintString.split(';');
 
-    for (let constraintToken of constraintTokenArray) {
+    for (const constraintToken of constraintTokenArray) {
       log.log('constraintToken', constraintToken);
-      let keyValuePair = constraintToken.split(':');
+      const keyValuePair = constraintToken.split(':');
 
       if (keyValuePair[0] === 'junction') {  // TODO: Edge case, simple format has ConstraintGroup.junction mixed into the constraint string.
         constraintGroupModel.setJunction(JunctionEnum.getTypeFromAlias(keyValuePair[1]));
@@ -220,13 +220,13 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   renderSyntax () {
-    let junction = ` ${this.junction.label} `;
+    const junction = ` ${this.junction.label} `;
     let syntax = '(';
 
-    let list = this.constraintList;
+    const list = this.constraintList;
 
     let count = 0;
-    for (let constraint of list) {
+    for (const constraint of list) {
       count++;
       syntax += constraint.renderSyntax();
       if (count < list.length) {
@@ -234,7 +234,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
       }
     }
 
-    for (let constraintGroup of this.constraintGroupList) {
+    for (const constraintGroup of this.constraintGroupList) {
       syntax += junction;
       syntax += constraintGroup.renderSyntax();
     }
@@ -246,19 +246,19 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
 
   renderSimpleObject (applySpecialHandlerConversions) {
     let simple = {};
-    let constraint = {};
+    const constraint = {};
 
     if (this.junction !== JunctionEnum.AND) {
       constraint.junction = this.junction.alias;
     }
 
-    let stringValue = this.renderConstraintsAsString(applySpecialHandlerConversions);
+    const stringValue = this.renderConstraintsAsString(applySpecialHandlerConversions);
     if (stringValue !== null && stringValue.length > 0) { // Don't set constraint.value to empty string, leave undefined in that case.
       constraint.value = stringValue;
     }
 
     let count = 0;
-    for (let constraintGroup of this.constraintGroupList) {
+    for (const constraintGroup of this.constraintGroupList) {
       count++;
       constraint['sub' + count] = constraintGroup.renderSimpleObject(applySpecialHandlerConversions);
     }
@@ -282,8 +282,8 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
     let queryString = '';
 
     let count = 0;
-    let list = this.constraintList;
-    for (let constraint of list) {
+    const list = this.constraintList;
+    for (const constraint of list) {
       count++;
       queryString += constraint.renderQueryString(applySpecialHandlerConversions);
       if (count < list.length) {
@@ -299,7 +299,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
    * @return String parameter
    */
   renderQueryString (applySpecialHandlerConversions) {
-    let simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
+    const simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
     return serializeObjectToQueryStringParameters(simpleObject);
   }
 
@@ -317,8 +317,8 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
    * @return {Array}
    */
   renderConstraintsAsList (applySpecialHandlerConversions) {
-    let list = [];
-    for (let constraint of this.constraintList) {
+    const list = [];
+    for (const constraint of this.constraintList) {
       list.push({
         objectId: constraint.objectId,
         constraint: constraint.renderQueryString(applySpecialHandlerConversions)
@@ -333,8 +333,8 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
    * @return {Array}
    */
   renderStructuredObjectList (applySpecialHandlerConversions) {
-    let list = this.renderConstraintsAsList(applySpecialHandlerConversions);
-    for (let constraintGroup of this.constraintGroupList) {
+    const list = this.renderConstraintsAsList(applySpecialHandlerConversions);
+    for (const constraintGroup of this.constraintGroupList) {
       list.push(constraintGroup.renderStructuredObjectList(applySpecialHandlerConversions));
     }
     return list;
@@ -347,7 +347,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
    */
   renderFlattenedObjectList (applySpecialHandlerConversions) {
     let list = this.renderConstraintsAsList(applySpecialHandlerConversions);
-    for (let constraintGroup of this.constraintGroupList) {
+    for (const constraintGroup of this.constraintGroupList) {
       list = list.concat(constraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions));
     }
     return list;

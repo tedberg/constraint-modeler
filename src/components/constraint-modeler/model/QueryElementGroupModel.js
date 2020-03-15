@@ -1,9 +1,9 @@
 export function serializeObjectToQueryStringParameters (obj, prefix) {
-  let str = [];
+  const str = [];
 
   Object.keys(obj).map(property => {
-    let k = prefix ? prefix + '[' + property + ']' : property;
-    let v = obj[property];
+    const k = prefix ? prefix + '[' + property + ']' : property;
+    const v = obj[property];
 
     str.push((v !== null && typeof v === 'object')
       ? serializeObjectToQueryStringParameters(v, k)
@@ -59,7 +59,7 @@ export default class QueryElementGroupModel {
   }
 
   findMaxKey (myMap) {
-    let keys = Object.keys(myMap);
+    const keys = Object.keys(myMap);
     let maxKey = 0;
     keys.map(key => {
       if (key > maxKey) {

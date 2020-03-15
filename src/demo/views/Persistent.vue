@@ -53,12 +53,12 @@
           }
         ],
         initialModel: {
-          'constraintGroup': {
-            'constraint': {
-              'value': 'status:eq:ENABLED;age:gt:50',
-              'sub1': {
-                'junction': 'or',
-                'value': 'age:lte:35;upper(name):like:*Y'
+          constraintGroup: {
+            constraint: {
+              value: 'status:eq:ENABLED;age:gt:50',
+              sub1: {
+                junction: 'or',
+                value: 'age:lte:35;upper(name):like:*Y'
               }
             }
           }

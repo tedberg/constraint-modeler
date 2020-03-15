@@ -10,7 +10,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
     super(1000);
     this.projectionList = [];
 
-    let settings = obj || {};
+    const settings = obj || {};
     this.grouped = settings.grouped || false;
     this.projectionAsMap = settings.projectionAsMap || false;
   }
@@ -39,14 +39,14 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
   }
 
   addProjection () {
-    let projection = new ProjectionModel();
+    const projection = new ProjectionModel();
     this.projectionList.push(projection);
     return projection;
   }
 
   removeProjection (projectionId) {
     log.log('removeProjection with id', projectionId);
-    let index = this.projectionList.findIndex(projection => projection.getObjectId() === projectionId);
+    const index = this.projectionList.findIndex(projection => projection.getObjectId() === projectionId);
     log.log('removeProjection index', index);
     if (index >= 0) {
       this.projectionList.splice(index, 1);
@@ -77,7 +77,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
         log.log('projectionAsMap = true');
       }
 
-      let projectionString = jsonObject.property;
+      const projectionString = jsonObject.property;
 
       log.info('ProjectionGroup projectionString', projectionString);
 
@@ -96,17 +96,17 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
   }
 
   initProjectionsFromString (projectionString, pathToPropertyMap) {
-    let projectionTokenArray = projectionString.split(';');   // [0] = contact.lastname  [1] = contact.address.city [2] = name
+    const projectionTokenArray = projectionString.split(';');   // [0] = contact.lastname  [1] = contact.address.city [2] = name
 
     log.info('ProjectionGroup initProjectionsFromString', projectionString);
-    for (let projectionToken of projectionTokenArray) {
+    for (const projectionToken of projectionTokenArray) {
       log.info('ProjectionGroup initProjectionsFromString Loop', projectionToken);
-      let projection = this.addProjection();
+      const projection = this.addProjection();
       projection.setValuesFromToken(projectionToken);
 
       log.info('ProjectionGroup initProjectionsFromString Loop - Projection', projection);
 
-      let property = pathToPropertyMap[projection.key];
+      const property = pathToPropertyMap[projection.key];
       if (!(typeof property === 'undefined' || property === null)) {
         projection.setProperty(property);
       } else {
@@ -119,7 +119,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
     let syntax = '(';
 
     let count = 0;
-    for (let projection of this.projectionList) {
+    for (const projection of this.projectionList) {
       count++;
       if (count > 1) {
         syntax += ',';
@@ -133,7 +133,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
   }
 
   renderSimpleObject (applySpecialHandlerConversions) {
-    let simple = {};
+    const simple = {};
     simple.property = this.renderProjectionsAsString(applySpecialHandlerConversions);
     simple.grouped = this.grouped;
     simple.projectionAsMap = this.projectionAsMap;
@@ -145,7 +145,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
    * @return String parameter
    */
   renderQueryString (applySpecialHandlerConversions) {
-    let simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
+    const simpleObject = this.renderSimpleObject(applySpecialHandlerConversions);
     return serializeObjectToQueryStringParameters(simpleObject);
   }
 
@@ -167,7 +167,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
   renderProjectionsAsString (applySpecialHandlerConversions) {
     let queryString = '';
     let count = 0;
-    for (let projection of this.projectionList) {
+    for (const projection of this.projectionList) {
       count++;
       queryString += projection.renderQueryString(applySpecialHandlerConversions);
       if (count < this.projectionList.length) {

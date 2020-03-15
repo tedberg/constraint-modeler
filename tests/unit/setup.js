@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import vueTestUtils from '@vue/test-utils' ;
+import vueTestUtils from '@vue/test-utils';
 
 // ===
 // Configure Vue

@@ -27,7 +27,7 @@
         </li>
       </ul>
 
-      <form class="form-inline navbar-search pull-left" :id="valueEntriesId" data-test="value-input">
+      <form class="form-inline navbar-search pull-left" :id="valueEntriesId" data-test="value-input" data-testid="value-input">
         <value-input :property="property"
                      :comparison-type="comparisonType"
                      :value-array="valueArray"

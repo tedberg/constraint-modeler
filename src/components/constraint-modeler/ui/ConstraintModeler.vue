@@ -34,28 +34,28 @@
 
       <div class="alerts">
         <b-alert variant="dark" dismissible
-                 :show="syntaxDisplay !== ''"
-                 @dismissed="syntaxDisplay=''">
+                 :model-value="syntaxDisplay !== ''"
+                 @closed="syntaxDisplay=''">
           <span class="syntaxDisplay">{{syntaxDisplay}}</span>
         </b-alert>
 
         <b-alert variant="success" dismissible
-                 :show="successDisplay !== ''"
-                 @dismissed="successDisplay=''">
+                 :model-value="successDisplay !== ''"
+                 @closed="successDisplay=''">
           {{successDisplay}}
         </b-alert>
 
         <b-alert variant="danger" dismissible
-                 :show="errorDisplay !== ''"
-                 @dismissed="errorDisplay=''">
+                 :model-value="errorDisplay !== ''"
+                 @closed="errorDisplay=''">
           {{errorDisplay}}
         </b-alert>
       </div>
 
       <div class="buttons">
-        <button class="btn btn-dark btn-sm mt-2 mr-2" type="button" @click.prevent="validateAndApply()">Apply</button>
-        <button class="btn btn-dark btn-sm mt-2 mr-2" type="button" @click.prevent="renderSyntax()">Render Syntax</button>
-        <button class="btn btn-dark btn-sm mt-2 mr-2" type="button" v-if="isSaveSupported" @click.prevent="save()">Save</button>
+        <button class="btn btn-dark btn-sm mt-2 me-2" type="button" @click.prevent="validateAndApply()">Apply</button>
+        <button class="btn btn-dark btn-sm mt-2 me-2" type="button" @click.prevent="renderSyntax()">Render Syntax</button>
+        <button class="btn btn-dark btn-sm mt-2 me-2" type="button" v-if="isSaveSupported" @click.prevent="save()">Save</button>
       </div>
 
     </div>
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+  import mitt from 'mitt';
   import ConstraintGroup from './constraint/ConstraintGroup.vue';
   import ProjectionGroup from './projection/ProjectionGroup.vue';
   import Model from '../model/Model';
@@ -120,6 +121,8 @@
       return {
         componentReady: false,
 
+        emitter: mitt(),
+
         model: new Model(this.objectName, this.constraintModelerResource),
 
         syntaxDisplay: '',
@@ -144,75 +147,59 @@
     },
     mounted () {
       // Setup data mutation listeners
-      // TODO: Ok to change this reference to my data directly here?
 
       // From constraint groups
 
-      this.$on('apply', function () {
+      this.emitter.on('apply', () => {
         this.validateAndApply();
       });
 
-      this.$on('setJunction', function (constraintGroupModel, junctionEnum) {
-        console.log('setJunction called', constraintGroupModel, junctionEnum);
+      this.emitter.on('setJunction', (constraintGroupModel, junctionEnum) => {
         constraintGroupModel.setJunction(junctionEnum);
       });
 
-      this.$on('addConstraint', function (constraintGroupModel) {
-        console.log('addConstraint called', constraintGroupModel);
+      this.emitter.on('addConstraint', (constraintGroupModel) => {
         constraintGroupModel.addConstraint();
       });
 
-      this.$on('addConstraintGroup', function (constraintGroupModel) {
-        console.log('addConstraintGroup called', constraintGroupModel);
+      this.emitter.on('addConstraintGroup', (constraintGroupModel) => {
         constraintGroupModel.addConstraintGroup();
       });
 
-      this.$on('removeConstraintGroup', function (constraintGroupModel) {
-        console.log('removeConstraintGroup called', constraintGroupModel);
+      this.emitter.on('removeConstraintGroup', (constraintGroupModel) => {
         this.rootConstraintGroup.removeConstraintGroupRecursively(constraintGroupModel.getObjectId());
       });
 
       // From constraints
 
-      this.$on('setQueryFunctionEnum', function (constraintModel, enumKey) {
-        console.log('setQueryFunctionEnum called', constraintModel, enumKey);
+      this.emitter.on('setQueryFunctionEnum', (constraintModel, enumKey) => {
         constraintModel.setQueryFunction(enumKey);
       });
 
-      this.$on('setProperty', function (constraintModel, property) {
-        console.log('setProperty called', constraintModel, property);
+      this.emitter.on('setProperty', (constraintModel, property) => {
         constraintModel.setProperty(property);
-
-        console.log('after setProperty called', constraintModel);
       });
 
-      this.$on('setComparator', function (constraintModel, comparisonType) {
-        console.log('setComparator called', constraintModel, comparisonType);
+      this.emitter.on('setComparator', (constraintModel, comparisonType) => {
         constraintModel.setComparisonType(comparisonType);
       });
 
-      this.$on('updateValueArray', function (constraintModel, valueArray) {
-        console.log('updateValueArray called', constraintModel, valueArray);
+      this.emitter.on('updateValueArray', (constraintModel, valueArray) => {
         constraintModel.setValueArray(valueArray);
       });
 
-      this.$on('removeConstraint', function (constraintGroupModel, constraintModel) {
-        console.log('removeConstraint called', constraintModel);
+      this.emitter.on('removeConstraint', (constraintGroupModel, constraintModel) => {
         constraintGroupModel.removeConstraint(constraintModel.getObjectId());
       });
 
       // From projections
 
-      this.$on('setProjectionQueryFunctionEnum', function (projectionModel, enumKey) {
-        console.log('setProjectionQueryFunctionEnum called', projectionModel, enumKey);
+      this.emitter.on('setProjectionQueryFunctionEnum', (projectionModel, enumKey) => {
         projectionModel.setQueryFunction(enumKey);
       });
 
-      this.$on('setProjectionProperty', function (projectionModel, property) {
-        console.log('setProjectionProperty called', projectionModel, property);
+      this.emitter.on('setProjectionProperty', (projectionModel, property) => {
         projectionModel.setProperty(property);
-
-        console.log('after setProperty called', projectionModel);
       });
 
     },
@@ -298,31 +285,31 @@
 
 <style scoped lang="scss">
 
-  ::v-deep div.nest {
+  :deep(div.nest) {
     margin-left: 25px;
   }
 
   div.constraint-modeler {
 
-    ::v-deep .navbar .btn,
-    ::v-deep .navbar .btn-group .btn {
+    :deep(.navbar .btn),
+    :deep(.navbar .btn-group .btn) {
       padding: 1px 4px;
     }
 
-    ::v-deep .nav-link {
+    :deep(.nav-link) {
       padding-top: 0;
       padding-bottom: 0;
     }
 
-    ::v-deep div.navbar {
+    :deep(div.navbar) {
       border-radius: 7px;
     }
 
-    ::v-deep input[type='text'] {
+    :deep(input[type='text']) {
       width: 100px;
     }
 
-    ::v-deep .buttons {
+    :deep(.buttons) {
       text-align: center;
     }
 

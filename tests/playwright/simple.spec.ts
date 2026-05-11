@@ -10,8 +10,8 @@ test('Creates an Age Greater Than 25 constraint', async ({ page }) => {
   await page.getByTestId('property-menu').click();
   await page.getByRole('menuitem', { name: /^Age$/ }).click();
 
-  await page.getByTestId('comparison-menu').locator('.dropdown-toggle').click();
-  await page.locator('.dropdown-menu.show').getByText('Greater Than').click();
+  await page.locator('[data-test="comparison-menu"] a.nav-link').click();
+  await page.getByRole('menuitem', { name: 'Greater Than', exact: true }).click();
 
   await page.locator('#test_valueEntry-11000').fill('25');
   await expect(page.locator('#test_valueEntry-11000')).toHaveValue('25');

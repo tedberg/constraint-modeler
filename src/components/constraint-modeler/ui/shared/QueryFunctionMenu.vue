@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item-dropdown :text="queryFunctionDisplay" extra-toggle-classes="nav-link-custom">
+  <b-nav-item-dropdown :text="queryFunctionDisplay">
     <h6 class="dropdown-header">Aggregates</h6>
 
     <b-dropdown-item v-for="item in aggregateArray" :key="item.key" @click.prevent="setQueryFunction(item.key)">{{item.label}}</b-dropdown-item>

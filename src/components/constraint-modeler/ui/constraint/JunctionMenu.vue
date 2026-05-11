@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item-dropdown :text="junction.label" extra-toggle-classes="nav-link-custom">
+  <b-nav-item-dropdown :text="junction.label">
     <b-dropdown-item v-for="item in typesArray" :key="item.key" @click.prevent="setJunction(item.key)">{{item.label}}</b-dropdown-item>
   </b-nav-item-dropdown>
 </template>

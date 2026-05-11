@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item-dropdown :text="comparisonType.label" extra-toggle-classes="nav-link-custom">
+  <b-nav-item-dropdown :text="comparisonType.label">
     <b-dropdown-item v-for="item in comparisonTypeArray" :key="item.key" @click.prevent="setComparator(item.key)">{{item.label}}</b-dropdown-item>
   </b-nav-item-dropdown>
 </template>

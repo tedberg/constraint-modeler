@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item-dropdown :text="propertyDisplay" extra-toggle-classes="nav-link-custom">
+  <b-nav-item-dropdown :text="propertyDisplay">
 
     <b-dropdown-item v-for="prop in propertyList" :key="prop.path" @click.prevent="setProperty(prop)">
       {{prop.displayName}} {{(typeof prop.simpleDataType === 'object') ? '&raquo;' : ''}}

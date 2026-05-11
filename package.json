@@ -11,6 +11,7 @@
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "cross-env NODE_OPTIONS=--openssl-legacy-provider VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
     "test:e2e:pw": "playwright test",
+    "test:e2e:pw:ui": "playwright test --ui",
     "lint": "vue-cli-service lint",
     "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
     "build-and-publish": "npm run build:lib && npm publish --access public",

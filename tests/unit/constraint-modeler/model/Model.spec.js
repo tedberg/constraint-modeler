@@ -1,7 +1,7 @@
 import Model from '@/components/constraint-modeler/model/Model';
 import { ROOT_CONSTRAINT_GROUP_ID } from '@/components/constraint-modeler/model/ConstraintGroupModel';
 import StubConstraintModelerResource from '@/components/constraint-modeler/StubConstraintModelerResource';
-import { JunctionEnum } from '../../../../src/components/constraint-modeler/enum/JunctionEnum';
+import { JunctionEnum } from '@/components/constraint-modeler/enum/JunctionEnum';
 
 const FULL_JSON_OBJECT =
   {

@@ -1,4 +1,4 @@
-<script>
+<script lang="jsx">
   import { ComparisonTypeEnum } from '../../enum/ComparisonTypeEnum';
   import { DataTypeEnum } from '../../enum/DataTypeEnum';
   import Property from '../../Property';

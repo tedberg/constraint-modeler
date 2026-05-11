@@ -1,32 +1,25 @@
-// See these docs for details on Jest's matcher utils:
-// https://facebook.github.io/jest/docs/en/expect.html#thisutils
+// Native isPlainObject check (no lodash dependency needed)
+function isPlainObject (val) {
+  if (val === null || typeof val !== 'object') return false;
+  const proto = Object.getPrototypeOf(val);
+  return proto === Object.prototype || proto === null;
+}
 
-const _ = require('lodash');
-const customMatchers = {};
-
-customMatchers.toBeAComponent = function (options) {
-  if (isAComponent()) {
-    return {
-      message: () =>
-        `expected ${this.utils.printReceived(
-          options
-        )} not to be a Vue component`,
-      pass: true
-    };
-  } else {
-    return {
-      message: () =>
-        `expected ${this.utils.printReceived(
-          options
-        )} to be a valid Vue component, exported from a .vue file`,
-      pass: false
-    };
-  }
-
-  function isAComponent() {
-    return _.isPlainObject(options) && typeof options.render === 'function';
-  }
+export const customMatchers = {
+  toBeAComponent (received) {
+    // In Vue 3, compiled SFCs export component definitions that may have __vccOpts or be objects
+    const isComponent = isPlainObject(received) &&
+      (typeof received.render === 'function' || typeof received.setup === 'function' || received.__vccOpts);
+    if (isComponent) {
+      return {
+        message: () => `expected ${this.utils.printReceived(received)} not to be a Vue component`,
+        pass: true,
+      };
+    } else {
+      return {
+        message: () => `expected ${this.utils.printReceived(received)} to be a valid Vue component`,
+        pass: false,
+      };
+    }
+  },
 };
-
-// https://facebook.github.io/jest/docs/en/expect.html#expectextendmatchers
-global.expect.extend(customMatchers);

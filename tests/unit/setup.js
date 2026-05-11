@@ -1,37 +1,19 @@
-import Vue from 'vue';
-import vueTestUtils from '@vue/test-utils';
+import { mount, shallowMount } from '@vue/test-utils';
+import { customMatchers } from './matchers.js';
+import { expect } from 'vitest';
 
-// ===
-// Configure Vue
-// ===
+expect.extend(customMatchers);
 
-// Don't warn about not using the production build of Vue, as
-// we care more about the quality of errors than performance
-// for tests.
-Vue.config.productionTip = false;
+// Make mount/shallowMount available globally (used in some specs)
+global.mount = mount;
+global.shallowMount = shallowMount;
 
-// ===
-// Global helpers
-// ===
-
-// https://vue-test-utils.vuejs.org/api/#mount
-global.mount = vueTestUtils.mount;
-
-// https://vue-test-utils.vuejs.org/api/#shallowmount
-global.shallowMount = vueTestUtils.shallowMount;
-
-// A helper for creating Vue component mocks
-global.createComponentMocks = ({ mocks, stubs }) => {
-  // Use a local version of Vue, to avoid polluting the global
-  // Vue and thereby affecting other tests.
-  // https://vue-test-utils.vuejs.org/api/#createlocalvue
-  const localVue = vueTestUtils.createLocalVue();
-  const returnOptions = { localVue };
-
-  // https://vue-test-utils.vuejs.org/api/options.html#stubs
-  returnOptions.stubs = stubs || {};
-  // https://vue-test-utils.vuejs.org/api/options.html#mocks
-  returnOptions.mocks = mocks || {};
-
-  return returnOptions;
+// createComponentMocks helper (simplified — createLocalVue is gone in VTU v2)
+global.createComponentMocks = ({ mocks = {}, stubs = {} } = {}) => {
+  return {
+    global: {
+      mocks,
+      stubs,
+    },
+  };
 };

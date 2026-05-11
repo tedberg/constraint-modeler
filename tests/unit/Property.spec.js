@@ -1,6 +1,6 @@
 
 import Property from '@/components/constraint-modeler/Property';
-import { DataTypeEnum } from '../../src/components/constraint-modeler/enum/DataTypeEnum';
+import { DataTypeEnum } from '@/components/constraint-modeler/enum/DataTypeEnum';
 
 const PROPERTIES_LIST = {
   propertyList: [

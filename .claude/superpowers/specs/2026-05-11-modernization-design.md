@@ -53,9 +53,9 @@ Sequential phases, each gated by a green Playwright suite. No phase begins until
 - `tests/playwright/everything.spec.ts`
 
 **Selector strategy:**
-- Replace hardcoded IDs (`#test_valueEntry-11000`) with `getByTestId()` using `data-testid` attributes
-- Use `getByRole()` and `getByText()` where semantics are clear
-- Avoid CSS class selectors
+- Port selectors as-is including hardcoded IDs (`#test_valueEntry-11000`) — these are deterministic and will be hardened in Phase 2
+- Use `testIdAttribute: 'data-test'` in Playwright config to leverage existing `data-test` attrs
+- Use `getByText()` for button labels
 
 **Assertions per spec:**
 - `simple`: add constraint, set field/operator/value, verify syntax output
@@ -68,9 +68,30 @@ Sequential phases, each gated by a green Playwright suite. No phase begins until
 
 ---
 
-## Phase 2 — Vue 3.5 + Vite 8 Migration
+## Phase 2 — Test Improvement & Expansion
 
-**Goal:** Migrate the app and library to Vue 3.5 + Vite 8, keeping Options API, verified by the Phase 1 Playwright suite.
+**Goal:** Harden the Playwright suite and expand coverage against the Vue 2 app — this becomes the migration safety net.
+
+**Selector improvements:**
+- Replace hardcoded IDs (`#test_valueEntry-11000`) with stable `data-testid` / `getByTestId()` locators
+- Ensure all interactive elements have stable `data-testid` attrs in source
+
+**New test scenarios:**
+- Constraint group nesting (And within Or, etc.)
+- Removing constraints and groups
+- Clearing the entire modeler
+- All comparison operators across different data types
+- Projection reordering / removal
+- Save and reload (Persistent page)
+- Syntax output validation: query string and JSON for all pages that support it
+
+**Exit gate:** Expanded suite green against Vue 2 app
+
+---
+
+## Phase 3 — Vue 3.5 + Vite 8 Migration
+
+**Goal:** Migrate the app and library to Vue 3.5 + Vite 8, keeping Options API, verified by the Phase 2 expanded Playwright suite.
 
 **Build tooling:**
 - Remove `@vue/cli-service`, `@vue/cli-plugin-*`, `vue-template-compiler`
@@ -115,30 +136,7 @@ Sequential phases, each gated by a green Playwright suite. No phase begins until
 - Migrate Jest → Vitest (ships with Vite, minimal config change)
 - Update `@vue/test-utils` to v2
 
-**Exit gate:** All 5 Playwright specs pass against `npm run dev` (Vite dev server)
-
----
-
-## Phase 3 — Test Improvement & Expansion
-
-**Goal:** Harden the Playwright suite and expand coverage now that migration is verified.
-
-**Selector improvements:**
-- Audit remaining `data-test` vs `data-testid` inconsistencies (the vue-cli plugin was stripping these selectively)
-- Ensure all interactive elements have stable `data-testid` attrs
-
-**New test scenarios:**
-- Constraint group nesting (And within Or, etc.)
-- Removing constraints and groups
-- Clearing the entire modeler
-- All comparison operators across different data types
-- Projection reordering / removal
-- Save and reload (Persistent page)
-- Syntax output validation: query string and JSON for all pages that support it
-
-**Remove Cypress** once expanded suite is green and stable.
-
-**Exit gate:** Expanded suite green, Cypress dependencies removed from `package.json`
+**Exit gate:** Full expanded Playwright suite green against `npm run dev` (Vite dev server), Cypress removed
 
 ---
 

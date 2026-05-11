@@ -18,6 +18,10 @@ jsconfig.json
 *.log
 npm-debug.log*
 
+# Playwright
+/playwright-report/
+/test-results/
+
 # Unconfigured Editors
 .idea/
 *.suo

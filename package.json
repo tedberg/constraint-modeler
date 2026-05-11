@@ -6,10 +6,10 @@
     "name": "Ted Bergeron"
   },
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "cross-env VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
+    "test:e2e": "cross-env NODE_OPTIONS=--openssl-legacy-provider VUE_APP_E2E=true npm run build && vue-cli-service test:e2e --mode e2e --headless",
     "test:e2e:pw": "playwright test",
     "lint": "vue-cli-service lint",
     "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
@@ -61,11 +61,11 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
     "minimist": "^1.2.5",
-    "node-sass": "^4.13.1",
     "rollup": "^2.0.6",
     "rollup-plugin-babel": "^4.4.0",
     "rollup-plugin-uglify-es": "0.0.1",
     "rollup-plugin-vue": "^5.1.6",
+    "sass": "^1.99.0",
     "sass-loader": "^8.0.2",
     "vue-cli-plugin-test-attrs": "^0.1.4",
     "vue-template-compiler": "^2.6.11"

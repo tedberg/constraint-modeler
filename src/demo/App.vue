@@ -5,9 +5,9 @@
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand href="#">Constraint Modeler Demo</b-navbar-brand>
 
-        <b-collapse is-nav id="nav_collapse">
+        <b-navbar-collapse id="nav_collapse">
 
-          <b-navbar-nav pills class="nav nav-pills">
+          <b-navbar-nav class="nav nav-pills">
             <b-nav-item to="/" exact>Home</b-nav-item>
             <b-nav-item to="/simple">Simple</b-nav-item>
             <b-nav-item to="/debug">Debug</b-nav-item>
@@ -17,9 +17,9 @@
           </b-navbar-nav>
 
           <!-- Right aligned nav items -->
-          <b-navbar-nav class="ml-auto">
+          <b-navbar-nav class="ms-auto">
 
-            <b-nav-item-dropdown right>
+            <b-nav-item-dropdown>
               <!-- Using button-content slot -->
               <template v-slot:button-content>
                 <em>User</em>
@@ -30,7 +30,7 @@
 
           </b-navbar-nav>
 
-        </b-collapse>
+        </b-navbar-collapse>
       </b-navbar>
     </nav>
 

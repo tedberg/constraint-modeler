@@ -1,4 +1,7 @@
 const path = require('path');
+const crypto = require('crypto');
+const origCreateHash = crypto.createHash;
+crypto.createHash = algorithm => origCreateHash(algorithm === 'md4' ? 'sha256' : algorithm);
 
 const outDir = path.resolve(__dirname, 'dist');
 console.log('outDir', outDir);

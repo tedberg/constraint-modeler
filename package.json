@@ -6,21 +6,15 @@
     "name": "Ted Bergeron"
   },
   "scripts": {
-    "serve": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "dev": "vite",
+    "build": "vite build",
+    "build:lib": "vite build --mode lib",
+    "preview": "vite preview",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
     "test:e2e:pw": "playwright test",
     "test:e2e:pw:ui": "playwright test --ui",
-    "lint": "vue-cli-service lint",
-    "Xbuild": "npm run build:unpkg & npm run build:es & npm run build:umd",
-    "build-and-publish": "npm run build:lib && npm publish --access public",
-    "build:es": "rollup --config rollup.config.js --format es --file dist/constraint-modeler.esm.js",
-    "build:lib": "vue-cli-service build --target lib --name constraint-modeler --dest dist/ src/components/entry.js",
-    "build:umd": "rollup --config rollup.config.js --format umd --file dist/constraint-modeler.umd.js",
-    "build:unpkg": "rollup --config rollup.config.js --format iife --file dist/constraint-modeler.min.js",
-    "build:wc": "vue-cli-service build --target wc --name constraint-modeler 'src/components/*.vue'",
-    "build:wc-async": "vue-cli-service build --target wc-async --name constraint-modeler 'src/components/*.vue'",
-    "test": "npm run test:unit && npm run test:e2e:pw"
+    "lint": "eslint src --ext .vue,.js,.ts"
   },
   "main": "dist/constraint-modeler.umd.js",
   "module": "dist/constraint-modeler.common.js",
@@ -32,23 +26,19 @@
   ],
   "dependencies": {
     "axios": "^0.19.2",
-    "bootstrap-vue": "^2.7.0",
-    "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.6"
+    "bootstrap": "^5.3.8",
+    "bootstrap-vue-next": "^0.45.3",
+    "mitt": "^3.0.1",
+    "vue": "^3.5.34",
+    "vue-router": "^4.6.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.7",
     "@playwright/test": "^1.59.1",
-    "@vue/cli-plugin-babel": "~4.2.3",
-    "@vue/cli-plugin-eslint": "~4.2.3",
-    "@vue/cli-plugin-unit-jest": "~4.2.3",
-    "@vue/cli-service": "~4.2.3",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vitejs/plugin-vue-jsx": "^5.1.5",
+    "@vitest/coverage-v8": "^4.1.6",
     "@vue/eslint-config-standard": "^5.1.0",
-    "@vue/test-utils": "1.0.0-beta.30",
-    "babel-eslint": "^10.1.0",
-    "babel-jest": "^25.1.0",
-    "babel-plugin-jsx-v-model": "^2.0.3",
+    "@vue/test-utils": "^2.4.10",
     "cross-env": "^7.0.2",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.20.1",
@@ -56,28 +46,24 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-vue": "^6.1.2",
-    "minimist": "^1.2.5",
-    "rollup": "^2.0.6",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-uglify-es": "0.0.1",
-    "rollup-plugin-vue": "^5.1.6",
+    "jsdom": "^29.1.1",
     "sass": "^1.99.0",
-    "sass-loader": "^8.0.2",
-    "vue-cli-plugin-test-attrs": "^0.1.4",
-    "vue-template-compiler": "^2.6.11"
+    "vite": "^8.0.12",
+    "vitest": "^4.1.6"
   },
   "peerDependencies": {
     "axios": "^0.19.2",
-    "bootstrap-vue": "^2.7.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.1.6"
+    "bootstrap": "^5.3.0",
+    "bootstrap-vue-next": "^0.45.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.0.0"
   },
   "bugs": {
     "url": "https://github.com/tedberg/constraint-modeler/issues"
   },
   "engines": {
-    "node": ">=8.11.0",
-    "npm": ">=5.6.0"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   },
   "gitHooksX": {
     "pre-commit": "foo"

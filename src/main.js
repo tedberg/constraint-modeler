@@ -1,27 +1,16 @@
-import Vue from 'vue';
+import { createApp } from 'vue';
 import App from './demo/App.vue';
 import router from './demo/router';
-
-import { AlertPlugin, ButtonPlugin, DropdownPlugin, NavbarPlugin, TablePlugin, TooltipPlugin } from 'bootstrap-vue';
+import { createBootstrap } from 'bootstrap-vue-next';
+import { vBTooltip } from 'bootstrap-vue-next';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
-// import '@/assets/css/style.scss';
+import 'bootstrap-vue-next/dist/bootstrap-vue-next.css';
 
-Vue.use(AlertPlugin);
-Vue.use(ButtonPlugin);
-Vue.use(DropdownPlugin);
-Vue.use(NavbarPlugin);
-Vue.use(TablePlugin);
-Vue.use(TooltipPlugin);
+const app = createApp(App);
 
-Vue.config.productionTip = false;
+app.use(router);
+app.use(createBootstrap());
+app.directive('b-tooltip', vBTooltip);
 
-new Vue({
-  router,
-  render: h => h(App),
-  data: () => {
-    return {
-    };
-  }
-}).$mount('#app');
+app.mount('#app');

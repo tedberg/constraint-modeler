@@ -88,10 +88,10 @@
     },
     methods: {
       setQueryFunctionEnum (enumKey) {
-        this.modelListener.$emit('setProjectionQueryFunctionEnum', this.projectionModel, enumKey);
+        this.modelListener.emitter.emit('setProjectionQueryFunctionEnum', [this.projectionModel, enumKey]);
       },
       setProperty (property) {
-        this.modelListener.$emit('setProjectionProperty', this.projectionModel, property);
+        this.modelListener.emitter.emit('setProjectionProperty', [this.projectionModel, property]);
       },
       removeProjection () {
         this.$emit('removeSelf');

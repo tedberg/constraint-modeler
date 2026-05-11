@@ -42,7 +42,7 @@
           <div class="validity">
             <div v-if="isValid == null"></div>
             <div v-else-if="isValid" class="valid"><img src="@/assets/images/icons/accept.png" alt="valid"/></div>
-            <div v-else class="invalid"><img src="@/assets/images/icons/error.png" alt="invalid" v-b-tooltip.hover :title="invalidReason"/></div>
+            <div v-else class="invalid"><img src="@/assets/images/icons/error.png" alt="invalid" :title="invalidReason"/></div>
           </div>
         </li>
         <form class="form-inline ml-2">
@@ -150,16 +150,16 @@
     },
     methods: {
       setComparator (comparisonType) {
-        this.modelListener.$emit('setComparator', this.constraintModel, comparisonType);
+        this.modelListener.emitter.emit('setComparator', [this.constraintModel, comparisonType]);
       },
       setQueryFunctionEnum (enumKey) {
-        this.modelListener.$emit('setQueryFunctionEnum', this.constraintModel, enumKey);
+        this.modelListener.emitter.emit('setQueryFunctionEnum', [this.constraintModel, enumKey]);
       },
       setProperty (property) {
-        this.modelListener.$emit('setProperty', this.constraintModel, property);
+        this.modelListener.emitter.emit('setProperty', [this.constraintModel, property]);
       },
       updateValueArray (valueArray) {
-        this.modelListener.$emit('setValueArray', this.constraintModel, valueArray);
+        this.modelListener.emitter.emit('updateValueArray', [this.constraintModel, valueArray]);
       },
       removeConstraint () {
         console.log('removeConstraint');

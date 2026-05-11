@@ -154,7 +154,7 @@
         this.validateAndApply();
       });
 
-      this.emitter.on('setJunction', (constraintGroupModel, junctionEnum) => {
+      this.emitter.on('setJunction', ([constraintGroupModel, junctionEnum]) => {
         constraintGroupModel.setJunction(junctionEnum);
       });
 
@@ -172,33 +172,33 @@
 
       // From constraints
 
-      this.emitter.on('setQueryFunctionEnum', (constraintModel, enumKey) => {
+      this.emitter.on('setQueryFunctionEnum', ([constraintModel, enumKey]) => {
         constraintModel.setQueryFunction(enumKey);
       });
 
-      this.emitter.on('setProperty', (constraintModel, property) => {
+      this.emitter.on('setProperty', ([constraintModel, property]) => {
         constraintModel.setProperty(property);
       });
 
-      this.emitter.on('setComparator', (constraintModel, comparisonType) => {
+      this.emitter.on('setComparator', ([constraintModel, comparisonType]) => {
         constraintModel.setComparisonType(comparisonType);
       });
 
-      this.emitter.on('updateValueArray', (constraintModel, valueArray) => {
+      this.emitter.on('updateValueArray', ([constraintModel, valueArray]) => {
         constraintModel.setValueArray(valueArray);
       });
 
-      this.emitter.on('removeConstraint', (constraintGroupModel, constraintModel) => {
+      this.emitter.on('removeConstraint', ([constraintGroupModel, constraintModel]) => {
         constraintGroupModel.removeConstraint(constraintModel.getObjectId());
       });
 
       // From projections
 
-      this.emitter.on('setProjectionQueryFunctionEnum', (projectionModel, enumKey) => {
+      this.emitter.on('setProjectionQueryFunctionEnum', ([projectionModel, enumKey]) => {
         projectionModel.setQueryFunction(enumKey);
       });
 
-      this.emitter.on('setProjectionProperty', (projectionModel, property) => {
+      this.emitter.on('setProjectionProperty', ([projectionModel, property]) => {
         projectionModel.setProperty(property);
       });
 

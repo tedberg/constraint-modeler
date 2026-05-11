@@ -116,22 +116,22 @@
     },
     methods: {
       setJunction (junctionEnum) {
-        this.modelListener.$emit('setJunction', this.constraintGroupModel, junctionEnum);
+        this.modelListener.emitter.emit('setJunction', [this.constraintGroupModel, junctionEnum]);
       },
       addConstraint () {
-        this.modelListener.$emit('addConstraint', this.constraintGroupModel);
+        this.modelListener.emitter.emit('addConstraint', this.constraintGroupModel);
       },
       removeConstraint (constraintModel) {
-        this.modelListener.$emit('removeConstraint', this.constraintGroupModel, constraintModel);
+        this.modelListener.emitter.emit('removeConstraint', [this.constraintGroupModel, constraintModel]);
       },
       addConstraintGroup () {
-        this.modelListener.$emit('addConstraintGroup', this.constraintGroupModel);
+        this.modelListener.emitter.emit('addConstraintGroup', this.constraintGroupModel);
       },
       apply () {
-        this.modelListener.$emit('apply');
+        this.modelListener.emitter.emit('apply');
       },
       removeSelf () {
-        this.modelListener.$emit('removeConstraintGroup', this.constraintGroupModel);
+        this.modelListener.emitter.emit('removeConstraintGroup', this.constraintGroupModel);
       }
     }
   };

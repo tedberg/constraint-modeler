@@ -55,6 +55,7 @@
 </template>
 
 <script>
+  import { toRaw } from 'vue';
   import ComparisonMenu from './ComparisonMenu.vue';
   import QueryFunctionMenu from '../shared/QueryFunctionMenu.vue';
   import ValueInput from './ValueInput.vue';
@@ -104,7 +105,7 @@
         return this.constraintModel.getProperty() || null;
       },
       dataType () {
-        return this.constraintModel.getDataType();
+        return toRaw(this.constraintModel.getDataType());
       },
       serverDataType () {
         return this.constraintModel.getServerDataType();

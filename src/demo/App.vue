@@ -5,7 +5,7 @@
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand href="#">Constraint Modeler Demo</b-navbar-brand>
 
-        <b-navbar-collapse id="nav_collapse">
+        <b-collapse id="nav_collapse" is-nav>
 
           <b-navbar-nav class="nav nav-pills">
             <b-nav-item to="/" exact>Home</b-nav-item>
@@ -30,7 +30,7 @@
 
           </b-navbar-nav>
 
-        </b-navbar-collapse>
+        </b-collapse>
       </b-navbar>
     </nav>
 

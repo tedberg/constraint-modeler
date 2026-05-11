@@ -11,26 +11,26 @@ The consuming project uses `bootstrap@^5.3.0` + `bootstrap-vue-next@^0.45.0`. Lo
 ## Commands
 
 ```bash
-npm run serve          # Vue CLI dev server (port 8080)
+npm run dev            # Vite dev server (port 8080)
 npm run build          # Production build of demo app
 npm run build:lib      # Build library output to dist/ (UMD + ESM)
-npm run test:unit      # Jest unit tests
-npm run test:e2e       # Build + run Cypress e2e (headless)
-npm run cypress        # Run Cypress interactively
+npm run test:unit      # Vitest unit tests
+npm run test:e2e:pw    # Playwright e2e tests (requires dev server running)
+npm run test:e2e:pw:ui # Playwright UI mode
 npm run lint           # ESLint
 ```
 
-Run a single Jest test file:
+Run a single Vitest test file:
 ```bash
-npx jest tests/unit/constraint-modeler/model/Model.spec.js
+npx vitest run tests/unit/constraint-modeler/model/Model.spec.js
 ```
 
 ## Architecture
 
 ### Two entry points
 
-- **Library** (`src/components/entry.js`) — exports `ConstraintModeler` as a Vue plugin for npm consumers
-- **Demo app** (`src/main.js` → `src/demo/`) — a standalone Vue app with 5 routes demonstrating the component
+- **Library** (`src/components/entry.js`) — exports `ConstraintModeler` as a Vue 3 plugin for npm consumers
+- **Demo app** (`src/main.js` → `src/demo/`) — a standalone Vue 3 app with 5 routes demonstrating the component
 
 ### Domain model (pure JS, no Vue)
 
@@ -53,23 +53,62 @@ npx jest tests/unit/constraint-modeler/model/Model.spec.js
 
 ### Component communication
 
-`ConstraintModeler.vue` is the root component. It uses `provide` to inject itself as `modelListener` to all descendant components. Children emit events upward via `this.$emit('setProperty', ...)` etc., and the root handles all model mutations in `mounted()` via `this.$on(...)`. This is a Vue 2 event bus pattern that will change in the Vue 3 migration.
+`ConstraintModeler.vue` is the root component. It uses `provide` to inject `modelListener: this` and `constraintModelerResource` to all descendants. Children emit events upward via `this.modelListener.emitter.emit(...)`, and the root handles all model mutations in `mounted()` via `this.emitter.on(...)` (mitt event bus).
 
-`data-test` attributes on interactive elements are used for e2e selectors. The `vue-cli-plugin-test-attrs` plugin strips `data-cy` and `data-xtest` attributes from production builds. Note: some components use hardcoded IDs like `#test_valueEntry-11000` — these are fragile and will be replaced with `data-testid` during the Playwright migration.
+**mitt multi-arg pattern:** mitt only supports one payload argument. Multi-arg events use array wrapping:
+```javascript
+// Child emits:
+this.modelListener.emitter.emit('setJunction', [constraintGroupModel, junctionEnum]);
+// ConstraintModeler listens:
+this.emitter.on('setJunction', ([constraintGroupModel, junctionEnum]) => { ... });
+```
+
+`data-test` and `data-testid` attributes on interactive elements are used for Playwright selectors.
 
 ### Enums
 
 `src/components/constraint-modeler/enum/` — `ComparisonTypeEnum`, `DataTypeEnum`, `JunctionEnum`, `QueryFunctionEnum`, etc. These drive which operators appear for a given property's `simpleDataType`.
 
+### ⚠️ Vue 3 reactive proxy and enum comparisons
+
+The domain model classes (`ConstraintModel`, `ConstraintGroupModel`, etc.) are plain JS and store enum singleton references (e.g. `this.dataType = DataTypeEnum.STRING`). When stored inside Vue's `data()`, Vue 3's `reactive()` deep-wraps these objects in a Proxy. This **breaks `===` reference equality** against the original enum singletons.
+
+**Symptom:** A check like `this.dataType === DataTypeEnum.STRING` silently returns `false` even though the value is conceptually STRING, because the left side is `Proxy(DataTypeEnum.STRING)`.
+
+**Fix:** Compare by `.key` (string) instead of reference identity:
+```javascript
+// BROKEN in Vue 3 reactive context:
+if (this.dataType === DataTypeEnum.STRING)
+if (this.junction !== JunctionEnum.AND)
+
+// CORRECT:
+if (this.dataType?.key === DataTypeEnum.STRING.key)
+if (this.junction?.key !== JunctionEnum.AND.key)
+```
+
+Apply this pattern whenever a model class stored in Vue `data()` needs to compare against enum constants.
+
 ## Testing
 
-- **Unit tests** (Jest): `tests/unit/` — cover models, enums, and a few component snapshots
-- **E2e tests** (Cypress): `tests/e2e/specs/` — 5 specs matching the 5 demo routes
+- **Unit tests** (Vitest): `tests/unit/` — cover models, enums, and component structure checks
+- **E2e tests** (Playwright): `tests/playwright/` — 13 specs covering all demo routes and feature scenarios
 
-## Migration status
+### Playwright selector patterns
 
-Currently Vue 2 / Vue CLI 4 / Bootstrap-Vue 2 / Cypress 4. Active migration to Vue 3.5 / Vite 8 / bootstrap-vue-next / Playwright. See `.claude/superpowers/specs/2026-05-11-modernization-design.md` for the full plan.
+See `tests/playwright/CLAUDE.md` for full documentation. Key rules:
+
+- `b-nav-item-dropdown` toggles must be clicked via `a.nav-link`, not on the outer `<li>`:
+  ```typescript
+  page.locator('[data-test="comparison-menu"] a.nav-link').click()  // ✅
+  page.getByTestId('comparison-menu').click()                       // ❌
+  ```
+- Junction menu: `subGroup.locator('.constraint-group-bar a.nav-link').click()`
+- Projection property menu: `projection.locator('[data-testid="projection-property-menu"] a.nav-link').click()`
+
+## Tech stack (current)
+
+Vue 3.5 / Vite 8 / bootstrap-vue-next 0.45 / Vue Router 4 / mitt / Vitest 4 / Playwright / Node 24
 
 ## Superpowers / AI tooling
 
-Design specs and implementation plans live in `.claude/superpowers/specs/` (not in `docs/`, which is reserved for GitHub Pages content).
+Design specs and implementation plans live in `.claude/superpowers/specs/` and `.claude/superpowers/plans/` (not in `docs/`, which is reserved for GitHub Pages content).

@@ -195,7 +195,7 @@ export default class ConstraintModel extends QueryElementModel {
   renderSyntaxForValue (value) {
     log.log('renderSyntaxForValue', value, this.dataType, this.dataType === DataTypeEnum.STRING);
     let syntax;
-    if (this.dataType === DataTypeEnum.STRING) {
+    if (this.dataType?.key === DataTypeEnum.STRING.key) {
       syntax = `'${value}'`;
     } else {
       syntax = value;

@@ -248,7 +248,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
     let simple = {};
     const constraint = {};
 
-    if (this.junction !== JunctionEnum.AND) {
+    if (this.junction?.key !== JunctionEnum.AND.key) {
       constraint.junction = this.junction.alias;
     }
 

@@ -7,6 +7,11 @@ export default defineConfig(({ mode }) => {
   if (mode === 'lib') {
     return {
       plugins: [vue(), vueJsx()],
+      resolve: {
+        alias: {
+          '@': resolve(__dirname, 'src'),
+        },
+      },
       build: {
         lib: {
           entry: resolve(__dirname, 'src/components/entry.js'),
@@ -20,9 +25,11 @@ export default defineConfig(({ mode }) => {
         rollupOptions: {
           external: ['vue', 'vue-router', 'bootstrap-vue-next', 'axios'],
           output: {
+            exports: 'named',
             globals: {
               vue: 'Vue',
               'bootstrap-vue-next': 'BootstrapVueNext',
+              axios: 'axios',
             },
           },
         },

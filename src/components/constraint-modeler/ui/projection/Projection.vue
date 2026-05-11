@@ -18,7 +18,7 @@
         </li>
       </ul>
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ms-auto">
         <li>
           <div class="validity"></div>
         </li>

@@ -37,7 +37,7 @@
         />
       </form>
 
-      <ul class="navbar-nav ml-auto">
+      <ul class="navbar-nav ms-auto">
         <li>
           <div class="validity">
             <div v-if="isValid == null"></div>
@@ -45,7 +45,7 @@
             <div v-else class="invalid"><img src="@/assets/images/icons/error.png" alt="invalid" :title="invalidReason"/></div>
           </div>
         </li>
-        <form class="form-inline ml-2">
+        <form class="form-inline ms-2">
           <button class="btn btn-sm btn-secondary" @click.prevent="removeConstraint">X</button>
         </form>
       </ul>

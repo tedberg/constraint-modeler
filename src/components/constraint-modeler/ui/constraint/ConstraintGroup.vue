@@ -14,7 +14,7 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ms-auto">
           <form class="form-inline">
             <button v-if="isRoot" class="btn btn-sm btn-secondary" data-test="apply" @click.prevent="apply">Apply</button>
             <button v-else class="btn btn-sm btn-secondary" data-test="remove-constraint" @click.prevent="removeSelf">X</button>

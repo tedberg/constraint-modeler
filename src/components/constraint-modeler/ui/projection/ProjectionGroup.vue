@@ -4,7 +4,7 @@
 
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">
-          <form class="form-inline">
+          <form class="form-inline ms-2">
             <button class="btn btn-sm btn-secondary" data-test="add-projection" data-testid="add-projection" @click.prevent="addProjection()">+ P</button>
           </form>
         </ul>

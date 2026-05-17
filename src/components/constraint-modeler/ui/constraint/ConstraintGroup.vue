@@ -1,6 +1,6 @@
 <template>
   <div :class="['constraint-group', {'root': isRoot}]" data-test="constraint-group">
-    <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-group-bar mb-1" :id="constraintGroupId">
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-group-bar mb-1 px-2" :id="constraintGroupId">
 
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav">

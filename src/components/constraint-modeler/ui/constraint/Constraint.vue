@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-bar mb-1" :id="constraintId" data-test="constraint">
+  <div class="navbar navbar-expand-lg navbar-dark bg-dark constraint-bar mb-1 px-2" :id="constraintId" data-test="constraint">
     <div class="collapse navbar-collapse">
 
       <ul class="navbar-nav">
@@ -34,15 +34,14 @@
                      :template-prefix="templatePrefix"
                      :object-id="objectId"
                      v-on:updateValueArray="updateValueArray"/>
-        />
       </form>
 
       <ul class="navbar-nav ms-auto">
         <li>
           <div class="validity">
             <div v-if="isValid == null"></div>
-            <div v-else-if="isValid" class="valid"><img src="@/assets/images/icons/accept.png" alt="valid"/></div>
-            <div v-else class="invalid"><img src="@/assets/images/icons/error.png" alt="invalid" :title="invalidReason"/></div>
+            <div v-else-if="isValid" class="valid"><img :src="acceptIcon" alt="valid"/></div>
+            <div v-else class="invalid"><img :src="errorIcon" alt="invalid" :title="invalidReason"/></div>
           </div>
         </li>
         <form class="form-inline ms-2">
@@ -56,6 +55,8 @@
 
 <script>
   import { toRaw } from 'vue';
+  import acceptIcon from '@/assets/images/icons/accept.png';
+  import errorIcon from '@/assets/images/icons/error.png';
   import ComparisonMenu from './ComparisonMenu.vue';
   import QueryFunctionMenu from '../shared/QueryFunctionMenu.vue';
   import ValueInput from './ValueInput.vue';
@@ -90,7 +91,7 @@
       }
     },
     data: () => {
-      return {};
+      return { acceptIcon, errorIcon };
     },
     created () {
     },

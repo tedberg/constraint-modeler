@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav id="nav">
-      <b-navbar toggleable="md" type="dark" variant="dark">
+      <b-navbar toggleable="md" variant="dark" data-bs-theme="dark">
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
         <b-navbar-brand href="#">Constraint Modeler Demo</b-navbar-brand>
 

@@ -6,6 +6,8 @@
     "name": "Ted Bergeron"
   },
   "scripts": {
+    "clean": "node -e \"const fs=require('fs'); fs.rmSync('dist', {recursive:true,force:true}); fs.rmSync('target', {recursive:true,force:true})\"",
+    "lint": "oxlint src",
     "dev": "vite",
     "build": "vite build",
     "build:lib": "vite build --mode lib",
@@ -13,8 +15,7 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:e2e:pw": "playwright test",
-    "test:e2e:pw:ui": "playwright test --ui",
-    "lint": "oxlint src"
+    "test:e2e:pw:ui": "playwright test --ui"
   },
   "main": "dist/constraint-modeler.umd.js",
   "exports": {

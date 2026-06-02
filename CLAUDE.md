@@ -8,6 +8,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 The consuming project uses `bootstrap@^5.3.0` + `bootstrap-vue-next@^0.45.0`. Longer-term plan is to replace Bootstrap with Tailwind + shadcn-vue, so component boundaries should stay clean.
 
+## Future: Vue Vapor mode
+
+Vue 3.6 introduces Vapor mode — a compilation strategy that replaces the virtual DOM with direct DOM manipulation. Vapor works by statically analyzing `<template>` blocks; components using JSX render functions are opaque to the Vapor compiler and can't be opted in.
+
+**Rule:** All components must use `<template>` syntax (no JSX render functions). This keeps every component Vapor-eligible when we upgrade to 3.6.
+
 ## Commands
 
 ```bash

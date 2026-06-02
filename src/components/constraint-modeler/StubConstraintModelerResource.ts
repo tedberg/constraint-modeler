@@ -1,50 +1,53 @@
-import AbstractConstraintModelerResource from './AbstractConstraintModelerResource';
+import AbstractConstraintModelerResource from "./AbstractConstraintModelerResource";
 
 const VALUE_LIST = {
-  data: [{ identifyingValue: 'DISABLED', displayValue: 'Disabled' }, { identifyingValue: 'ENABLED', displayValue: 'Enabled' }]
+  data: [
+    { identifyingValue: "DISABLED", displayValue: "Disabled" },
+    { identifyingValue: "ENABLED", displayValue: "Enabled" },
+  ],
 };
 
 const PROPERTIES_LIST = {
   propertyList: [
     {
-      path: 'name',
-      displayName: 'Name',
-      simpleDataType: 'string',
-      dataType: 'java.lang.String'
+      path: "name",
+      displayName: "Name",
+      simpleDataType: "string",
+      dataType: "java.lang.String",
     },
     {
-      path: 'age',
-      displayName: 'Age',
-      simpleDataType: 'number',
-      dataType: 'java.lang.Integer'
+      path: "age",
+      displayName: "Age",
+      simpleDataType: "number",
+      dataType: "java.lang.Integer",
     },
     {
-      path: 'status',
-      displayName: 'Status',
-      simpleDataType: 'enum',
-      dataType: 'com.xyz.model.Status'
-    }
+      path: "status",
+      displayName: "Status",
+      simpleDataType: "enum",
+      dataType: "com.xyz.model.Status",
+    },
   ],
   multiPropertyList: [
     {
-      path: 'alert',
-      displayName: 'alert',
-      simpleDataType: 'object',
-      dataType: 'com.xyz.Alert',
+      path: "alert",
+      displayName: "alert",
+      simpleDataType: "object",
+      dataType: "com.xyz.Alert",
       expectedDataMagnitude: 10000,
       keyDisplayPropertyPath: null,
       relationship: true,
       multiProperty: true,
       nestedPropertyList: [
         {
-          path: 'alert.message',
-          displayName: 'Message',
-          simpleDataType: 'string',
-          dataType: 'java.lang.String'
-        }
-      ]
-    }
-  ]
+          path: "alert.message",
+          displayName: "Message",
+          simpleDataType: "string",
+          dataType: "java.lang.String",
+        },
+      ],
+    },
+  ],
 };
 
 const RESULT_RESPONSE = {
@@ -53,17 +56,17 @@ const RESULT_RESPONSE = {
   success: true,
   page: 1,
   data: [
-    { id: 1, name: 'Bill', age: 25, status: 'ENABLED' },
-    { id: 2, name: 'Frank', age: 32, status: 'DISABLED' },
-    { id: 3, name: 'Sally', age: 73, status: 'ENABLED' },
-    { id: 4, name: 'Jim', age: 27, status: 'DISABLED' },
-    { id: 5, name: 'Larry', age: 6, status: 'ENABLED' },
-    { id: 6, name: 'Tony', age: 18, status: 'ENABLED' },
-    { id: 7, name: 'Lisa', age: 50, status: 'DISABLED' },
-    { id: 8, name: 'Beth', age: 21, status: 'ENABLED' },
-    { id: 9, name: 'Randy', age: 45, status: 'ENABLED' },
-    { id: 10, name: 'Moe', age: 62, status: 'ENABLED' }
-  ]
+    { id: 1, name: "Bill", age: 25, status: "ENABLED" },
+    { id: 2, name: "Frank", age: 32, status: "DISABLED" },
+    { id: 3, name: "Sally", age: 73, status: "ENABLED" },
+    { id: 4, name: "Jim", age: 27, status: "DISABLED" },
+    { id: 5, name: "Larry", age: 6, status: "ENABLED" },
+    { id: 6, name: "Tony", age: 18, status: "ENABLED" },
+    { id: 7, name: "Lisa", age: 50, status: "DISABLED" },
+    { id: 8, name: "Beth", age: 21, status: "ENABLED" },
+    { id: 9, name: "Randy", age: 45, status: "ENABLED" },
+    { id: 10, name: "Moe", age: 62, status: "ENABLED" },
+  ],
 };
 
 /**
@@ -71,7 +74,6 @@ const RESULT_RESPONSE = {
  * necessary API calls that a backend server would provide.
  */
 export default class StubConstraintModelerResource extends AbstractConstraintModelerResource {
-
   // Used by ValueInput.vue
   /**
    * Loads a list of values, each having an identifyingValue and displayValue attribute.
@@ -82,8 +84,8 @@ export default class StubConstraintModelerResource extends AbstractConstraintMod
    *   "data": [{"identifyingValue": "DISABLED", "displayValue": "Disabled"}, {"identifyingValue": "ENABLED", "displayValue": "Enabled"}],
    * }
    */
-  loadValueList (serverDataType) {
-    return new Promise((resolve, reject) => {
+  loadValueList(_serverDataType) {
+    return new Promise((resolve, _reject) => {
       resolve(VALUE_LIST);
     });
   }
@@ -140,8 +142,8 @@ export default class StubConstraintModelerResource extends AbstractConstraintMod
    *   ]
    * }
    */
-  loadProperties (objectName) {
-    return new Promise((resolve, reject) => {
+  loadProperties(_objectName) {
+    return new Promise((resolve, _reject) => {
       resolve(PROPERTIES_LIST);
     });
   }
@@ -161,17 +163,17 @@ export default class StubConstraintModelerResource extends AbstractConstraintMod
    *   ]
    * }
    */
-  validateConstraintModeler (className, constraintList) {
-    const data = JSON.parse(constraintList).map(item => {
+  validateConstraintModeler(className, constraintList) {
+    const data = JSON.parse(constraintList).map((item) => {
       item.valid = true;
       item.invalidReason = null;
       return item;
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       resolve({
         success: true,
-        data: data
+        data: data,
       });
     });
   }
@@ -193,10 +195,9 @@ export default class StubConstraintModelerResource extends AbstractConstraintMod
    *  ]
    * }
    */
-  loadResultWithConstraints (className, urlEncodedConstraintQueryString) {
-    return new Promise((resolve, reject) => {
+  loadResultWithConstraints(_className, _urlEncodedConstraintQueryString) {
+    return new Promise((resolve, _reject) => {
       resolve(RESULT_RESPONSE);
     });
   }
-
 }

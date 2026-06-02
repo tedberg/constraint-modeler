@@ -1,12 +1,12 @@
-import { log } from '@/common/LoggingFacade';
-import Property from '../Property';
-import ConstraintModelerResource from '../ConstraintModelerResource';
-import ConstraintGroupModel, { ROOT_CONSTRAINT_GROUP_ID } from './ConstraintGroupModel';
-import ConstraintModel from './ConstraintModel';
-import ProjectionGroupModel from './ProjectionGroupModel';
-import AbstractConstraintModelerResource from '../AbstractConstraintModelerResource';
+import { log } from "@/common/LoggingFacade";
+import Property from "../Property";
+import ConstraintModelerResource from "../ConstraintModelerResource";
+import ConstraintGroupModel, { ROOT_CONSTRAINT_GROUP_ID } from "./ConstraintGroupModel";
+import ConstraintModel from "./ConstraintModel";
+import ProjectionGroupModel from "./ProjectionGroupModel";
+import AbstractConstraintModelerResource from "../AbstractConstraintModelerResource";
 
-const defaultErrorFunction = error => {
+const defaultErrorFunction = (error) => {
   log.error(error);
 };
 
@@ -27,16 +27,15 @@ const defaultErrorFunction = error => {
  * Requires pathToPropertyMap to be set, a mapping fetched from the server, mapping the propertyPath String to a Property instance.
  */
 export default class Model {
-
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
 
-  constructor (objectName, constraintModelerResource = new ConstraintModelerResource()) {
+  constructor(objectName, constraintModelerResource = new ConstraintModelerResource()) {
     if (!objectName) {
-      throw new Error('Model must be instantiated with a valid objectName.');
+      throw new Error("Model must be instantiated with a valid objectName.");
     }
 
-    if (!(AbstractConstraintModelerResource.isValidImplementation(constraintModelerResource))) {
-      throw new Error('Model must be instantiated with a valid ConstraintModelerResource.');
+    if (!AbstractConstraintModelerResource.isValidImplementation(constraintModelerResource)) {
+      throw new Error("Model must be instantiated with a valid ConstraintModelerResource.");
     }
 
     this.constraintModelerResource = constraintModelerResource;
@@ -53,44 +52,44 @@ export default class Model {
     this.pathToPropertyMap = {};
   }
 
-  getRootConstraintGroup () {
+  getRootConstraintGroup() {
     return this.rootConstraintGroup;
   }
 
-  getPropertyList () {
+  getPropertyList() {
     return this.propertyList;
   }
 
-  getMultiPropertyList () {
+  getMultiPropertyList() {
     return this.multiPropertyList;
   }
 
-  getPathToPropertyMap () {
+  getPathToPropertyMap() {
     return this.pathToPropertyMap;
   }
 
-  setPathToPropertyMap (mapping) {
+  setPathToPropertyMap(mapping) {
     this.pathToPropertyMap = mapping;
   }
 
-  addProjectionGroup () {
+  addProjectionGroup() {
     if (!this.projectionGroup) {
       this.projectionGroup = new ProjectionGroupModel();
     }
   }
 
-  findConstraintById (constraintId) {
+  findConstraintById(constraintId) {
     return this.rootConstraintGroup.findConstraintById(constraintId);
   }
 
-  getProjectionGroup () {
+  getProjectionGroup() {
     return this.projectionGroup;
   }
 
-  loadProperties () {
-    const successFunction = data => {
+  loadProperties() {
+    const successFunction = (data) => {
       if (data.propertyList) {
-        data.propertyList.forEach(prop => {
+        data.propertyList.forEach((prop) => {
           const property = new Property(prop);
           this.propertyList.push(property);
           this.recursivePropertyListScan(property);
@@ -98,7 +97,7 @@ export default class Model {
       }
 
       if (data.multiPropertyList) {
-        data.multiPropertyList.forEach(prop => {
+        data.multiPropertyList.forEach((prop) => {
           const property = new Property(prop);
           this.multiPropertyList.push(property);
           this.recursivePropertyListScan(property);
@@ -118,43 +117,54 @@ export default class Model {
    * Builds up the pathToPropertyMap by scanning the given property and its nested propertyLists.
    * @param property
    */
-  recursivePropertyListScan (property) {
+  recursivePropertyListScan(property) {
     this.pathToPropertyMap[property.path] = property;
 
-    if (!(typeof property.nestedPropertyList === 'undefined' || property.nestedPropertyList === null)) {
+    if (
+      !(typeof property.nestedPropertyList === "undefined" || property.nestedPropertyList === null)
+    ) {
       for (const prop of property.nestedPropertyList) {
         this.recursivePropertyListScan(prop);
       }
     }
 
-    if (!(typeof property.nestedMultiPropertyList === 'undefined' || property.nestedMultiPropertyList === null)) {
+    if (
+      !(
+        typeof property.nestedMultiPropertyList === "undefined" ||
+        property.nestedMultiPropertyList === null
+      )
+    ) {
       for (const prop of property.nestedMultiPropertyList) {
         this.recursivePropertyListScan(prop);
       }
     }
   }
 
-  buildModelFromJson (jsonObject) {
-    log.debug('buildModelFromJson, jsonObject = ', jsonObject);
+  buildModelFromJson(jsonObject) {
+    log.debug("buildModelFromJson, jsonObject = ", jsonObject);
 
-    if (jsonObject) { // If null or undefined, model remains in vanilla state.
+    if (jsonObject) {
+      // If null or undefined, model remains in vanilla state.
       const pathToPropertyMap = this.pathToPropertyMap;
 
       let constraintSimpleObject;
 
       if (jsonObject.projectionGroup || jsonObject.constraintGroup) {
         // Newer 2.8 format
-        log.debug('Newer 2.8 format found');
+        log.debug("Newer 2.8 format found");
         if (jsonObject.projectionGroup && jsonObject.projectionGroup.property) {
-          log.debug('Projection query found');
+          log.debug("Projection query found");
           this.projectionGroup = new ProjectionGroupModel();
-          this.projectionGroup.buildModelFromJson(jsonObject.projectionGroup, this.pathToPropertyMap);
+          this.projectionGroup.buildModelFromJson(
+            jsonObject.projectionGroup,
+            this.pathToPropertyMap,
+          );
         }
 
         constraintSimpleObject = jsonObject.constraintGroup;
       } else if (jsonObject.constraint) {
         // Older format (no projections)
-        log.debug('Older 2.x format found');
+        log.debug("Older 2.x format found");
         constraintSimpleObject = jsonObject;
       } else {
         constraintSimpleObject = null;
@@ -164,17 +174,24 @@ export default class Model {
         // Needed at Root level
         const constraintObject = constraintSimpleObject.constraint;
 
-        if (typeof constraintObject === 'object') {
-          this.rootConstraintGroup = ConstraintGroupModel.buildModelFromJson(ROOT_CONSTRAINT_GROUP_ID, constraintObject, pathToPropertyMap);
-        } else if (typeof constraintObject === 'string') {
+        if (typeof constraintObject === "object") {
+          this.rootConstraintGroup = ConstraintGroupModel.buildModelFromJson(
+            ROOT_CONSTRAINT_GROUP_ID,
+            constraintObject,
+            pathToPropertyMap,
+          );
+        } else if (typeof constraintObject === "string") {
           // Simple constraint form (constraint=property)
-          this.rootConstraintGroup.setConstraintList(ConstraintModel.buildModelFromString(constraintObject, pathToPropertyMap));
+          this.rootConstraintGroup.setConstraintList(
+            ConstraintModel.buildModelFromString(constraintObject, pathToPropertyMap),
+          );
         } else {
-          throw new Error(`Parsed constraint is not an object, nor a string.  Datatype = ${typeof constraintObject}`);
+          throw new Error(
+            `Parsed constraint is not an object, nor a string.  Datatype = ${typeof constraintObject}`,
+          );
         }
       }
     }
-
   }
 
   // Json Structure, (older format)
@@ -228,36 +245,35 @@ export default class Model {
   //  */
   //
 
-  renderSyntax () {
-    let syntax = '';
+  renderSyntax() {
+    let syntax = "";
     if (this.projectionGroup) {
       syntax = this.projectionGroup.renderSyntax();
     }
 
     syntax += this.rootConstraintGroup.renderSyntax();
-    if (syntax === '()') {
-      syntax = '';
+    if (syntax === "()") {
+      syntax = "";
     }
 
     return syntax;
   }
 
-  renderQueryString () {
+  renderQueryString() {
     const applySpecialHandlerConversions = false; // For UI not server
     return this.buildQueryString(applySpecialHandlerConversions, false);
   }
 
-  buildQueryString (applySpecialHandlerConversions, applyUrlEncoding) {
-    let syntax = '';
+  buildQueryString(applySpecialHandlerConversions, applyUrlEncoding) {
+    let syntax = "";
     if (this.projectionGroup && this.projectionGroup.getQueryElementCount() > 0) {
       if (applyUrlEncoding) {
         syntax = this.projectionGroup.renderQueryString(applySpecialHandlerConversions);
-        syntax += encodeURIComponent('&');
+        syntax += encodeURIComponent("&");
       } else {
         syntax = this.projectionGroup.renderQueryStringDecoded(applySpecialHandlerConversions);
-        syntax += '&';
+        syntax += "&";
       }
-
     }
 
     if (applyUrlEncoding) {
@@ -269,50 +285,54 @@ export default class Model {
     return syntax;
   }
 
-  renderSimpleJSON () {
+  renderSimpleJSON() {
     const applySpecialHandlerConversions = false; // For UI not server
 
     const modelerObject = {
-      constraintGroup: this.rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions)
+      constraintGroup: this.rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions),
     };
 
     if (this.projectionGroup) {
-      modelerObject.projectionGroup = this.projectionGroup.renderSimpleObject(applySpecialHandlerConversions);
+      modelerObject.projectionGroup = this.projectionGroup.renderSimpleObject(
+        applySpecialHandlerConversions,
+      );
     }
 
     return JSON.stringify(modelerObject);
   }
 
-  renderFlattenedObjectList () {
+  renderFlattenedObjectList() {
     const applySpecialHandlerConversions = false;
     const list = this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions);
     log.dir(list);
     return this.renderObjectArray(list);
   }
 
-  renderStructuredObjectList () {
+  renderStructuredObjectList() {
     const applySpecialHandlerConversions = false;
-    const list = this.rootConstraintGroup.renderStructuredObjectList(applySpecialHandlerConversions);
+    const list = this.rootConstraintGroup.renderStructuredObjectList(
+      applySpecialHandlerConversions,
+    );
     log.dir(list);
     return this.renderObjectArray(list);
   }
 
-  renderObjectArray (list) {
-    let syntax = '<ol>';
+  renderObjectArray(list) {
+    let syntax = "<ol>";
     for (const entry of list) {
-      syntax += '<li>';
+      syntax += "<li>";
       if (Array.isArray(entry)) {
         syntax += this.renderObjectArray(entry);
       } else {
         syntax += `${entry.objectId} - ${entry.constraint}`;
       }
-      syntax += '</li>';
+      syntax += "</li>";
     }
-    syntax += '</ol>';
+    syntax += "</ol>";
     return syntax;
   }
 
-  validate () {
+  validate() {
     let promiseResponse;
 
     let validProjectionGroup = true;
@@ -323,23 +343,28 @@ export default class Model {
     if (validProjectionGroup) {
       const applySpecialHandlerConversions = true; // Sending to server
 
-      const successFunction = data => {
+      const successFunction = (data) => {
         const list = data.data;
-        list.forEach(entry => {
+        list.forEach((entry) => {
           const constraint = this.findConstraintById(entry.objectId);
           if (constraint) {
             constraint.setVerifiedValidity(entry.valid, entry.invalidReason);
           } else {
-            log.warn('Server validate response contained an objectId which is not found in our model...', entry.objectId);
+            log.warn(
+              "Server validate response contained an objectId which is not found in our model...",
+              entry.objectId,
+            );
           }
         });
 
         return data;
       };
 
-      const constraintList = JSON.stringify(this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions));
+      const constraintList = JSON.stringify(
+        this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions),
+      );
 
-      log.log('validate - constraintList', constraintList);
+      log.log("validate - constraintList", constraintList);
 
       promiseResponse = this.constraintModelerResource
         .validateConstraintModeler(this.objectName, constraintList)
@@ -353,16 +378,17 @@ export default class Model {
     return promiseResponse;
   }
 
-  apply () {
+  apply() {
     const applySpecialHandlerConversions = true; // Server side call
-    const urlEncodedConstraintQueryString = this.buildQueryString(applySpecialHandlerConversions, true);
+    const urlEncodedConstraintQueryString = this.buildQueryString(
+      applySpecialHandlerConversions,
+      true,
+    );
 
-    const successFunction = data => data;
+    const successFunction = (data) => data;
     return this.constraintModelerResource
       .loadResultWithConstraints(this.objectName, urlEncodedConstraintQueryString)
       .then(successFunction)
       .catch(defaultErrorFunction);
   }
-
 }
-

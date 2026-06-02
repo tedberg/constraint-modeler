@@ -1,25 +1,18 @@
-function LoggingFacade () {
+function LoggingFacade() {
+  const DEBUG = "DEBUG";
+  const INFO = "INFO";
+  const WARN = "WARN";
+  const ERROR = "ERROR";
+  const OFF = "OFF";
 
-  const DEBUG = 'DEBUG';
-  const INFO = 'INFO';
-  const WARN = 'WARN';
-  const ERROR = 'ERROR';
-  const OFF = 'OFF';
-
-  const LOG_LEVELS = [
-    DEBUG,
-    INFO,
-    WARN,
-    ERROR,
-    OFF
-  ];
+  const LOG_LEVELS = [DEBUG, INFO, WARN, ERROR, OFF];
 
   const LOG_VALUES = {
     DEBUG: 4,
     INFO: 3,
     WARN: 2,
     ERROR: 1,
-    OFF: 0
+    OFF: 0,
   };
 
   this.setLogLevel = (level) => {
@@ -62,15 +55,12 @@ function LoggingFacade () {
       console.error(message, ...args);
     }
   };
-
 }
 
 const instance = new LoggingFacade();
 
 // instance.setLogLevel('WARN');
 
-instance.setLogLevel('INFO');
+instance.setLogLevel("INFO");
 
-export {
-  instance as log
-};
+export { instance as log };

@@ -1,4 +1,4 @@
-import { log } from '@/common/LoggingFacade';
+import { log } from "@/common/LoggingFacade";
 
 /**
  * Takes a JSON string argument and converts it to an object with error handling.
@@ -6,20 +6,22 @@ import { log } from '@/common/LoggingFacade';
  * @param jsonString A JSON String
  * @return {object}
  */
-const parseJSON = jsonString => {
+const parseJSON = (jsonString) => {
   let jsonObject = {};
   if (jsonString && jsonString.length > 0) {
     try {
       jsonObject = JSON.parse(jsonString);
     } catch (error) {
-      log.error(`Info: could not parse Json string with value of (${jsonString}). Message is: ${error.message}`);
+      log.error(
+        `Info: could not parse Json string with value of (${jsonString}). Message is: ${error.message}`,
+      );
     }
   }
   return jsonObject;
 };
 
 const DEFAULT_SAVE_FUNCTION = (filterObject, formData) => {
-  log.log('Save Function Placeholder...', filterObject, formData);
+  log.log("Save Function Placeholder...", filterObject, formData);
   return Promise.resolve();
 };
 
@@ -28,29 +30,28 @@ const DEFAULT_SAVE_FUNCTION = (filterObject, formData) => {
  * Usage is optional, only providing support when the ability to save constraint modeler models is desired.
  */
 export default class ModelPersistence {
-
-  constructor (saveFunction) {
+  constructor(saveFunction) {
     // Values for saving constraint models (if supported)
     this.saveFunction = saveFunction || DEFAULT_SAVE_FUNCTION;
-    this.persistentId = null;    // If we load constraint model from persistence layer, set the id and name.
+    this.persistentId = null; // If we load constraint model from persistence layer, set the id and name.
     this.persistentName = null;
   }
 
   /**
    * Save the current constraint model.
    */
-  save (model, isValid = true) {
+  save(model, isValid = true) {
     return this.saveInternal(this.persistentId, model, isValid);
   }
 
   /**
    * Save the current constraint model as a newly saved instance.
    */
-  saveAs (model, isValid = true) {
+  saveAs(model, isValid = true) {
     return this.saveInternal(null, model, isValid);
   }
 
-  saveInternal (persistentId, model, isValid) {
+  saveInternal(persistentId, model, isValid) {
     //let applySpecialHandlerConversions = false; // Don't save with server conversions
 
     // Convert to 2.8 format
@@ -59,17 +60,21 @@ export default class ModelPersistence {
 
     const filterObject = {
       rootObject: model.objectName,
-      constraintValue: JSON.stringify(ModelPersistence.extractConstraintFromModelerObject(modelerObject)),
+      constraintValue: JSON.stringify(
+        ModelPersistence.extractConstraintFromModelerObject(modelerObject),
+      ),
       logicalSyntax: constraintSyntax,
-      valid: isValid
+      valid: isValid,
     };
 
     if (model.projectionGroup) {
-      filterObject.projectionValue = JSON.stringify(ModelPersistence.extractProjectionFromModelerObject(modelerObject));
+      filterObject.projectionValue = JSON.stringify(
+        ModelPersistence.extractProjectionFromModelerObject(modelerObject),
+      );
     }
 
     const formData = {
-      id: persistentId
+      id: persistentId,
     };
 
     return this.saveFunction(filterObject, formData); // Call the registered save function.
@@ -85,7 +90,10 @@ export default class ModelPersistence {
    * @param projectionGroupSimpleObject output of ProjectionGroup.renderSimpleObject(false)
    * @return {object}
    */
-  static convertToModelerObjectFromSimpleObjects (constraintGroupSimpleObject, projectionGroupSimpleObject) {
+  static convertToModelerObjectFromSimpleObjects(
+    constraintGroupSimpleObject,
+    projectionGroupSimpleObject,
+  ) {
     const modelerObject = {};
 
     if (constraintGroupSimpleObject && constraintGroupSimpleObject.constraintGroup) {
@@ -115,10 +123,13 @@ export default class ModelPersistence {
    * @param projectionJSON A JSON String modeling the projection
    * @return {object}
    */
-  static convertToModelerObjectFromJSON (constraintJSON, projectionJSON) {
+  static convertToModelerObjectFromJSON(constraintJSON, projectionJSON) {
     const constraintObject = parseJSON(constraintJSON);
     const projectionObject = parseJSON(projectionJSON);
-    return ModelPersistence.convertToModelerObjectFromSimpleObjects(constraintObject, projectionObject);
+    return ModelPersistence.convertToModelerObjectFromSimpleObjects(
+      constraintObject,
+      projectionObject,
+    );
   }
 
   /**
@@ -140,16 +151,23 @@ export default class ModelPersistence {
    *
    * @returns {Object}
    */
-  static convertToModelerObject ({ rootConstraintGroup, projectionGroup }) {
+  static convertToModelerObject({ rootConstraintGroup, projectionGroup }) {
     const applySpecialHandlerConversions = false; // For UI not server
 
-    const constraintGroupSimpleObject = rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions);
+    const constraintGroupSimpleObject = rootConstraintGroup.renderSimpleObject(
+      applySpecialHandlerConversions,
+    );
     let projectionGroupSimpleObject = null;
     if (projectionGroup) {
-      projectionGroupSimpleObject = projectionGroup.renderSimpleObject(applySpecialHandlerConversions);
+      projectionGroupSimpleObject = projectionGroup.renderSimpleObject(
+        applySpecialHandlerConversions,
+      );
     }
 
-    return ModelPersistence.convertToModelerObjectFromSimpleObjects(constraintGroupSimpleObject, projectionGroupSimpleObject);
+    return ModelPersistence.convertToModelerObjectFromSimpleObjects(
+      constraintGroupSimpleObject,
+      projectionGroupSimpleObject,
+    );
   }
 
   /**
@@ -157,9 +175,9 @@ export default class ModelPersistence {
    * @param modelerObject
    * @returns {Object}
    */
-  static extractProjectionFromModelerObject (modelerObject) {
+  static extractProjectionFromModelerObject(modelerObject) {
     return {
-      projectionGroup: modelerObject.projectionGroup
+      projectionGroup: modelerObject.projectionGroup,
     };
   }
 
@@ -168,11 +186,9 @@ export default class ModelPersistence {
    * @param modelerObject
    * @returns {Object}
    */
-  static extractConstraintFromModelerObject (modelerObject) {
+  static extractConstraintFromModelerObject(modelerObject) {
     return {
-      constraintGroup: modelerObject.constraintGroup
+      constraintGroup: modelerObject.constraintGroup,
     };
   }
-
 }
-

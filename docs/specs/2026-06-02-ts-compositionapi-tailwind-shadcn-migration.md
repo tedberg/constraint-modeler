@@ -1,7 +1,7 @@
 # Migration Spec: TypeScript + Composition API + Tailwind + ShadCN
 
-**Date:** 2026-06-02  
-**Branch:** feat/vue3 → new feature branch per phase  
+**Date:** 2026-06-02
+**Branch:** feat/vue3 → new feature branch per phase
 **Phases:** 2 (logic modernization, then visual layer swap)
 
 ---
@@ -37,7 +37,16 @@ All dependencies bumped to current stable versions as part of Phase 1:
 
 ### axios → native fetch
 
-`ApiResource.js` uses axios for a single operation: `GET` with `Accept: application/json`. The `paramsSerializer` is dead code (returns `''`, has a commented-out `Qs.stringify`). Replace with native `fetch` — removes axios as a dep and peerDep entirely.
+`ApiResource.js` uses axios for a single operation: `GET` with `Accept: application/json`. Replace with native `fetch` — removes axios as a dep and peerDep entirely.
+
+**Intentional behavior change — document and test first:** The current `paramsSerializer` returns `''`, which means any `params` object passed to `getJsonWithParams` is silently dropped — query parameters are never sent. This appears to be an incomplete stub (the commented-out `Qs.stringify` confirms intent to fix it). The fetch replacement intentionally corrects this: params will now be serialized via `URLSearchParams` and appended to the URL.
+
+Before implementing the migration, add unit tests to `ApiResource` covering:
+1. No params → URL is unchanged, no `?` appended
+2. Non-null params → serialized correctly as a query string
+3. URL already starting with `/api` → prefix not doubled
+
+These tests document the intended contract and prevent silent regressions if the behavior is revisited.
 
 ```typescript
 // ApiResource.ts — after
@@ -186,6 +195,8 @@ All `<style scoped lang="scss">` → `<style scoped>` (plain CSS). SASS features
 
 ### Lint/format parity with afa-client
 
+**This must be completed first, before any code migrations begin.** ESLint's `vue/prefer-use-template-ref: error` and TypeScript parser rules need to be active from the first converted component so violations surface immediately rather than accumulating silently.
+
 **New devDependencies:**
 - `eslint`
 - `eslint-plugin-vue`
@@ -196,12 +207,16 @@ All `<style scoped lang="scss">` → `<style scoped>` (plain CSS). SASS features
 
 **New config file:** `eslint.config.js` — copy afa-client's config verbatim. The shadcn-specific rule (`vue/require-default-prop: off` for `src/components/ui/**`) is already appropriate; it will apply once shadcn components are added in Phase 2.
 
+**New config file:** `tsconfig.json` — as specified in the TypeScript config section above. Required before ESLint's TypeScript parser can resolve types.
+
 **Updated scripts in `package.json`:**
 ```json
 "lint": "oxlint src && eslint src",
 "format": "oxfmt src/",
 "format:check": "oxfmt --check src/"
 ```
+
+**Verification:** Run `npm run lint` and `npm run format:check` against the unmodified codebase before touching any component. Fix any pre-existing violations first so the baseline is clean.
 
 **Note:** `vue/prefer-use-template-ref` is set to `error` in the eslint config — use `useTemplateRef()` rather than string refs in all new `<script setup>` components.
 

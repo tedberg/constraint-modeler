@@ -2,45 +2,40 @@
  *  Class to support the concept of Enums in JavaScript.
  */
 export var Enum = function () {
-  'use strict';
-
-  const self = this;
+  "use strict";
 
   /**
    * Takes an Enum object and returns a value Array.
    */
   this.enumToValueList = () => {
     const valueArray = [];
-    const keys = Object.keys(self);
-    keys.map(key => {
-      const item = self[key];
-      if (typeof item !== 'function') {
+    Object.keys(this).map((key) => {
+      const item = (this as any)[key];
+      if (typeof item !== "function") {
         valueArray.push(item);
       }
     });
-
     return valueArray;
   };
 
-  this.getType = key => {
-    const val = self[key] || null;
+  this.getType = (key) => {
+    const val = (this as any)[key] || null;
     if (!val) {
-      console.error('Invalid key passed.  Key = ', key);
+      console.error("Invalid key passed.  Key = ", key);
     }
     return val;
   };
 
-  this.getTypeFromAlias = alias => {
-    let prop;
-    for (prop in self) {
-      if (self.hasOwnProperty(prop)) {
-        const item = self[prop];
-        if (typeof item !== 'function' && item.alias === alias) {
+  this.getTypeFromAlias = (alias) => {
+    for (const prop in this) {
+      if (this.hasOwnProperty(prop)) {
+        const item = (this as any)[prop];
+        if (typeof item !== "function" && item.alias === alias) {
           return item;
         }
       }
     }
-    console.error('Invalid alias passed.  Alias = ', alias);
+    console.error("Invalid alias passed.  Alias = ", alias);
     return null;
   };
 };
@@ -59,12 +54,12 @@ export var EnumValue = function (key, label, alias) {
 };
 
 export var GeneralEnum = (function () {
-  'use strict';
+  "use strict";
 
   EnumDefs.prototype = Object.create(Enum.prototype);
   EnumDefs.prototype.constructor = EnumDefs;
 
-  function EnumDefs () {
+  function EnumDefs() {
     // Call the parent constructor
     Enum.call(this);
 
@@ -72,19 +67,19 @@ export var GeneralEnum = (function () {
      * Constant used to represent when a choice of null or NONE is made from an Enum based menu.
      * @type {EnumValue}
      */
-    this.NONE = new EnumValue('NONE', 'None', 'none');
+    this.NONE = new EnumValue("NONE", "None", "none");
 
     /**
      * Static method that can return values for any passed Enum.
      * Takes an Enum object and returns a value Array.
      * @param obj the Enum object used to supply the values.
      */
-    this.enumToValueList = obj => {
+    this.enumToValueList = (obj) => {
       const valueArray = [];
       const keys = Object.keys(obj);
-      keys.map(key => {
+      keys.map((key) => {
         const item = obj[key];
-        if (typeof item !== 'function') {
+        if (typeof item !== "function") {
           valueArray.push(item);
         }
       });
@@ -99,9 +94,9 @@ export var GeneralEnum = (function () {
 
   let returnValue = new EnumDefs();
 
-  if (typeof Object.freeze === 'function') {
+  if (typeof Object.freeze === "function") {
     returnValue = Object.freeze(returnValue);
   }
 
   return returnValue;
-}());
+})();

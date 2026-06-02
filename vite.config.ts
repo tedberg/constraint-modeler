@@ -14,7 +14,7 @@ export default defineConfig(({ mode }) => {
       },
       build: {
         lib: {
-          entry: resolve(__dirname, 'src/components/entry.js'),
+          entry: resolve(__dirname, 'src/components/entry.ts'),
           name: 'ConstraintModeler',
           formats: ['umd', 'es'],
           fileName: (format) =>
@@ -23,13 +23,12 @@ export default defineConfig(({ mode }) => {
               : 'constraint-modeler.common.js',
         },
         rollupOptions: {
-          external: ['vue', 'vue-router', 'bootstrap-vue-next', 'axios'],
+          external: ['vue', 'vue-router', 'bootstrap-vue-next'],
           output: {
             exports: 'named',
             globals: {
               vue: 'Vue',
               'bootstrap-vue-next': 'BootstrapVueNext',
-              axios: 'axios',
             },
           },
         },

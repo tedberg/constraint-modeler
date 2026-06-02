@@ -1,20 +1,32 @@
 <template>
-  <div class="navbar navbar-expand-lg navbar-dark bg-dark projection-bar mb-1 px-2" :id="projectionId" data-test="projection" data-testid="projection">
+  <div
+    class="navbar navbar-expand-lg navbar-dark bg-dark projection-bar mb-1 px-2"
+    :id="projectionId"
+    data-test="projection"
+    data-testid="projection"
+  >
     <div class="collapse navbar-collapse">
-
       <ul class="navbar-nav">
         <li class="nav-item dropdown" :id="aggregateId">
-          <query-function-menu :query-function="queryFunctionEnum"
-                               :template-prefix="templatePrefix"
-                               v-on:setQueryFunction="setQueryFunctionEnum"/>
+          <query-function-menu
+            :query-function="queryFunctionEnum"
+            :template-prefix="templatePrefix"
+            v-on:setQueryFunction="setQueryFunctionEnum"
+          />
         </li>
 
-        <li class="nav-item active dropdown" :id="propertyId" data-testid="projection-property-menu">
-          <property-menu :property="property"
-                         :property-list="propertyList"
-                         :multi-property-list="multiPropertyList"
-                         :template-prefix="templatePrefix"
-                         v-on:setProperty="setProperty"/>
+        <li
+          class="nav-item active dropdown"
+          :id="propertyId"
+          data-testid="projection-property-menu"
+        >
+          <property-menu
+            :property="property"
+            :property-list="propertyList"
+            :multi-property-list="multiPropertyList"
+            :template-prefix="templatePrefix"
+            v-on:setProperty="setProperty"
+          />
         </li>
       </ul>
 
@@ -26,86 +38,61 @@
         <form class="form-inline">
           <button class="btn btn-sm btn-secondary" @click.prevent="removeProjection">X</button>
         </form>
-
       </ul>
     </div>
   </div>
 </template>
 
-<script>
-  import QueryFunctionMenu from '../shared/QueryFunctionMenu.vue';
-  import PropertyMenu from '../shared/PropertyMenu.vue';
-  import ProjectionModel from '../../model/ProjectionModel';
+<script setup lang="ts">
+import { computed, inject } from "vue";
+import QueryFunctionMenu from "../shared/QueryFunctionMenu.vue";
+import PropertyMenu from "../shared/PropertyMenu.vue";
+import ProjectionModel from "../../model/ProjectionModel";
+import { emitterKey } from "../../keys";
 
-  export default {
-    name: 'Projection',
-    components: { PropertyMenu, QueryFunctionMenu },
-    inject: ['modelListener'],
-    props: {
-      templatePrefix: {
-        type: String,
-        default: ''
-      },
-      projectionModel: {
-        type: Object,
-        required: true,
-        validator: model => {
-          return model instanceof ProjectionModel;
-        }
-      },
-      propertyList: {
-        type: Array
-      },
-      multiPropertyList: {
-        type: Array
-      },
-      pathToPropertyMap: {
-        type: Object
-      }
-    },
-    data: () => {
-      return {};
-    },
-    computed: {
-      property () {
-        return this.projectionModel.getProperty() || null;
-      },
-      objectId () {
-        return this.projectionModel.getObjectId();
-      },
-      queryFunctionEnum () {
-        return this.projectionModel.getQueryFunction();
-      },
-      projectionId () {
-        return this.templatePrefix + '_projection-bar-' + this.objectId;
-      },
-      aggregateId () {
-        return this.templatePrefix + '_aggregate-menu-' + this.objectId;
-      },
-      propertyId () {
-        return this.templatePrefix + '_property-menu-' + this.objectId;
-      }
-    },
-    methods: {
-      setQueryFunctionEnum (enumKey) {
-        this.modelListener.emitter.emit('setProjectionQueryFunctionEnum', [this.projectionModel, enumKey]);
-      },
-      setProperty (property) {
-        this.modelListener.emitter.emit('setProjectionProperty', [this.projectionModel, property]);
-      },
-      removeProjection () {
-        this.$emit('removeSelf');
-      }
-    }
-  };
+const props = defineProps({
+  templatePrefix: { type: String, default: "" },
+  projectionModel: {
+    type: Object,
+    required: true,
+    validator: (m: unknown) => m instanceof ProjectionModel,
+  },
+  propertyList: { type: Array },
+  multiPropertyList: { type: Array },
+  pathToPropertyMap: { type: Object },
+});
+
+const emit = defineEmits(["removeSelf"]);
+
+const emitter = inject(emitterKey)!;
+
+const property = computed(() => props.projectionModel.getProperty() || null);
+const objectId = computed(() => props.projectionModel.getObjectId());
+const queryFunctionEnum = computed(() => props.projectionModel.getQueryFunction());
+const projectionId = computed(() => `${props.templatePrefix}_projection-bar-${objectId.value}`);
+const aggregateId = computed(() => `${props.templatePrefix}_aggregate-menu-${objectId.value}`);
+const propertyId = computed(() => `${props.templatePrefix}_property-menu-${objectId.value}`);
+
+function setQueryFunctionEnum(enumKey: string) {
+  emitter.emit("setProjectionQueryFunctionEnum", [
+    props.projectionModel as ProjectionModel,
+    enumKey,
+  ]);
+}
+function setProperty(property: any) {
+  emitter.emit("setProjectionProperty", [props.projectionModel as ProjectionModel, property]);
+}
+function removeProjection() {
+  emit("removeSelf");
+}
 </script>
 
-<style scoped lang="scss">
-  div.navbar {
-    margin-left: 15px;
-  }
+<style scoped>
+div.navbar {
+  margin-left: 15px;
+}
 
-  .projection-bar {
-    width: 400px;
-  }
+.projection-bar {
+  width: 400px;
+}
 </style>

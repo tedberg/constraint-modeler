@@ -1,11 +1,10 @@
-import { DataTypeEnum } from './enum/DataTypeEnum';
+import { DataTypeEnum } from "./enum/DataTypeEnum";
 
 /**
  *  Property models a single field in a Class.
  */
 export default class Property {
-
-  constructor (obj) {
+  constructor(obj) {
     const prop = obj || {};
 
     this.path = prop.path || undefined;
@@ -20,20 +19,19 @@ export default class Property {
 
     this.relationship = prop.relationship || false;
     this.multiProperty = prop.multiProperty || false;
-    this.nestedPropertyList = prop.nestedPropertyList || undefined;  // nested list is just being set as straight JSON, not converted recursively into real Property instances.
-    this.nestedMultiPropertyList = prop.nestedMultiPropertyList || undefined;  // nested list is just being set as straight JSON, not converted recursively into real Property instances.
+    this.nestedPropertyList = prop.nestedPropertyList || undefined; // nested list is just being set as straight JSON, not converted recursively into real Property instances.
+    this.nestedMultiPropertyList = prop.nestedMultiPropertyList || undefined; // nested list is just being set as straight JSON, not converted recursively into real Property instances.
   }
 
-  isObjectType () {
-    return this.simpleDataType === 'object';
+  isObjectType() {
+    return this.simpleDataType === "object";
   }
 
-  getSimpleDataTypeEnum () {
+  getSimpleDataTypeEnum() {
     return DataTypeEnum.getTypeFromAlias(this.simpleDataType);
   }
 
-  getServerDataType () {
+  getServerDataType() {
     return this.dataType;
   }
-
 }

@@ -1,7 +1,6 @@
-import AbstractConstraintModelerResource from './AbstractConstraintModelerResource';
+import AbstractConstraintModelerResource from "./AbstractConstraintModelerResource";
 
 export default class ConstraintModelerResource extends AbstractConstraintModelerResource {
-
   // Used by ValueInput.vue
   /**
    * Loads a list of values, each having an identifyingValue and displayValue attribute.
@@ -12,7 +11,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   "data": [{"identifyingValue": "DISABLED", "displayValue": "Disabled"}, {"identifyingValue": "ENABLED", "displayValue": "Enabled"}],
    * }
    */
-  loadValueList (serverDataType) {
+  loadValueList(serverDataType) {
     return this.getJson(`/objects/${serverDataType}/values`);
   }
 
@@ -68,7 +67,7 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   ]
    * }
    */
-  loadProperties (objectName) {
+  loadProperties(objectName) {
     return this.getJson(`/api/objects/${objectName}/classInfo`);
   }
 
@@ -86,9 +85,9 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *   ]
    * }
    */
-  validateConstraintModeler (className, constraintList) {
+  validateConstraintModeler(className, constraintList) {
     const url = `/objects/${className}/constraintModeler/validate`;
-    const queryString = 'constraintList=' + encodeURIComponent(constraintList);
+    const queryString = "constraintList=" + encodeURIComponent(constraintList);
     return this.getJson(`${url}?${queryString}`);
   }
 
@@ -109,9 +108,8 @@ export default class ConstraintModelerResource extends AbstractConstraintModeler
    *  ]
    * }
    */
-  loadResultWithConstraints (className, urlEncodedConstraintQueryString) {
+  loadResultWithConstraints(className, urlEncodedConstraintQueryString) {
     const url = `/objects/${className}`;
     return this.getJson(`${url}?${urlEncodedConstraintQueryString}`);
   }
-
 }

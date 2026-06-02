@@ -22,6 +22,9 @@ npm-debug.log*
 /playwright-report/
 /test-results/
 
+# Superpowers brainstorming temp files
+.superpowers/
+
 # Unconfigured Editors
 .idea/
 *.suo

@@ -117,4 +117,4 @@ Vue 3.5 / Vite 8 / bootstrap-vue-next 0.45 / Vue Router 4 / mitt / Vitest 4 / Pl
 
 ## Superpowers / AI tooling
 
-Design specs and implementation plans live in `.claude/superpowers/specs/` and `.claude/superpowers/plans/` (not in `docs/`, which is reserved for GitHub Pages content).
+Design specs and implementation plans live in `docs/specs/` and `docs/plans/`.

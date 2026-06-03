@@ -1,71 +1,56 @@
 <template>
   <div
-    class="navbar navbar-expand-lg navbar-dark bg-dark constraint-bar mb-1 px-2"
+    class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 ml-4 constraint-bar"
     :id="constraintId"
     data-test="constraint"
   >
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown" :id="aggregateId" data-test="query-function-menu">
-          <query-function-menu
-            :query-function="queryFunctionEnum"
-            :template-prefix="templatePrefix"
-            v-on:setQueryFunction="setQueryFunctionEnum"
-          />
-        </li>
-
-        <li class="nav-item active dropdown" :id="propertyId" data-test="property-menu">
-          <property-menu
-            :property="property"
-            :property-list="propertyList"
-            :multi-property-list="multiPropertyList"
-            :template-prefix="templatePrefix"
-            v-on:setProperty="setProperty"
-          />
-        </li>
-
-        <li class="nav-item dropdown" :id="comparisonId" data-test="comparison-menu">
-          <comparison-menu
-            :comparison-type="comparisonType"
-            :data-type="dataType"
-            :query-function="queryFunctionEnum"
-            :property="property"
-            :template-prefix="templatePrefix"
-            v-on:setComparator="setComparator"
-          />
-        </li>
-      </ul>
-
-      <form
-        class="form-inline navbar-search pull-left"
-        :id="valueEntriesId"
-        data-test="value-input"
-        data-testid="value-input"
-      >
-        <value-input
-          :property="property"
-          :comparison-type="comparisonType"
-          :value-array="valueArray"
+    <div class="flex items-center gap-1">
+      <div :id="aggregateId" data-test="query-function-menu">
+        <query-function-menu
+          :query-function="queryFunctionEnum"
           :template-prefix="templatePrefix"
-          :object-id="objectId"
-          v-on:updateValueArray="updateValueArray"
+          @setQueryFunction="setQueryFunctionEnum"
         />
-      </form>
+      </div>
+      <div :id="propertyId" data-test="property-menu">
+        <property-menu
+          :property="property"
+          :property-list="propertyList"
+          :multi-property-list="multiPropertyList"
+          :template-prefix="templatePrefix"
+          @setProperty="setProperty"
+        />
+      </div>
+      <div :id="comparisonId" data-test="comparison-menu">
+        <comparison-menu
+          :comparison-type="comparisonType"
+          :data-type="dataType"
+          :query-function="queryFunctionEnum"
+          :property="property"
+          :template-prefix="templatePrefix"
+          @setComparator="setComparator"
+        />
+      </div>
+    </div>
 
-      <ul class="navbar-nav ms-auto">
-        <li>
-          <div class="validity">
-            <div v-if="isValid == null"></div>
-            <div v-else-if="isValid" class="valid"><img :src="acceptIcon" alt="valid" /></div>
-            <div v-else class="invalid">
-              <img :src="errorIcon" alt="invalid" :title="invalidReason" />
-            </div>
-          </div>
-        </li>
-        <form class="form-inline ms-2">
-          <button class="btn btn-sm btn-secondary" @click.prevent="removeConstraint">X</button>
-        </form>
-      </ul>
+    <div :id="valueEntriesId" data-test="value-input" data-testid="value-input">
+      <value-input
+        :property="property"
+        :comparison-type="comparisonType"
+        :value-array="valueArray"
+        :template-prefix="templatePrefix"
+        :object-id="objectId"
+        @updateValueArray="updateValueArray"
+      />
+    </div>
+
+    <div class="ml-auto flex items-center gap-1">
+      <div class="validity">
+        <div v-if="isValid == null"></div>
+        <div v-else-if="isValid" class="text-green-500"><CheckCircle2 :size="16" /></div>
+        <div v-else class="text-red-500" :title="invalidReason"><XCircle :size="16" /></div>
+      </div>
+      <Button variant="secondary" size="xs" @click.prevent="removeConstraint">X</Button>
     </div>
   </div>
 </template>
@@ -73,14 +58,14 @@
 <script setup lang="ts">
 import { computed, inject } from "vue";
 import { toRaw } from "vue";
-import acceptIcon from "@/assets/images/icons/accept.png";
-import errorIcon from "@/assets/images/icons/error.png";
 import ComparisonMenu from "./ComparisonMenu.vue";
 import QueryFunctionMenu from "../shared/QueryFunctionMenu.vue";
 import ValueInput from "./ValueInput.vue";
 import PropertyMenu from "../shared/PropertyMenu.vue";
 import ConstraintModel from "../../model/ConstraintModel";
 import { emitterKey } from "../../keys";
+import { Button } from "@/components/ui/button";
+import { CheckCircle2, XCircle } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
@@ -139,10 +124,6 @@ function removeConstraint() {
 </script>
 
 <style scoped>
-div.navbar {
-  margin-left: 15px;
-}
-
 .constraint-bar {
   max-width: 800px;
 }

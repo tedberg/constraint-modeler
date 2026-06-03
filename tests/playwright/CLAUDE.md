@@ -1,31 +1,43 @@
 # Playwright Tests — Selector Patterns
 
-## Bootstrap-Vue dropdown toggles
+## Dropdown triggers (shadcn DropdownMenuTrigger)
 
-Cypress clicks the outer `<li>` wrapper and propagates to the first interactable child.
-Playwright clicks the exact center of the given element, which may miss the toggle `<a>` inside.
-
-**Pattern for Bootstrap-Vue `b-nav-item-dropdown` toggles:**
+shadcn's `DropdownMenuTrigger` renders a `<button>` element. Always target the `<button>` inside the wrapper div, not the wrapper div itself.
 
 ```typescript
-// BAD — Playwright's center-click on the <li> may miss the toggle <a>
+// GOOD — targets the <button> rendered by DropdownMenuTrigger
+await page.locator('[data-test="comparison-menu"] button').click();
+await page.locator('[data-test="property-menu"] button').click();
+await page.locator('[data-test="query-function-menu"] button').click();
+
+// BAD — getByTestId targets the wrapper <div>, not the trigger button
 await page.getByTestId('comparison-menu').click();
-await page.getByTestId('comparison-menu').locator('.dropdown-toggle').click();
-
-// GOOD — combined CSS selector targets the <a> directly
-await page.locator('[data-test="comparison-menu"] a.nav-link').click();
-await page.locator('#test_property-menu-1100 a.nav-link').click();
+await page.getByTestId('property-menu').click();
 ```
 
-The rendered DOM for `b-nav-item-dropdown` is:
+The rendered DOM for a shadcn DropdownMenu is:
 ```
-<li data-test="comparison-menu">           ← outer wrapper (data-test or id)
-  <li class="nav-item b-nav-item-dropdown">
-    <a class="nav-link dropdown-toggle">…</a>  ← actual toggle; click this
-    <ul class="dropdown-menu">…</ul>
-  </li>
-</li>
+<div data-test="comparison-menu">          ← wrapper div
+  <button>Equal</button>                   ← DropdownMenuTrigger: click this
+  <div role="menu">…</div>                 ← DropdownMenuContent (portal)
+</div>
 ```
+
+## Junction menu
+
+```typescript
+// Junction button is the first button in the constraint-group-bar
+// Use Playwright's .first() — CSS :first-child matches multiple elements due to nested parents
+await subGroup.locator('.constraint-group-bar button').first().click();
+```
+
+## Projection property menu
+
+```typescript
+await projection.locator('[data-testid="projection-property-menu"] button').click();
+```
+
+Note: uses `data-testid` (not `data-test`) because the Playwright config's `testIdAttribute` is set to `data-test`, so `getByTestId` won't match `data-testid`.
 
 ## Dropdown item selection
 

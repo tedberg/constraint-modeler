@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
 
+test('Status column formatter renders Yep/Nope instead of ENABLED/DISABLED', async ({ page }) => {
+  await page.goto('/debug');
+
+  await page.getByText('Apply', { exact: true }).first().click();
+
+  const statusCells = page.locator('td').filter({ hasText: /^(Yep|Nope)$/ });
+  await expect(statusCells.first()).toBeVisible();
+});
+
 test('Creates an Age Greater Than 25 constraint', async ({ page }) => {
   await page.goto('/debug');
 
@@ -7,10 +16,10 @@ test('Creates an Age Greater Than 25 constraint', async ({ page }) => {
 
   await page.getByTestId('add-constraint').click();
 
-  await page.getByTestId('property-menu').click();
+  await page.locator('[data-test="property-menu"] button').click();
   await page.getByRole('menuitem', { name: /^Age$/ }).click();
 
-  await page.locator('[data-test="comparison-menu"] .nav-link').click();
+  await page.locator('[data-test="comparison-menu"] button').click();
   await page.getByRole('menuitem', { name: 'Greater Than', exact: true }).click();
 
   const valueInput = page.getByTestId('constraint').first().getByTestId('value-input').locator('input');

@@ -6,11 +6,11 @@ test('Number field shows numeric operators and generates correct syntax', async 
   await page.getByTestId('add-constraint').click();
   const constraint = page.getByTestId('constraint').first();
 
-  await constraint.locator('[data-test="property-menu"] .nav-link').click();
+  await constraint.locator('[data-test="property-menu"] button').click();
   await page.getByRole('menuitem', { name: /^Age$/ }).click();
 
   // Open comparison menu and verify numeric operators are visible
-  await constraint.locator('[data-test="comparison-menu"] .nav-link').click();
+  await constraint.locator('[data-test="comparison-menu"] button').click();
   await expect(page.getByRole('menuitem', { name: 'Less Than', exact: true })).toBeVisible();
   await expect(page.getByRole('menuitem', { name: 'Less Than or Equal', exact: true })).toBeVisible();
   await expect(page.getByRole('menuitem', { name: 'Greater Than', exact: true })).toBeVisible();
@@ -32,10 +32,10 @@ test('String field shows string operators and generates correct syntax', async (
   await page.getByTestId('add-constraint').click();
   const constraint = page.getByTestId('constraint').first();
 
-  await constraint.locator('[data-test="property-menu"] .nav-link').click();
+  await constraint.locator('[data-test="property-menu"] button').click();
   await page.getByRole('menuitem', { name: /^Name$/ }).click();
 
-  await constraint.locator('[data-test="comparison-menu"] .nav-link').click();
+  await constraint.locator('[data-test="comparison-menu"] button').click();
   await expect(page.getByRole('menuitem', { name: 'Like', exact: true })).toBeVisible();
   await expect(page.getByRole('menuitem', { name: 'Not Like', exact: true })).toBeVisible();
 
@@ -53,10 +53,10 @@ test('Enum field shows Equal/Not Equal operators and generates correct syntax', 
   await page.getByTestId('add-constraint').click();
   const constraint = page.getByTestId('constraint').first();
 
-  await constraint.locator('[data-test="property-menu"] .nav-link').click();
+  await constraint.locator('[data-test="property-menu"] button').click();
   await page.getByRole('menuitem', { name: /^Status$/ }).click();
 
-  await constraint.locator('[data-test="comparison-menu"] .nav-link').click();
+  await constraint.locator('[data-test="comparison-menu"] button').click();
   await page.getByRole('menuitem', { name: 'Equal', exact: true }).click();
 
   // Status is an enum — value input renders a <select>

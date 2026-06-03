@@ -184,6 +184,14 @@ watch(serverDataType, () => {
 </script>
 
 <style scoped>
+input,
+select {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 1px 4px;
+}
 input {
   width: 250px;
 }

@@ -1,12 +1,17 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
-import vueJsx from '@vitejs/plugin-vue-jsx';
+import tailwindcss from '@tailwindcss/vite';
 import { resolve } from 'path';
+
+function suppressNodeModuleAnnotations(warning: any, warn: any) {
+  if (warning.code === 'INVALID_ANNOTATION' && warning.id?.includes('node_modules')) return;
+  warn(warning);
+}
 
 export default defineConfig(({ mode }) => {
   if (mode === 'lib') {
     return {
-      plugins: [vue(), vueJsx()],
+      plugins: [tailwindcss(), vue()],
       resolve: {
         alias: {
           '@': resolve(__dirname, 'src'),
@@ -23,12 +28,12 @@ export default defineConfig(({ mode }) => {
               : 'constraint-modeler.common.js',
         },
         rollupOptions: {
-          external: ['vue', 'vue-router', 'bootstrap-vue-next'],
+          external: ['vue', 'vue-router'],
+          onwarn: suppressNodeModuleAnnotations,
           output: {
             exports: 'named',
             globals: {
               vue: 'Vue',
-              'bootstrap-vue-next': 'BootstrapVueNext',
             },
           },
         },
@@ -39,7 +44,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    plugins: [vue(), vueJsx()],
+    plugins: [tailwindcss(), vue()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),
@@ -57,6 +62,9 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       outDir: 'dist',
+      rollupOptions: {
+        onwarn: suppressNodeModuleAnnotations,
+      },
     },
   };
 });

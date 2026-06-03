@@ -1,82 +1,48 @@
 <template>
   <div id="app">
-    <nav id="nav">
-      <b-navbar toggleable="md" variant="dark" data-bs-theme="dark">
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-        <b-navbar-brand href="#">Constraint Modeler Demo</b-navbar-brand>
+    <nav class="flex items-center gap-4 px-4 py-2 bg-zinc-900 text-white text-sm">
+      <span class="font-semibold">Constraint Modeler Demo</span>
+      <RouterLink to="/" class="hover:text-zinc-300">Home</RouterLink>
+      <RouterLink to="/simple" class="hover:text-zinc-300">Simple</RouterLink>
+      <RouterLink to="/debug" class="hover:text-zinc-300">Debug</RouterLink>
+      <RouterLink to="/projection" class="hover:text-zinc-300">Projection</RouterLink>
+      <RouterLink to="/persistent" class="hover:text-zinc-300">Persistent</RouterLink>
+      <RouterLink to="/everything" class="hover:text-zinc-300">Everything</RouterLink>
 
-        <b-collapse id="nav_collapse" is-nav>
-          <b-navbar-nav class="nav nav-pills">
-            <b-nav-item to="/" exact>Home</b-nav-item>
-            <b-nav-item to="/simple">Simple</b-nav-item>
-            <b-nav-item to="/debug">Debug</b-nav-item>
-            <b-nav-item to="/projection">Projection</b-nav-item>
-            <b-nav-item to="/persistent">Persistent</b-nav-item>
-            <b-nav-item to="/everything">Everything</b-nav-item>
-          </b-navbar-nav>
-
-          <!-- Right aligned nav items -->
-          <b-navbar-nav class="ms-auto">
-            <b-nav-item-dropdown>
-              <!-- Using button-content slot -->
-              <template v-slot:button-content>
-                <em>User</em>
-              </template>
-              <b-dropdown-item href="#">Profile</b-dropdown-item>
-              <b-dropdown-item href="#">Signout</b-dropdown-item>
-            </b-nav-item-dropdown>
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
+      <div class="ml-auto">
+        <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <button class="hover:text-zinc-300"><em>User</em></button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem as-child><a href="#">Profile</a></DropdownMenuItem>
+            <DropdownMenuItem as-child><a href="#">Signout</a></DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </nav>
 
-    <div class="container-fluid">
-      <router-view />
+    <div class="p-4">
+      <RouterView />
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+</script>
 
 <style>
-#app {
-  /*font-family: 'Avenir', Helvetica, Arial, sans-serif;*/
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-
-nav {
-  a {
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-
 body {
   overflow-y: scroll;
 }
 
-.constraint-modeler {
-  border-radius: 7px;
-  font-size: 0.9em;
-  padding: 10px;
-  margin: 0 0 15px;
-  background-color: #eee;
-  width: fit-content;
-  height: fit-content;
-  min-width: 400px;
-
-  .title {
-    color: #444;
-    border-radius: 7px;
-    background-color: #ccc;
-    font-size: 1.2em;
-    font-weight: bold;
-    padding: 5px 0 6px;
-    margin: 0 0 5px;
-    text-align: center;
-  }
+a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

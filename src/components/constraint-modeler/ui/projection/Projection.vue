@@ -1,44 +1,30 @@
 <template>
   <div
-    class="navbar navbar-expand-lg navbar-dark bg-dark projection-bar mb-1 px-2"
+    class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 ml-4 projection-bar"
     :id="projectionId"
     data-test="projection"
     data-testid="projection"
   >
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown" :id="aggregateId">
-          <query-function-menu
-            :query-function="queryFunctionEnum"
-            :template-prefix="templatePrefix"
-            v-on:setQueryFunction="setQueryFunctionEnum"
-          />
-        </li>
-
-        <li
-          class="nav-item active dropdown"
-          :id="propertyId"
-          data-testid="projection-property-menu"
-        >
-          <property-menu
-            :property="property"
-            :property-list="propertyList"
-            :multi-property-list="multiPropertyList"
-            :template-prefix="templatePrefix"
-            v-on:setProperty="setProperty"
-          />
-        </li>
-      </ul>
-
-      <ul class="navbar-nav ms-auto">
-        <li>
-          <div class="validity"></div>
-        </li>
-
-        <form class="form-inline">
-          <button class="btn btn-sm btn-secondary" @click.prevent="removeProjection">X</button>
-        </form>
-      </ul>
+    <div class="flex items-center gap-1">
+      <div :id="aggregateId">
+        <query-function-menu
+          :query-function="queryFunctionEnum"
+          :template-prefix="templatePrefix"
+          @setQueryFunction="setQueryFunctionEnum"
+        />
+      </div>
+      <div :id="propertyId" data-testid="projection-property-menu">
+        <property-menu
+          :property="property"
+          :property-list="propertyList"
+          :multi-property-list="multiPropertyList"
+          :template-prefix="templatePrefix"
+          @setProperty="setProperty"
+        />
+      </div>
+    </div>
+    <div class="ml-auto">
+      <Button variant="secondary" size="xs" @click.prevent="removeProjection">X</Button>
     </div>
   </div>
 </template>
@@ -49,6 +35,7 @@ import QueryFunctionMenu from "../shared/QueryFunctionMenu.vue";
 import PropertyMenu from "../shared/PropertyMenu.vue";
 import ProjectionModel from "../../model/ProjectionModel";
 import { emitterKey } from "../../keys";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
@@ -88,10 +75,6 @@ function removeProjection() {
 </script>
 
 <style scoped>
-div.navbar {
-  margin-left: 15px;
-}
-
 .projection-bar {
   width: 400px;
 }

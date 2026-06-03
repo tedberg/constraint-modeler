@@ -1,12 +1,20 @@
 <template>
-  <b-nav-item-dropdown :text="comparisonType.label">
-    <b-dropdown-item
-      v-for="item in comparisonTypeArray"
-      :key="item.key"
-      @click.prevent="setComparator(item.key)"
-      >{{ item.label }}</b-dropdown-item
-    >
-  </b-nav-item-dropdown>
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button variant="menu" size="xs"
+        >{{ comparisonType.label }} <ChevronDown :size="12"
+      /></Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem
+        v-for="item in comparisonTypeArray"
+        :key="item.key"
+        @click.prevent="setComparator(item.key)"
+      >
+        {{ item.label }}
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>
 
 <script setup lang="ts">
@@ -15,6 +23,14 @@ import { ComparisonTypeEnum } from "../../enum/ComparisonTypeEnum";
 import { DataTypeEnum } from "../../enum/DataTypeEnum";
 import { PropertyTypeEnum } from "../../enum/PropertyTypeEnum";
 import Property from "../../Property";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, required: true },
@@ -61,5 +77,3 @@ function setComparator(enumKey: string) {
   emit("setComparator", ComparisonTypeEnum.getType(enumKey));
 }
 </script>
-
-<style scoped></style>

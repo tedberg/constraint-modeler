@@ -1,58 +1,41 @@
 <template>
   <div :class="['constraint-group', { root: isRoot }]" data-test="constraint-group">
     <div
-      class="navbar navbar-expand-lg navbar-dark bg-dark constraint-group-bar mb-1 px-2"
+      class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 constraint-group-bar"
       :id="constraintGroupId"
     >
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <li class="nav-item active dropdown" :id="junctionMenuId">
-            <junction-menu :junction="junction" v-on:setJunction="setJunction" />
-          </li>
-
-          <li class="nav-item btn-group btn-group-sm">
-            <button
-              class="btn btn-sm btn-secondary"
-              data-test="add-constraint"
-              @click.prevent="addConstraint"
-            >
-              + C
-            </button>
-            <button
-              class="btn btn-sm btn-secondary"
-              data-test="add-constraint-group"
-              @click.prevent="addConstraintGroup"
-            >
-              + CG
-            </button>
-          </li>
-        </ul>
-
-        <ul class="navbar-nav ms-auto">
-          <form class="form-inline">
-            <button
-              v-if="isRoot"
-              class="btn btn-sm btn-secondary"
-              data-test="apply"
-              @click.prevent="apply"
-            >
-              Apply
-            </button>
-            <button
-              v-else
-              class="btn btn-sm btn-secondary"
-              data-test="remove-constraint"
-              @click.prevent="removeSelf"
-            >
-              X
-            </button>
-          </form>
-        </ul>
+      <div class="flex items-center gap-1">
+        <junction-menu :junction="junction" @setJunction="setJunction" />
+        <Button
+          variant="secondary"
+          size="xs"
+          data-test="add-constraint"
+          @click.prevent="addConstraint"
+          >+ C</Button
+        >
+        <Button
+          variant="secondary"
+          size="xs"
+          data-test="add-constraint-group"
+          @click.prevent="addConstraintGroup"
+          >+ CG</Button
+        >
+      </div>
+      <div class="ml-auto">
+        <Button v-if="isRoot" variant="secondary" size="xs" data-test="apply" @click.prevent="apply"
+          >Apply</Button
+        >
+        <Button
+          v-else
+          variant="secondary"
+          size="xs"
+          data-test="remove-constraint"
+          @click.prevent="removeSelf"
+          >X</Button
+        >
       </div>
     </div>
-    <!-- Must close the nav bar-->
 
-    <!-- This is a list of many new nav bars -->
     <constraint
       v-for="constraint in constraintList"
       :key="constraint.getObjectId()"
@@ -61,10 +44,9 @@
       :propertyList="propertyList"
       :multiPropertyList="multiPropertyList"
       :pathToPropertyMap="pathToPropertyMap"
-      v-on:removeConstraint="removeConstraint"
+      @removeConstraint="removeConstraint"
     />
 
-    <!-- This is a list of many new nav bars -->
     <constraint-group
       v-for="constraintGroup in constraintGroupList"
       :key="constraintGroup.getObjectId()"
@@ -83,6 +65,7 @@ import JunctionMenu from "./JunctionMenu.vue";
 import Constraint from "./Constraint.vue";
 import ConstraintGroupModel from "../../model/ConstraintGroupModel";
 import { emitterKey } from "../../keys";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
@@ -135,7 +118,6 @@ function removeSelf() {
 div.constraint-group:not(.root) {
   margin-left: 15px;
 }
-
 .constraint-group-bar {
   width: 225px;
 }

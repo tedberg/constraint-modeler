@@ -1,27 +1,23 @@
 <template>
-  <ul v-if="hasNestedList" class="dropdown-menu">
+  <ul v-if="hasNestedList" class="list-none py-1">
     <li v-for="nestedProperty in nestedPropertyList" :key="nestedProperty.path">
-      <a @click.prevent="setProperty">{{ propertyDisplay(nestedProperty) }}</a>
-
-      <!--{{#$$ ../objectId ../templatePrefix }}-->
-
-      <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop. TODO, don't show >> if at max level.}}-->
-      <!--{{> propertyMenuPartial}}-->
-
-      <!--{{/$$}}-->
+      <a
+        class="block px-2 py-1 text-xs hover:bg-white/10 cursor-pointer"
+        @click.prevent="setProperty"
+        >{{ propertyDisplay(nestedProperty) }}</a
+      >
     </li>
 
-    <li v-if="nestedMultiPropertyList" class="divider"></li>
-    <li v-if="nestedMultiPropertyList" class="nav-header">Multi Properties</li>
+    <li v-if="nestedMultiPropertyList" class="border-t border-zinc-600 my-1"></li>
+    <li v-if="nestedMultiPropertyList" class="px-2 py-1 text-xs font-semibold text-zinc-400">
+      Multi Properties
+    </li>
     <li v-for="nestedProperty in nestedMultiPropertyList" :key="nestedProperty.path">
-      <a @click.prevent="setMultiProperty">{{ propertyDisplay(nestedProperty) }}</a>
-
-      <!--{{#$$ ../objectId ../templatePrefix }}-->
-
-      <!--{{! Recursive call here. Since JSON limits to 4, don't have to check level, if block above takes care of infinite loop.}}-->
-      <!--{{> propertyMenuPartial}}-->
-
-      <!--{{/$$}}-->
+      <a
+        class="block px-2 py-1 text-xs hover:bg-white/10 cursor-pointer"
+        @click.prevent="setMultiProperty"
+        >{{ propertyDisplay(nestedProperty) }}</a
+      >
     </li>
   </ul>
 </template>

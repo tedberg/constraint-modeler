@@ -1,27 +1,19 @@
 <template>
   <div class="projection-group" data-test="projection-group">
     <div
-      class="navbar navbar-expand-lg navbar-dark bg-dark projection-group-bar mb-1"
+      class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 projection-group-bar"
       :id="projectionGroupId"
     >
-      <div class="collapse navbar-collapse">
-        <ul class="navbar-nav">
-          <form class="form-inline ms-2">
-            <button
-              class="btn btn-sm btn-secondary"
-              data-test="add-projection"
-              data-testid="add-projection"
-              @click.prevent="addProjection()"
-            >
-              + P
-            </button>
-          </form>
-        </ul>
-      </div>
+      <Button
+        variant="secondary"
+        size="xs"
+        data-test="add-projection"
+        data-testid="add-projection"
+        @click.prevent="addProjection()"
+        >+ P</Button
+      >
     </div>
-    <!-- Must close the nav bar-->
 
-    <!-- This is a list of many new nav bars -->
     <projection
       v-for="(projection, index) in projectionList"
       :key="projection.getObjectId()"
@@ -30,7 +22,7 @@
       :propertyList="propertyList"
       :multiPropertyList="multiPropertyList"
       :pathToPropertyMap="pathToPropertyMap"
-      v-on:removeSelf="removeProjection(projection, index)"
+      @removeSelf="removeProjection(projection, index)"
     />
   </div>
 </template>
@@ -39,6 +31,7 @@
 import { computed } from "vue";
 import Projection from "./Projection.vue";
 import ProjectionGroupModel from "../../model/ProjectionGroupModel";
+import { Button } from "@/components/ui/button";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },

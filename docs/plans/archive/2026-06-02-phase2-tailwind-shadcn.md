@@ -861,6 +861,10 @@ a.router-link-exact-active {
 
 - [ ] **Step 2: Replace `b-table` in `ListGrid.vue` with plain HTML table**
 
+The replacement must preserve two behaviors that all five demo views rely on:
+- `sortable: true` fields — clicking the column header sorts rows client-side (ascending → descending → unsorted)
+- `formatter: (value) => string` — the function is called when rendering the cell value (e.g. `ENABLED` → `Yep`, `DISABLED` → `Nope`)
+
 Replace the entire `ListGrid.vue` content:
 
 ```vue
@@ -870,26 +874,29 @@ Replace the entire `ListGrid.vue` content:
       <thead>
         <tr class="bg-zinc-800">
           <th
-            v-for="field in fields"
-            :key="typeof field === 'string' ? field : field.key"
+            v-for="field in normalizedFields"
+            :key="field.key"
             class="border border-zinc-700 px-3 py-2 text-left font-medium text-zinc-200"
+            :class="{ 'cursor-pointer select-none': field.sortable }"
+            @click="field.sortable ? toggleSort(field.key) : undefined"
           >
-            {{ typeof field === 'string' ? field : (field.label ?? field.key) }}
+            {{ field.label ?? field.key }}
+            <span v-if="sortKey === field.key">{{ sortDir === 'asc' ? ' ↑' : ' ↓' }}</span>
           </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          v-for="(row, i) in items"
+          v-for="(row, i) in sortedItems"
           :key="i"
           class="odd:bg-zinc-900 even:bg-zinc-800/50 hover:bg-zinc-700/50"
         >
           <td
-            v-for="field in fields"
-            :key="typeof field === 'string' ? field : field.key"
+            v-for="field in normalizedFields"
+            :key="field.key"
             class="border border-zinc-700 px-3 py-2 text-zinc-300"
           >
-            {{ row[typeof field === 'string' ? field : field.key] }}
+            {{ field.formatter ? field.formatter(row[field.key]) : row[field.key] }}
           </td>
         </tr>
       </tbody>
@@ -898,17 +905,72 @@ Replace the entire `ListGrid.vue` content:
 </template>
 
 <script setup lang="ts">
-defineProps<{
+import { computed, ref } from 'vue';
+
+type FieldDef = {
+  key: string;
+  label?: string;
+  sortable?: boolean;
+  formatter?: (value: unknown) => string;
+};
+
+const props = defineProps<{
   objectName: string;
   maxRowsPerPage?: number;
   name?: string;
-  fields: (string | { key: string; label?: string })[];
+  fields: (string | FieldDef)[];
   items: Record<string, unknown>[];
 }>();
+
+const normalizedFields = computed<FieldDef[]>(() =>
+  props.fields.map((f) => (typeof f === 'string' ? { key: f } : f)),
+);
+
+const sortKey = ref<string | null>(null);
+const sortDir = ref<'asc' | 'desc'>('asc');
+
+function toggleSort(key: string) {
+  if (sortKey.value === key) {
+    if (sortDir.value === 'asc') {
+      sortDir.value = 'desc';
+    } else {
+      sortKey.value = null;
+    }
+  } else {
+    sortKey.value = key;
+    sortDir.value = 'asc';
+  }
+}
+
+const sortedItems = computed(() => {
+  if (!sortKey.value) return props.items;
+  const key = sortKey.value;
+  const dir = sortDir.value === 'asc' ? 1 : -1;
+  return [...props.items].sort((a, b) => {
+    const av = a[key];
+    const bv = b[key];
+    if (av == null) return 1;
+    if (bv == null) return -1;
+    return av < bv ? -dir : av > bv ? dir : 0;
+  });
+});
 </script>
 ```
 
-- [ ] **Step 3: Start dev server and verify demo nav and table render**
+- [ ] **Step 3: Add Playwright assertion for formatter output**
+
+The existing Playwright suite does not assert the formatted `status` cell values (`Yep`/`Nope`), so this regression can ship green without this step. Add an assertion to at least one debug/results spec:
+
+```typescript
+// In an existing spec that loads a results table (e.g. tests/playwright/debug.spec.ts or similar)
+// After triggering a query that returns results:
+const statusCells = page.locator('td').filter({ hasText: /^(Yep|Nope)$/ });
+await expect(statusCells.first()).toBeVisible();
+```
+
+Locate the right spec file and add this check after the existing results assertion.
+
+- [ ] **Step 4: Start dev server and verify demo nav and table render**
 
 ```bash
 npm run dev
@@ -918,20 +980,23 @@ Open `http://localhost:8080`. Check:
 - Nav bar renders with dark Tailwind background and white links
 - Active route link is green
 - User dropdown opens and shows Profile / Signout items
-- Navigate to the Debug or Everything route and confirm the results grid renders with correct column headers and rows
+- Navigate to the Debug or Everything route, run a query, and confirm:
+  - Results grid renders with correct column headers and rows
+  - Status column shows `Yep` / `Nope` (not `ENABLED` / `DISABLED`)
+  - Clicking a sortable column header sorts the rows; clicking again reverses; clicking a third time clears the sort
 
-- [ ] **Step 4: Run Playwright tests**
+- [ ] **Step 5: Run Playwright tests**
 
 ```bash
 npm run test:e2e:pw
 ```
 
-Expected: 13/13 passing.
+Expected: 13/13 passing (plus the new formatter assertion).
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add src/demo/App.vue src/demo/views/ListGrid.vue
+git add src/demo/App.vue src/demo/views/ListGrid.vue tests/playwright/
 git commit -m "feat: migrate demo shell to Tailwind nav and plain HTML table"
 ```
 

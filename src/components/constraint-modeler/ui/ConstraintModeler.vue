@@ -5,8 +5,6 @@
     </div>
 
     <div v-if="componentReady">
-      <!-- else loading animation? -->
-
       <constraint-group
         :constraint-group-model="rootConstraintGroup"
         :templatePrefix="templatePrefix"
@@ -22,8 +20,8 @@
         :propertyList="propertyList"
         :multiPropertyList="multiPropertyList"
         :pathToPropertyMap="pathToPropertyMap"
-        v-on:addProjection="addProjection"
-        v-on:removeProjection="removeProjection"
+        @addProjection="addProjection"
+        @removeProjection="removeProjection"
       />
 
       <div v-if="showDebug" style="width: 250px" class="debug-panel">
@@ -39,53 +37,43 @@
       </div>
 
       <div class="alerts">
-        <b-alert
-          variant="dark"
-          dismissible
-          :model-value="syntaxDisplay !== ''"
-          @closed="syntaxDisplay = ''"
-        >
-          <span class="syntaxDisplay">{{ syntaxDisplay }}</span>
-        </b-alert>
+        <Alert v-if="syntaxDisplay !== ''" variant="default" class="mb-2">
+          <AlertDescription>
+            <span class="syntaxDisplay">{{ syntaxDisplay }}</span>
+            <Button variant="ghost" size="sm" class="ml-2" @click="syntaxDisplay = ''">x</Button>
+          </AlertDescription>
+        </Alert>
 
-        <b-alert
-          variant="success"
-          dismissible
-          :model-value="successDisplay !== ''"
-          @closed="successDisplay = ''"
-        >
-          {{ successDisplay }}
-        </b-alert>
+        <Alert v-if="successDisplay !== ''" class="mb-2 border-green-600 text-green-400">
+          <AlertDescription>
+            {{ successDisplay }}
+            <Button variant="ghost" size="sm" class="ml-2" @click="successDisplay = ''">x</Button>
+          </AlertDescription>
+        </Alert>
 
-        <b-alert
-          variant="danger"
-          dismissible
-          :model-value="errorDisplay !== ''"
-          @closed="errorDisplay = ''"
-        >
-          {{ errorDisplay }}
-        </b-alert>
+        <Alert v-if="errorDisplay !== ''" variant="destructive" class="mb-2">
+          <AlertDescription>
+            {{ errorDisplay }}
+            <Button variant="ghost" size="sm" class="ml-2" @click="errorDisplay = ''">x</Button>
+          </AlertDescription>
+        </Alert>
       </div>
 
       <div class="buttons">
-        <button
-          class="btn btn-dark btn-sm mt-2 me-2"
-          type="button"
-          @click.prevent="validateAndApply()"
+        <Button variant="default" size="sm" class="mt-2 me-2" @click.prevent="validateAndApply()"
+          >Apply</Button
         >
-          Apply
-        </button>
-        <button class="btn btn-dark btn-sm mt-2 me-2" type="button" @click.prevent="renderSyntax()">
-          Render Syntax
-        </button>
-        <button
-          class="btn btn-dark btn-sm mt-2 me-2"
-          type="button"
+        <Button variant="default" size="sm" class="mt-2 me-2" @click.prevent="renderSyntax()"
+          >Render Syntax</Button
+        >
+        <Button
           v-if="isSaveSupported"
+          variant="default"
+          size="sm"
+          class="mt-2 me-2"
           @click.prevent="save()"
+          >Save</Button
         >
-          Save
-        </button>
       </div>
     </div>
   </div>
@@ -101,6 +89,8 @@ import ConstraintModelerResource from "../ConstraintModelerResource";
 import AbstractConstraintModelerResource from "../AbstractConstraintModelerResource";
 import { emitterKey, resourceKey } from "../keys";
 import type { Events } from "../events";
+import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const props = defineProps({
   title: { type: String, default: null },
@@ -248,21 +238,28 @@ function renderStructuredObjectList() {
 }
 
 div.constraint-modeler {
-  & :deep(.navbar .btn),
-  & :deep(.navbar .btn-group .btn) {
-    padding: 1px 4px;
-  }
-  & :deep(.nav-link) {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-  & :deep(div.navbar) {
-    border-radius: 7px;
-  }
-  & :deep(input[type="text"]) {
-    width: 100px;
-  }
+  border-radius: 7px;
+  font-size: 0.9em;
+  padding: 10px;
+  margin: 0 0 15px;
+  background-color: #eee;
+  color: #2c3e50;
+  width: fit-content;
+  height: fit-content;
+  min-width: 400px;
+
   & :deep(.buttons) {
+    text-align: center;
+  }
+
+  & :deep(.title) {
+    color: #444;
+    border-radius: 7px;
+    background-color: #ccc;
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 5px 0 6px;
+    margin: 0 0 5px;
     text-align: center;
   }
 }

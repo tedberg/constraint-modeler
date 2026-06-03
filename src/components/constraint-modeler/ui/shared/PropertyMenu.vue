@@ -1,32 +1,46 @@
 <template>
-  <b-nav-item-dropdown :text="propertyDisplay">
-    <b-dropdown-item
-      v-for="prop in propertyList"
-      :key="prop.path"
-      @click.prevent="setProperty(prop)"
-    >
-      {{ prop.displayName }} {{ typeof prop.simpleDataType === "object" ? "&raquo;" : "" }}
-      <!--<property-menu-partial :property="prop" :template-prefix="templatePrefix" :object-id="objectId"/>-->
-    </b-dropdown-item>
-
-    <div v-if="multiPropertyList" class="dropdown-divider"></div>
-    <h6 v-if="multiPropertyList" class="dropdown-header">Multi Properties</h6>
-
-    <b-dropdown-item
-      v-for="prop in multiPropertyList"
-      :key="prop.path"
-      @click.prevent="setProperty(prop)"
-    >
-      {{ prop.displayName }} {{ prop.isObjectType() ? "&raquo;" : "" }}
-      <property-menu-partial :property="prop" :template-prefix="templatePrefix" />
-    </b-dropdown-item>
-  </b-nav-item-dropdown>
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button variant="menu" size="xs">{{ propertyDisplay }} <ChevronDown :size="12" /></Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem
+        v-for="prop in propertyList"
+        :key="prop.path"
+        @click.prevent="setProperty(prop)"
+      >
+        {{ prop.displayName }} {{ typeof prop.simpleDataType === "object" ? "»" : "" }}
+      </DropdownMenuItem>
+      <template v-if="multiPropertyList">
+        <DropdownMenuSeparator />
+        <DropdownMenuLabel>Multi Properties</DropdownMenuLabel>
+        <DropdownMenuItem
+          v-for="prop in multiPropertyList"
+          :key="prop.path"
+          @click.prevent="setProperty(prop)"
+        >
+          {{ prop.displayName }} {{ prop.isObjectType() ? "»" : "" }}
+          <PropertyMenuPartial :property="prop" :template-prefix="templatePrefix" />
+        </DropdownMenuItem>
+      </template>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 import PropertyMenuPartial from "./PropertyMenuPartial.vue";
 import Property from "../../Property";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, required: true },
@@ -43,5 +57,3 @@ function setProperty(property: any) {
   emit("setProperty", property);
 }
 </script>
-
-<style scoped></style>

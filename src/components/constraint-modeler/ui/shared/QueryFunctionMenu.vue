@@ -1,24 +1,30 @@
 <template>
-  <b-nav-item-dropdown :text="queryFunctionDisplay">
-    <h6 class="dropdown-header">Aggregates</h6>
-
-    <b-dropdown-item
-      v-for="item in aggregateArray"
-      :key="item.key"
-      @click.prevent="setQueryFunction(item.key)"
-      >{{ item.label }}</b-dropdown-item
-    >
-
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header">Functions</h6>
-
-    <b-dropdown-item
-      v-for="item in queryFunctionArray"
-      :key="item.key"
-      @click.prevent="setQueryFunction(item.key)"
-      >{{ item.label }}</b-dropdown-item
-    >
-  </b-nav-item-dropdown>
+  <DropdownMenu>
+    <DropdownMenuTrigger as-child>
+      <Button variant="menu" size="xs"
+        >{{ queryFunctionDisplay }} <ChevronDown :size="12"
+      /></Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Aggregates</DropdownMenuLabel>
+      <DropdownMenuItem
+        v-for="item in aggregateArray"
+        :key="item.key"
+        @click.prevent="setQueryFunction(item.key)"
+      >
+        {{ item.label }}
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuLabel>Functions</DropdownMenuLabel>
+      <DropdownMenuItem
+        v-for="item in queryFunctionArray"
+        :key="item.key"
+        @click.prevent="setQueryFunction(item.key)"
+      >
+        {{ item.label }}
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </template>
 
 <script setup lang="ts">
@@ -27,6 +33,16 @@ import { QueryFunctionEnum } from "../../enum/QueryFunctionEnum";
 import { DataTypeEnum } from "../../enum/DataTypeEnum";
 import { GeneralEnum } from "../../enum/Enum";
 import Property from "../../Property";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, required: true },
@@ -66,5 +82,3 @@ function setQueryFunction(enumKey: string) {
   emit("setQueryFunction", enumKey);
 }
 </script>
-
-<style scoped></style>

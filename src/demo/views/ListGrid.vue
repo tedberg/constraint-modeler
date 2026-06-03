@@ -1,16 +1,87 @@
 <template>
-  <b-table sm bordered striped hover :fields="fields" :items="items"> </b-table>
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm border-collapse border border-zinc-300">
+      <thead>
+        <tr class="bg-zinc-100">
+          <th
+            v-for="field in normalizedFields"
+            :key="field.key"
+            class="border border-zinc-300 px-3 py-2 text-left font-medium text-zinc-700"
+            :class="{ 'cursor-pointer select-none': field.sortable }"
+            @click="field.sortable ? toggleSort(field.key) : undefined"
+          >
+            {{ field.label ?? field.key }}
+            <span v-if="sortKey === field.key">{{ sortDir === "asc" ? " ↑" : " ↓" }}</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(row, i) in sortedItems"
+          :key="i"
+          class="odd:bg-white even:bg-zinc-50 hover:bg-zinc-100"
+        >
+          <td
+            v-for="field in normalizedFields"
+            :key="field.key"
+            class="border border-zinc-300 px-3 py-2 text-zinc-800"
+          >
+            {{ field.formatter ? field.formatter(row[field.key]) : row[field.key] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script setup lang="ts">
-defineProps({
-  objectName: { type: String, required: true },
-  maxRowsPerPage: { type: Number, default: 100 },
-  name: { type: String, default: "" },
-  fields: { type: Array, default: () => [] },
-  items: { type: Array, required: true, default: () => [] },
+import { computed, ref } from "vue";
+
+type FieldDef = {
+  key: string;
+  label?: string;
+  sortable?: boolean;
+  formatter?: (value: unknown) => string;
+};
+
+const props = defineProps<{
+  objectName: string;
+  maxRowsPerPage?: number;
+  name?: string;
+  fields: (string | FieldDef)[];
+  items: Record<string, unknown>[];
+}>();
+
+const normalizedFields = computed<FieldDef[]>(() =>
+  props.fields.map((f) => (typeof f === "string" ? { key: f } : f)),
+);
+
+const sortKey = ref<string | null>(null);
+const sortDir = ref<"asc" | "desc">("asc");
+
+function toggleSort(key: string) {
+  if (sortKey.value === key) {
+    if (sortDir.value === "asc") {
+      sortDir.value = "desc";
+    } else {
+      sortKey.value = null;
+    }
+  } else {
+    sortKey.value = key;
+    sortDir.value = "asc";
+  }
+}
+
+const sortedItems = computed(() => {
+  if (!sortKey.value) return props.items;
+  const key = sortKey.value;
+  const dir = sortDir.value === "asc" ? 1 : -1;
+  return [...props.items].sort((a, b) => {
+    const av = a[key];
+    const bv = b[key];
+    if (av == null) return 1;
+    if (bv == null) return -1;
+    return av < bv ? -dir : av > bv ? dir : 0;
+  });
 });
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

@@ -1,4 +1,4 @@
-import "@/assets/css/tailwind.css";
+import "@/assets/css/lib.css";
 import ConstraintModeler from "./constraint-modeler/ui/ConstraintModeler.vue";
 import type { App } from "vue";
 

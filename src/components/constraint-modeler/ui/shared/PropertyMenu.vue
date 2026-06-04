@@ -6,22 +6,21 @@
     <DropdownMenuContent>
       <DropdownMenuItem
         v-for="prop in propertyList"
-        :key="prop.path"
-        @click.prevent="setProperty(prop)"
+        :key="(prop as any).path"
+        @select="setProperty(prop)"
       >
-        {{ prop.displayName }} {{ typeof prop.simpleDataType === "object" ? "»" : "" }}
+        {{ (prop as any).displayName }}
       </DropdownMenuItem>
-      <template v-if="multiPropertyList">
+      <template v-if="multiPropertyList?.length">
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Multi Properties</DropdownMenuLabel>
-        <DropdownMenuItem
+        <PropertyMenuItem
           v-for="prop in multiPropertyList"
-          :key="prop.path"
-          @click.prevent="setProperty(prop)"
-        >
-          {{ prop.displayName }} {{ prop.isObjectType() ? "»" : "" }}
-          <PropertyMenuPartial :property="prop" :template-prefix="templatePrefix" />
-        </DropdownMenuItem>
+          :key="(prop as any).path"
+          :property="prop"
+          :template-prefix="templatePrefix"
+          @setProperty="setProperty"
+        />
       </template>
     </DropdownMenuContent>
   </DropdownMenu>
@@ -29,8 +28,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
-import PropertyMenuPartial from "./PropertyMenuPartial.vue";
-import Property from "../../Property";
+import PropertyMenuItem from "./PropertyMenuItem.vue";
 import {
   DropdownMenu,
   DropdownMenuTrigger,

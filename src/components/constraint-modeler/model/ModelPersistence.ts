@@ -30,7 +30,7 @@ const DEFAULT_SAVE_FUNCTION = (filterObject, formData) => {
  * Usage is optional, only providing support when the ability to save constraint modeler models is desired.
  */
 export default class ModelPersistence {
-  constructor(saveFunction) {
+  constructor(saveFunction?) {
     // Values for saving constraint models (if supported)
     this.saveFunction = saveFunction || DEFAULT_SAVE_FUNCTION;
     this.persistentId = null; // If we load constraint model from persistence layer, set the id and name.

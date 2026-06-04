@@ -8,10 +8,35 @@ function suppressNodeModuleAnnotations(warning: any, warn: any) {
   warn(warning);
 }
 
+// Wraps all emitted CSS in a named @layer so consuming projects that also use
+// Tailwind v4 can order this library's styles below their own @layer utilities.
+// Uses closeBundle + fs because @tailwindcss/vite emits CSS after generateBundle.
+function wrapCssInLayer(layerName: string, outDir: string) {
+  const prefix = `@layer ${layerName}`;
+  return {
+    name: 'wrap-css-in-layer',
+    apply: 'build' as const,
+    closeBundle() {
+      const { readdirSync, readFileSync, writeFileSync } = require('fs');
+      const { join } = require('path');
+      let files: string[];
+      try { files = readdirSync(outDir); } catch { return; }
+      for (const file of files) {
+        if (!file.endsWith('.css')) continue;
+        const path = join(outDir, file);
+        const content = readFileSync(path, 'utf-8') as string;
+        if (!content.startsWith(prefix)) {
+          writeFileSync(path, `${prefix} {\n${content}\n}`);
+        }
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   if (mode === 'lib') {
     return {
-      plugins: [tailwindcss(), vue()],
+      plugins: [tailwindcss(), vue(), wrapCssInLayer('constraint-modeler', 'dist')],
       resolve: {
         alias: {
           '@': resolve(__dirname, 'src'),

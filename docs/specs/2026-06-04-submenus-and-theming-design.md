@@ -7,7 +7,7 @@
 
 Two independent features:
 1. **Recursive submenus** — object-type properties in the property picker now cascade into `DropdownMenuSub` flyouts at arbitrary depth (2–4 levels in real apps).
-2. **Demo theming** — the demo app gains a dark/light mode toggle and a four-preset theme picker. The library CSS is unchanged beyond what was already done; theming works via CSS custom property override.
+2. **Demo theming** — the demo app gains a dark/light mode toggle and a four-preset theme picker (Default, Midnight Bloom, Modern Minimal, Solar Dusk). The library CSS is unchanged beyond what was already done; theming works via CSS custom property override.
 
 ---
 
@@ -89,30 +89,37 @@ The demo app needs: a `useTheme` composable + CSS preset definitions + UI contro
 Add three additional theme presets using tweakcn-generated values. Zinc (the current `:root` / `.light`) is the default and requires no new class.
 
 ```
-:root                    dark zinc  (already defined)
-.light                   light zinc (already defined)
-:root.theme-slate        dark slate
-:root.theme-slate.light  light slate
-:root.theme-rose         dark rose
-:root.theme-rose.light   light rose
-:root.theme-violet       dark violet
-:root.theme-violet.light light violet
+:root                             Default (dark)  — already defined
+.light                            Default (light) — already defined
+:root.theme-midnight              Midnight Bloom (dark)
+:root.theme-midnight.light        Midnight Bloom (light)
+:root.theme-minimal               Modern Minimal (dark)
+:root.theme-minimal.light         Modern Minimal (light)
+:root.theme-solar                 Solar Dusk (dark)
+:root.theme-solar.light           Solar Dusk (light)
 ```
 
-Using `:root.theme-slate` (specificity `0,2,0`) rather than `.theme-slate` (`0,1,0`) ensures theme blocks correctly override `:root` (`0,1,0`) regardless of source order. Combined selectors like `:root.theme-slate.light` (`0,3,0`) correctly win over the plain `.light` zinc block.
+**Theme palette intent:**
+- **Midnight Bloom** — deep indigo/violet base with a bloom accent (purple tones); dramatic dark, soft light
+- **Modern Minimal** — near-zero chroma neutrals; very clean and desaturated in both modes
+- **Solar Dusk** — warm amber/orange accent on a warm-neutral base; rich dark, warm light
+
+Values are generated from tweakcn.com matching these aesthetics and defined as CSS custom properties using the same shadcn token names.
+
+Using `:root.theme-midnight` (specificity `0,2,0`) rather than `.theme-midnight` (`0,1,0`) ensures theme blocks correctly override `:root` (`0,1,0`) regardless of source order. Combined selectors like `:root.theme-midnight.light` (`0,3,0`) correctly win over the plain `.light` default block.
 
 ### `useTheme` composable
 
 **Location:** `src/demo/composables/useTheme.ts`
 
 **State (both persisted to `localStorage`):**
-- `themeId: Ref<string>` — one of `'zinc' | 'slate' | 'rose' | 'violet'`, default `'zinc'`
+- `themeId: Ref<string>` — one of `'default' | 'midnight' | 'minimal' | 'solar'`, default `'default'`
 - `isDark: Ref<boolean>` — initialized from `localStorage` if present, otherwise from `window.matchMedia('prefers-color-scheme: dark')`
 
 **Exported:**
 - `themes` — static `{ id, name }[]` array for the picker to iterate
 - `themeId`, `isDark` — reactive refs (read-only to consumers)
-- `setTheme(id)` — removes all `.theme-*` classes from `document.documentElement`, adds `.theme-{id}` unless id is `'zinc'` (zinc is the `:root` default), persists to `localStorage`
+- `setTheme(id)` — removes all `.theme-*` classes from `document.documentElement`, adds `.theme-{id}` unless id is `'default'` (default uses the bare `:root` block), persists to `localStorage`
 - `toggleMode()` — flips `isDark`, toggles `.light` on `document.documentElement`, persists to `localStorage`
 
 Composable is a singleton (module-level refs) so state is shared across any component that calls `useTheme()`.
@@ -122,7 +129,7 @@ Composable is a singleton (module-level refs) so state is shared across any comp
 Two controls added to the right side of the nav bar, left of the User dropdown:
 
 1. **Mode toggle button** — sun icon when dark, moon icon when light; calls `toggleMode()` on click
-2. **Theme picker dropdown** — uses `DropdownMenu`; trigger shows a palette icon; menu lists the four theme names as `DropdownMenuItem`s; selecting one calls `setTheme(id)`; active theme gets a checkmark or highlight
+2. **Theme picker dropdown** — uses `DropdownMenu`; trigger shows a palette icon; menu lists Default, Midnight Bloom, Modern Minimal, Solar Dusk as `DropdownMenuItem`s; selecting one calls `setTheme(id)`; active theme gets a checkmark
 
 ### File changes
 

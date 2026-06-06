@@ -119,6 +119,7 @@ div.constraint-group:not(.root) {
   margin-left: 15px;
 }
 .constraint-group-bar {
-  width: 225px;
+  width: 100%;
+  min-width: 225px;
 }
 </style>

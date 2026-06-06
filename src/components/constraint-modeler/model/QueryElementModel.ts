@@ -2,11 +2,20 @@ import { log } from "@/common/LoggingFacade";
 import { DataTypeEnum } from "../enum/DataTypeEnum";
 import { QueryFunctionEnum } from "../enum/QueryFunctionEnum";
 import { GeneralEnum } from "../enum/Enum";
+import type Property from "../Property";
 
 /**
  *  A QueryElement models an element to be used in a Query.  It may be a projection, constraint, etc.
  */
 export default class QueryElementModel {
+  objectId: number;
+  property: Property | null;
+  queryFunction: any;
+  key: string | null;
+  label: string | null;
+  dataType: any;
+  serverDataType: string | null;
+
   constructor(objectId) {
     this.objectId = objectId;
 

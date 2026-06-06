@@ -165,12 +165,12 @@ function findChoiceLabel(choice: any): string {
   return choice;
 }
 
-function getIdAttribute(fieldIndex: number) {
-  return `${props.templatePrefix}_valueEntry-${fieldIndex}-${props.objectId}`;
+function getIdAttribute(fieldIndex: string | number) {
+  return `${props.templatePrefix}_valueEntry-${Number(fieldIndex)}-${props.objectId}`;
 }
 
-function getNameAttribute(fieldIndex: number) {
-  return `valueEntry-${fieldIndex}-${props.objectId}`;
+function getNameAttribute(fieldIndex: string | number) {
+  return `valueEntry-${Number(fieldIndex)}-${props.objectId}`;
 }
 
 // replaces created()

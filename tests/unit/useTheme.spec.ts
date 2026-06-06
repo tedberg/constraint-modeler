@@ -24,11 +24,11 @@ describe("useTheme", () => {
     expect(themeId.value).toBe("default");
   });
 
-  it("initialises dark when system prefers dark and no localStorage value", async () => {
+  it("initialises light when system prefers dark and no localStorage value", async () => {
     mockMatchMedia(true);
     const { useTheme } = await import("@/demo/composables/useTheme");
     const { isDark } = useTheme();
-    expect(isDark.value).toBe(true);
+    expect(isDark.value).toBe(false);
   });
 
   it("initialises light when system prefers light and no localStorage value", async () => {

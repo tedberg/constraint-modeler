@@ -97,23 +97,29 @@ Variants compose left-to-right: `cm:hover:bg-accent`, `cm:focus:text-foreground`
 
 ### 2.1 — Configure prefix in the CSS entry point
 
-The prefix is configured via `@import` in the CSS file. **The Vite plugin (`@tailwindcss/vite`) has no `prefix` option** — prefix is handled by the Oxide (Rust) compiler, not the Vite plugin.
+The prefix is configured via `@import` in the CSS file. **The Vite plugin (`@tailwindcss/vite`) has no `prefix` option** — prefix is handled by the Oxide compiler, not the Vite plugin.
 
 ```css
-/* lib.css — full import, prefix applies to all generated utilities */
-@import "tailwindcss" prefix(cm);
+/* lib.css — library build: no Preflight, prefixed variables + utilities */
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(cm);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(cm) source("../../components");
 ```
 
-> **Critical:** `prefix(cm)` only works on the full `@import "tailwindcss"`. Using it on sub-imports like `@import "tailwindcss/utilities" prefix(cm)` silently has no effect — the prefix is ignored and unprefixed utilities are generated.
+> **Critical:** Do not import `tailwindcss/preflight.css` in the library build. Preflight emits global element selectors like `button, input, select...`; a component library should not reset the consuming app's page. The split imports above are the current Tailwind v4 pattern for disabling Preflight while keeping prefixed utilities.
 
-The `@source` directive is relative to the CSS file:
+The source path is relative to the CSS file and belongs on the utilities import:
 
 ```css
-@source "../../components/**/*.vue";
+@import "tailwindcss/utilities.css" layer(utilities) prefix(cm) source("../../components");
+```
+
+`@source inline(...)` still force-generates specific utilities that the scanner might miss (e.g. classes in dynamic `:class` bindings):
+
+```css
 @source inline("cm:bg-neutral-900 cm:border-zinc-600 cm:text-zinc-400");
 ```
-
-`@source inline(...)` force-generates specific utilities that the scanner might miss (e.g. classes in dynamic `:class` bindings).
 
 ### 2.2 — Class names in source files
 
@@ -138,7 +144,8 @@ This applies to all library components and vendored shadcn-vue components in `sr
 
 Authored CSS in `<style>` blocks (e.g. `ConstraintModeler.vue`) references `--cm-*` variables directly and uses plain CSS property names — no Tailwind utilities — so no changes needed there.
 
-- [x] Configure `@import "tailwindcss" prefix(cm)` in `lib.css`
+- [x] Configure split Tailwind imports with `prefix(cm)` in `lib.css`
+- [x] Omit Tailwind Preflight from the library build
 - [x] Batch-replace all utility class names in all `.vue` and `.ts` component files (`cm-X` → `cm:X`, `{variant}:cm-X` → `cm:{variant}:X`)
 - [x] Update shadcn-vue vendored components in `src/components/ui/`
 - [x] Run dev server and visual-check all routes
@@ -225,15 +232,10 @@ If you want the constraint modeler to match your app's design system, override t
 
 ### Layer ordering (shadcn / Tailwind apps only)
 
-If your app uses `@layer`, pre-declare the library's layer before your imports so its styles have lower priority than your overrides:
-
-```css
-/* your tailwind.css or main.css — first line */
-@layer constraint-modeler;
-```
+No custom `constraint-modeler` layer is required. The library emits only prefixed Tailwind theme variables/utilities and component-scoped CSS; it does not emit Preflight. Consuming apps can import the CSS from JavaScript or from their app CSS without giving the library global reset power.
 
 ### What you can remove after upgrading
 
 - Any `all: revert-layer` workarounds in your `@layer base` targeting `.constraint-modeler` children
 - Any wrapper class like `.cm-scope` used to re-scope the component's token resolution
-- The `@layer constraint-modeler` pre-declaration (still harmless to keep; no longer required for correctness)
+- Any `@layer constraint-modeler` pre-declaration

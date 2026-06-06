@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <nav class="cm:flex cm:items-center cm:gap-4 cm:px-4 cm:py-2 cm:bg-primary cm:text-primary-foreground cm:text-sm">
+    <nav
+      class="cm:flex cm:items-center cm:gap-4 cm:px-4 cm:py-2 cm:bg-primary cm:text-primary-foreground cm:text-sm"
+    >
       <span class="cm:font-semibold">Constraint Modeler Demo</span>
       <RouterLink to="/" class="cm:hover:opacity-70">Home</RouterLink>
       <RouterLink to="/simple" class="cm:hover:opacity-70">Simple</RouterLink>
@@ -54,7 +56,10 @@
       </div>
     </nav>
 
-    <div data-test="page-background" class="cm:p-4 cm:min-h-screen cm:bg-background cm:text-foreground">
+    <div
+      data-test="page-background"
+      class="cm:p-4 cm:min-h-screen cm:bg-background cm:text-foreground"
+    >
       <RouterView />
     </div>
   </div>

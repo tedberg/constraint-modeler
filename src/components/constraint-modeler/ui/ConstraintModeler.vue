@@ -47,7 +47,9 @@
         <Alert v-if="successDisplay !== ''" class="cm:mb-2 cm:border-green-600 cm:text-green-400">
           <AlertDescription>
             {{ successDisplay }}
-            <Button variant="ghost" size="sm" class="cm:ml-2" @click="successDisplay = ''">x</Button>
+            <Button variant="ghost" size="sm" class="cm:ml-2" @click="successDisplay = ''"
+              >x</Button
+            >
           </AlertDescription>
         </Alert>
 
@@ -60,7 +62,11 @@
       </div>
 
       <div class="buttons">
-        <Button variant="default" size="sm" class="cm:mt-2 cm:me-2" @click.prevent="validateAndApply()"
+        <Button
+          variant="default"
+          size="sm"
+          class="cm:mt-2 cm:me-2"
+          @click.prevent="validateAndApply()"
           >Apply</Button
         >
         <Button variant="default" size="sm" class="cm:mt-2 cm:me-2" @click.prevent="renderSyntax()"
@@ -85,7 +91,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, provide, onMounted, reactive } from "vue";
+import { ref, computed, provide, onMounted, reactive, useTemplateRef } from "vue";
+import type { PropType } from "vue";
 import mitt from "mitt";
 import ConstraintGroup from "./constraint/ConstraintGroup.vue";
 import ProjectionGroup from "./projection/ProjectionGroup.vue";
@@ -104,7 +111,7 @@ const props = defineProps({
   exposeProjectionModeler: { type: Boolean, default: false },
   initialModelJsonObject: { type: Object, default: () => null },
   constraintModelerResource: {
-    type: Object,
+    type: Object as PropType<AbstractConstraintModelerResource>,
     default: () => new ConstraintModelerResource(),
     validator: (m: unknown) => AbstractConstraintModelerResource.isValidImplementation(m),
   },
@@ -115,7 +122,7 @@ const emit = defineEmits(["applyConstraintsToData"]);
 
 const emitter = mitt<Events>();
 const model = reactive(new Model(props.objectName, props.constraintModelerResource));
-const dropdownPortalRef = ref<HTMLElement | null>(null);
+const dropdownPortalRef = useTemplateRef<HTMLElement>("dropdownPortalRef");
 
 provide(emitterKey, emitter);
 provide(resourceKey, props.constraintModelerResource);
@@ -268,7 +275,8 @@ div.constraint-modeler {
   font-size: 0.9em;
   padding: 10px;
   margin: 0 0 15px;
-  width: fit-content;
+  width: max-content;
+  max-width: 100%;
   height: fit-content;
   min-width: 400px;
 

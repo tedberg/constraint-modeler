@@ -3,10 +3,12 @@
    so they never pollute the consuming app's :root. Override --cm-* variables on
    .constraint-modeler to bridge your design system (see docs/plans/2026-06-05-library-css-isolation.md). */
 
-@import "tailwindcss" prefix(cm);
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(cm);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(cm) source("../../components");
 @import "tw-animate-css";
 
-@source "../../components/**/*.vue";
 @source inline("cm:bg-neutral-900 cm:border-zinc-600 cm:text-zinc-400");
 
 @custom-variant dark (&:is(.dark *));

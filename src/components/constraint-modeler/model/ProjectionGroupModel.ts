@@ -6,8 +6,11 @@ import ProjectionModel from "./ProjectionModel";
 
 export default class ProjectionGroupModel extends QueryElementGroupModel {
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
+  projectionList: ProjectionModel[];
+  grouped: boolean;
+  projectionAsMap: boolean;
 
-  constructor(obj) {
+  constructor(obj?) {
     super(1000);
     this.projectionList = [];
 
@@ -142,7 +145,7 @@ export default class ProjectionGroupModel extends QueryElementGroupModel {
   }
 
   renderSimpleObject(applySpecialHandlerConversions) {
-    const simple = {};
+    const simple: Record<string, any> = {};
     simple.property = this.renderProjectionsAsString(applySpecialHandlerConversions);
     simple.grouped = this.grouped;
     simple.projectionAsMap = this.projectionAsMap;

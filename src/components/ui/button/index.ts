@@ -10,7 +10,8 @@ export const buttonVariants = cva(
       variant: {
         default: "cm:bg-primary cm:text-primary-foreground cm:hover:bg-primary/90",
         destructive: "cm:bg-destructive cm:text-destructive-foreground cm:hover:bg-destructive/90",
-        outline: "cm:border cm:border-input cm:bg-background cm:hover:bg-accent cm:hover:text-accent-foreground",
+        outline:
+          "cm:border cm:border-input cm:bg-background cm:hover:bg-accent cm:hover:text-accent-foreground",
         secondary: "cm:bg-zinc-500 cm:text-white cm:hover:bg-zinc-400",
         ghost: "cm:hover:bg-accent cm:hover:text-accent-foreground",
         menu: "cm:bg-transparent cm:text-white cm:hover:bg-white/10",

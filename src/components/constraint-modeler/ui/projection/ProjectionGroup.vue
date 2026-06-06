@@ -55,13 +55,14 @@ const projectionGroupId = computed(
 function addProjection() {
   emit("addProjection");
 }
-function removeProjection(projection: any, index: number) {
+function removeProjection(projection: any, index: string | number) {
   emit("removeProjection", projection, index);
 }
 </script>
 
 <style scoped>
 .projection-group-bar {
-  width: 225px;
+  width: 100%;
+  min-width: 225px;
 }
 </style>

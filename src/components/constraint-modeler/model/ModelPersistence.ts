@@ -1,5 +1,7 @@
 import { log } from "@/common/LoggingFacade";
 
+type ModelerObject = Record<string, any>;
+
 /**
  * Takes a JSON string argument and converts it to an object with error handling.
  *
@@ -7,7 +9,7 @@ import { log } from "@/common/LoggingFacade";
  * @return {object}
  */
 const parseJSON = (jsonString) => {
-  let jsonObject = {};
+  let jsonObject: ModelerObject = {};
   if (jsonString && jsonString.length > 0) {
     try {
       jsonObject = JSON.parse(jsonString);
@@ -30,6 +32,10 @@ const DEFAULT_SAVE_FUNCTION = (filterObject, formData) => {
  * Usage is optional, only providing support when the ability to save constraint modeler models is desired.
  */
 export default class ModelPersistence {
+  saveFunction: Function;
+  persistentId: any;
+  persistentName: string | null;
+
   constructor(saveFunction?) {
     // Values for saving constraint models (if supported)
     this.saveFunction = saveFunction || DEFAULT_SAVE_FUNCTION;
@@ -58,7 +64,7 @@ export default class ModelPersistence {
     const modelerObject = ModelPersistence.convertToModelerObject(model);
     const constraintSyntax = model.rootConstraintGroup.renderSyntax();
 
-    const filterObject = {
+    const filterObject: Record<string, any> = {
       rootObject: model.objectName,
       constraintValue: JSON.stringify(
         ModelPersistence.extractConstraintFromModelerObject(modelerObject),
@@ -94,7 +100,7 @@ export default class ModelPersistence {
     constraintGroupSimpleObject,
     projectionGroupSimpleObject,
   ) {
-    const modelerObject = {};
+    const modelerObject: ModelerObject = {};
 
     if (constraintGroupSimpleObject && constraintGroupSimpleObject.constraintGroup) {
       // Already in new format, prevent double wrapping.

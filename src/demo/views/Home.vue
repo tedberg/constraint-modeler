@@ -1,6 +1,8 @@
 <template>
   <div class="cm:max-w-2xl">
-    <div class="cm:bg-blue-50 cm:border cm:border-blue-300 cm:text-blue-800 cm:rounded cm:px-4 cm:py-3 cm:mb-4 cm:text-sm">
+    <div
+      class="cm:bg-blue-50 cm:border cm:border-blue-300 cm:text-blue-800 cm:rounded cm:px-4 cm:py-3 cm:mb-4 cm:text-sm"
+    >
       This is a demonstration site for the Constraint Modeler Vue component.
     </div>
 
@@ -27,7 +29,9 @@
       <li><strong>Everything</strong> — Exposes all options.</li>
     </ul>
 
-    <div class="cm:bg-yellow-50 cm:border cm:border-yellow-300 cm:text-yellow-800 cm:rounded cm:px-4 cm:py-3 cm:text-sm">
+    <div
+      class="cm:bg-yellow-50 cm:border cm:border-yellow-300 cm:text-yellow-800 cm:rounded cm:px-4 cm:py-3 cm:text-sm"
+    >
       This demo is a static site, not running against a database. The normal API which would make
       calls to a server is implemented as a stub, responding with canned responses wrapped in
       promises. The data which appears in the grid is only a simulation and not actually filtered by

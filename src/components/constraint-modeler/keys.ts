@@ -8,5 +8,4 @@ export const resourceKey: InjectionKey<AbstractConstraintModelerResource> = Symb
   "constraintModelerResource",
 );
 // Portal container inside .constraint-modeler so dropdown panels inherit its CSS variables.
-export const dropdownPortalKey: InjectionKey<Ref<HTMLElement | null>> =
-  Symbol("dropdownPortal");
+export const dropdownPortalKey: InjectionKey<Ref<HTMLElement | null>> = Symbol("dropdownPortal");

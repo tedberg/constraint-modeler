@@ -19,6 +19,11 @@ export function resetConstraintIdGenerator() {
  *  A Constraint models a single condition used in filtering data.
  */
 export default class ConstraintModel extends QueryElementModel {
+  comparisonType: any;
+  valueArray: any[];
+  verifiedValidity: { valid: boolean; reason: string } | null;
+  specialHandlerFunction: any;
+
   constructor() {
     super(constraintIdGenerator());
     this.comparisonType = ComparisonTypeEnum.EQUAL;

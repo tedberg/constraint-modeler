@@ -28,6 +28,13 @@ const defaultErrorFunction = (error) => {
  */
 export default class Model {
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
+  constraintModelerResource: AbstractConstraintModelerResource;
+  objectName: string;
+  rootConstraintGroup: ConstraintGroupModel;
+  projectionGroup: ProjectionGroupModel | null;
+  propertyList: Property[];
+  multiPropertyList: Property[];
+  pathToPropertyMap: Record<string, Property>;
 
   constructor(objectName, constraintModelerResource = new ConstraintModelerResource()) {
     if (!objectName) {
@@ -288,7 +295,7 @@ export default class Model {
   renderSimpleJSON() {
     const applySpecialHandlerConversions = false; // For UI not server
 
-    const modelerObject = {
+    const modelerObject: Record<string, any> = {
       constraintGroup: this.rootConstraintGroup.renderSimpleObject(applySpecialHandlerConversions),
     };
 

@@ -1,4 +1,4 @@
-export function serializeObjectToQueryStringParameters(obj, prefix) {
+export function serializeObjectToQueryStringParameters(obj, prefix?) {
   const str = [];
 
   Object.keys(obj).map((property) => {
@@ -19,6 +19,8 @@ export function serializeObjectToQueryStringParameters(obj, prefix) {
  *  A QueryElementGroup models a container for a group of elements to be used in a Query.
  */
 export default class QueryElementGroupModel {
+  objectId: number;
+
   constructor(objectId) {
     this.objectId = objectId;
   }
@@ -63,11 +65,12 @@ export default class QueryElementGroupModel {
     const keys = Object.keys(myMap);
     let maxKey = 0;
     keys.map((key) => {
-      if (key > maxKey) {
-        maxKey = key;
+      const numericKey = Number(key);
+      if (numericKey > maxKey) {
+        maxKey = numericKey;
       }
     });
-    return Number(maxKey);
+    return maxKey;
   }
 
   // TODO: Need to review

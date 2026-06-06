@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PrimitiveProps } from "reka-ui";
 import type { HTMLAttributes } from "vue";
+import { useAttrs } from "vue";
 import type { ButtonVariants } from ".";
 import { Primitive } from "reka-ui";
 import { cn } from "@/lib/utils";
@@ -15,10 +16,12 @@ interface Props extends PrimitiveProps {
 const props = withDefaults(defineProps<Props>(), {
   as: "button",
 });
+const attrs = useAttrs();
 </script>
 
 <template>
   <Primitive
+    v-bind="attrs"
     :as="as"
     :as-child="asChild"
     :class="cn(buttonVariants({ variant, size }), props.class)"

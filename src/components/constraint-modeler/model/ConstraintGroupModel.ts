@@ -24,6 +24,9 @@ export function resetConstraintGroupIdGenerator() {
  */
 export default class ConstraintGroupModel extends QueryElementGroupModel {
   // TODO, several ways to init model from JSON, queryString, etc.  Maybe a factory/builder pattern here?
+  junction: any;
+  constraintList: ConstraintModel[];
+  constraintGroupList: ConstraintGroupModel[];
 
   constructor(constraintGroupId) {
     super(constraintGroupId);
@@ -73,7 +76,7 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
     return this.constraintGroupList;
   }
 
-  addConstraintGroup(subConstraintGroup) {
+  addConstraintGroup(subConstraintGroup?) {
     const constraintGroup =
       subConstraintGroup || new ConstraintGroupModel(constraintGroupIdGenerator());
     this.constraintGroupList.push(constraintGroup);
@@ -275,8 +278,8 @@ export default class ConstraintGroupModel extends QueryElementGroupModel {
   }
 
   renderSimpleObject(applySpecialHandlerConversions) {
-    let simple = {};
-    const constraint = {};
+    let simple: Record<string, any> = {};
+    const constraint: Record<string, any> = {};
 
     if (this.junction?.key !== JunctionEnum.AND.key) {
       constraint.junction = this.junction.alias;

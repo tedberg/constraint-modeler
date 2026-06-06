@@ -4,19 +4,19 @@ import ApiResource from "../../common/ApiResource";
  * This is a base class for ConstraintModelerResource, listing the required methods to implement.
  */
 export default class AbstractConstraintModelerResource extends ApiResource {
-  loadValueList(_serverDataType) {
+  loadValueList(_serverDataType): any {
     throw new Error("Must not call abstract method directly.");
   }
 
-  loadProperties(_objectName) {
+  loadProperties(_objectName): any {
     throw new Error("Must not call abstract method directly.");
   }
 
-  validateConstraintModeler(_className, _constraintList) {
+  validateConstraintModeler(_className, _constraintList): any {
     throw new Error("Must not call abstract method directly.");
   }
 
-  loadResultWithConstraints(_className, _urlEncodedConstraintQueryString) {
+  loadResultWithConstraints(_className, _urlEncodedConstraintQueryString): any {
     throw new Error("Must not call abstract method directly.");
   }
 

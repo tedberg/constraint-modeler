@@ -4,6 +4,17 @@ import { DataTypeEnum } from "./enum/DataTypeEnum";
  *  Property models a single field in a Class.
  */
 export default class Property {
+  path?: string;
+  displayName?: string;
+  simpleDataType?: string;
+  dataType?: string;
+  expectedDataMagnitude?: number;
+  keyDisplayPropertyPath?: string;
+  relationship: boolean;
+  multiProperty: boolean;
+  nestedPropertyList?: Property[];
+  nestedMultiPropertyList?: Property[];
+
   constructor(obj) {
     const prop = obj || {};
 

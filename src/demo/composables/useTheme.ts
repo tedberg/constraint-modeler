@@ -26,9 +26,7 @@ function validatedThemeId(raw: string | null): string {
 function applyToDOM() {
   const el = document.documentElement;
   // Remove any existing theme class
-  [...el.classList]
-    .filter((c) => c.startsWith("theme-"))
-    .forEach((c) => el.classList.remove(c));
+  [...el.classList].filter((c) => c.startsWith("theme-")).forEach((c) => el.classList.remove(c));
   // Add the new theme class (default uses bare :root — no class needed)
   if (themeId.value !== "default") {
     el.classList.add(`theme-${themeId.value}`);

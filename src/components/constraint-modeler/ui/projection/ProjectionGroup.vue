@@ -1,7 +1,7 @@
 <template>
   <div class="projection-group" data-test="projection-group">
     <div
-      class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 projection-group-bar"
+      class="cm:flex cm:items-center cm:gap-1 cm:bg-cm-bar cm:text-cm-bar-foreground cm:rounded-md cm:mb-1 cm:px-2 cm:py-1 projection-group-bar"
       :id="projectionGroupId"
     >
       <Button

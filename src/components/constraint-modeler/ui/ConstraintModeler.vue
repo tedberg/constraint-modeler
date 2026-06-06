@@ -1,7 +1,7 @@
 <template>
-  <div class="constraint-modeler">
+  <div class="constraint-modeler cm:bg-card cm:text-card-foreground">
     <div v-if="title">
-      <div class="title">{{ title }}</div>
+      <div class="title cm:bg-muted cm:text-muted-foreground">{{ title }}</div>
     </div>
 
     <div v-if="componentReady">
@@ -37,45 +37,50 @@
       </div>
 
       <div class="alerts">
-        <Alert v-if="syntaxDisplay !== ''" variant="default" class="mb-2">
+        <Alert v-if="syntaxDisplay !== ''" variant="default" class="cm:mb-2">
           <AlertDescription>
             <span class="syntaxDisplay">{{ syntaxDisplay }}</span>
-            <Button variant="ghost" size="sm" class="ml-2" @click="syntaxDisplay = ''">x</Button>
+            <Button variant="ghost" size="sm" class="cm:ml-2" @click="syntaxDisplay = ''">x</Button>
           </AlertDescription>
         </Alert>
 
-        <Alert v-if="successDisplay !== ''" class="mb-2 border-green-600 text-green-400">
+        <Alert v-if="successDisplay !== ''" class="cm:mb-2 cm:border-green-600 cm:text-green-400">
           <AlertDescription>
             {{ successDisplay }}
-            <Button variant="ghost" size="sm" class="ml-2" @click="successDisplay = ''">x</Button>
+            <Button variant="ghost" size="sm" class="cm:ml-2" @click="successDisplay = ''">x</Button>
           </AlertDescription>
         </Alert>
 
-        <Alert v-if="errorDisplay !== ''" variant="destructive" class="mb-2">
+        <Alert v-if="errorDisplay !== ''" variant="destructive" class="cm:mb-2">
           <AlertDescription>
             {{ errorDisplay }}
-            <Button variant="ghost" size="sm" class="ml-2" @click="errorDisplay = ''">x</Button>
+            <Button variant="ghost" size="sm" class="cm:ml-2" @click="errorDisplay = ''">x</Button>
           </AlertDescription>
         </Alert>
       </div>
 
       <div class="buttons">
-        <Button variant="default" size="sm" class="mt-2 me-2" @click.prevent="validateAndApply()"
+        <Button variant="default" size="sm" class="cm:mt-2 cm:me-2" @click.prevent="validateAndApply()"
           >Apply</Button
         >
-        <Button variant="default" size="sm" class="mt-2 me-2" @click.prevent="renderSyntax()"
+        <Button variant="default" size="sm" class="cm:mt-2 cm:me-2" @click.prevent="renderSyntax()"
           >Render Syntax</Button
         >
         <Button
           v-if="isSaveSupported"
           variant="default"
           size="sm"
-          class="mt-2 me-2"
+          class="cm:mt-2 cm:me-2"
           @click.prevent="save()"
           >Save</Button
         >
       </div>
     </div>
+    <!-- Portal target lives at body level so fixed-position dropdowns compute
+         coordinates correctly regardless of any CSS transform on the host. -->
+    <Teleport to="body">
+      <div class="constraint-modeler-portal" ref="dropdownPortalRef" />
+    </Teleport>
   </div>
 </template>
 
@@ -87,7 +92,7 @@ import ProjectionGroup from "./projection/ProjectionGroup.vue";
 import Model from "../model/Model";
 import ConstraintModelerResource from "../ConstraintModelerResource";
 import AbstractConstraintModelerResource from "../AbstractConstraintModelerResource";
-import { emitterKey, resourceKey } from "../keys";
+import { emitterKey, resourceKey, dropdownPortalKey } from "../keys";
 import type { Events } from "../events";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -110,9 +115,11 @@ const emit = defineEmits(["applyConstraintsToData"]);
 
 const emitter = mitt<Events>();
 const model = reactive(new Model(props.objectName, props.constraintModelerResource));
+const dropdownPortalRef = ref<HTMLElement | null>(null);
 
 provide(emitterKey, emitter);
 provide(resourceKey, props.constraintModelerResource);
+provide(dropdownPortalKey, dropdownPortalRef);
 
 const componentReady = ref(false);
 const syntaxDisplay = ref("");
@@ -237,13 +244,30 @@ function renderStructuredObjectList() {
   margin-left: 25px;
 }
 
+:deep(.constraint-group-bar button),
+:deep(.constraint-bar button),
+:deep(.projection-bar button),
+:deep(.projection-group-bar button) {
+  background-color: color-mix(in oklch, var(--cm-bar-foreground) 18%, transparent);
+  color: var(--cm-bar-foreground);
+  border: none;
+}
+
+:deep(.constraint-group-bar button:hover),
+:deep(.constraint-bar button:hover),
+:deep(.projection-bar button:hover),
+:deep(.projection-group-bar button:hover) {
+  background-color: color-mix(in oklch, var(--cm-bar-foreground) 28%, transparent);
+}
+
 div.constraint-modeler {
+  all: revert-layer;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
   border-radius: 7px;
   font-size: 0.9em;
   padding: 10px;
   margin: 0 0 15px;
-  background-color: #eee;
-  color: #2c3e50;
   width: fit-content;
   height: fit-content;
   min-width: 400px;
@@ -253,9 +277,7 @@ div.constraint-modeler {
   }
 
   & :deep(.title) {
-    color: #444;
     border-radius: 7px;
-    background-color: #ccc;
     font-size: 1.2em;
     font-weight: bold;
     padding: 5px 0 6px;

@@ -1,10 +1,10 @@
 <template>
   <div :class="['constraint-group', { root: isRoot }]" data-test="constraint-group">
     <div
-      class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 constraint-group-bar"
+      class="cm:flex cm:items-center cm:gap-1 cm:bg-cm-bar cm:text-cm-bar-foreground cm:rounded-md cm:mb-1 cm:px-2 cm:py-1 constraint-group-bar"
       :id="constraintGroupId"
     >
-      <div class="flex items-center gap-1">
+      <div class="cm:flex cm:items-center cm:gap-1">
         <junction-menu :junction="junction" @setJunction="setJunction" />
         <Button
           variant="secondary"
@@ -21,7 +21,7 @@
           >+ CG</Button
         >
       </div>
-      <div class="ml-auto">
+      <div class="cm:ml-auto">
         <Button v-if="isRoot" variant="secondary" size="xs" data-test="apply" @click.prevent="apply"
           >Apply</Button
         >

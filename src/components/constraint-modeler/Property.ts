@@ -19,8 +19,12 @@ export default class Property {
 
     this.relationship = prop.relationship || false;
     this.multiProperty = prop.multiProperty || false;
-    this.nestedPropertyList = prop.nestedPropertyList || undefined; // nested list is just being set as straight JSON, not converted recursively into real Property instances.
-    this.nestedMultiPropertyList = prop.nestedMultiPropertyList || undefined; // nested list is just being set as straight JSON, not converted recursively into real Property instances.
+    this.nestedPropertyList = prop.nestedPropertyList
+      ? prop.nestedPropertyList.map((p) => new Property(p))
+      : undefined;
+    this.nestedMultiPropertyList = prop.nestedMultiPropertyList
+      ? prop.nestedMultiPropertyList.map((p) => new Property(p))
+      : undefined;
   }
 
   isObjectType() {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-for="(_, i) in numberOfObjects" :key="i">
-      <span v-if="i === 1 && numberOfObjects === 2" style="color: white">AND</span>
+      <span v-if="i === 1 && numberOfObjects === 2" class="cm:text-foreground cm:text-xs">AND</span>
       <select
         v-if="useSelectField"
         :id="getIdAttribute(i)"
@@ -186,9 +186,9 @@ watch(serverDataType, () => {
 <style scoped>
 input,
 select {
-  background-color: white;
-  color: #333;
-  border: 1px solid #ccc;
+  background-color: var(--cm-background);
+  color: var(--cm-foreground);
+  border: 1px solid var(--cm-border);
   border-radius: 4px;
   padding: 1px 4px;
 }

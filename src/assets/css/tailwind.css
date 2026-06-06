@@ -1,30 +1,33 @@
+@import "tailwindcss" prefix(cm);
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --radius-sm: calc(var(--cm-radius, var(--radius)) - 4px);
+  --radius-md: calc(var(--cm-radius, var(--radius)) - 2px);
+  --radius-lg: var(--cm-radius, var(--radius));
+  --radius-xl: calc(var(--cm-radius, var(--radius)) + 4px);
+  --color-background: var(--cm-background, var(--background));
+  --color-foreground: var(--cm-foreground, var(--foreground));
+  --color-card: var(--cm-card, var(--card));
+  --color-card-foreground: var(--cm-card-foreground, var(--card-foreground));
+  --color-popover: var(--cm-popover, var(--popover));
+  --color-popover-foreground: var(--cm-popover-foreground, var(--popover-foreground));
+  --color-primary: var(--cm-primary, var(--primary));
+  --color-primary-foreground: var(--cm-primary-foreground, var(--primary-foreground));
+  --color-secondary: var(--cm-secondary, var(--secondary));
+  --color-secondary-foreground: var(--cm-secondary-foreground, var(--secondary-foreground));
+  --color-muted: var(--cm-muted, var(--muted));
+  --color-muted-foreground: var(--cm-muted-foreground, var(--muted-foreground));
+  --color-accent: var(--cm-accent, var(--accent));
+  --color-accent-foreground: var(--cm-accent-foreground, var(--accent-foreground));
+  --color-destructive: var(--cm-destructive, var(--destructive));
+  --color-border: var(--cm-border, var(--border));
+  --color-input: var(--cm-input, var(--input));
+  --color-ring: var(--cm-ring, var(--ring));
+  --color-cm-bar: var(--cm-bar);
+  --color-cm-bar-foreground: var(--cm-bar-foreground);
 }
 
 :root {
@@ -47,6 +50,8 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
+  --cm-bar: oklch(0.269 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
 }
 
 .light {
@@ -68,4 +73,378 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
+  --cm-bar: oklch(0.205 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
+}
+
+/* ─── Midnight Bloom ──────────────────────────────────────── */
+
+:root.theme-midnight {
+  --radius: 0.75rem;
+  --background: oklch(0.112 0.028 278);
+  --foreground: oklch(0.942 0.013 278);
+  --card: oklch(0.158 0.033 278);
+  --card-foreground: oklch(0.942 0.013 278);
+  --popover: oklch(0.158 0.033 278);
+  --popover-foreground: oklch(0.942 0.013 278);
+  --primary: oklch(0.698 0.196 292);
+  --primary-foreground: oklch(0.112 0.028 278);
+  --secondary: oklch(0.215 0.038 278);
+  --secondary-foreground: oklch(0.942 0.013 278);
+  --muted: oklch(0.215 0.038 278);
+  --muted-foreground: oklch(0.618 0.065 278);
+  --accent: oklch(0.215 0.038 278);
+  --accent-foreground: oklch(0.942 0.013 278);
+  --destructive: oklch(0.648 0.218 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.698 0.196 292);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
+}
+
+:root.theme-midnight.light {
+  --radius: 0.75rem;
+  --background: oklch(0.972 0.008 278);
+  --foreground: oklch(0.178 0.028 278);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.178 0.028 278);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.178 0.028 278);
+  --primary: oklch(0.482 0.218 292);
+  --primary-foreground: oklch(0.972 0.008 278);
+  --secondary: oklch(0.912 0.018 278);
+  --secondary-foreground: oklch(0.178 0.028 278);
+  --muted: oklch(0.912 0.018 278);
+  --muted-foreground: oklch(0.518 0.058 278);
+  --accent: oklch(0.912 0.018 278);
+  --accent-foreground: oklch(0.178 0.028 278);
+  --destructive: oklch(0.552 0.248 27);
+  --border: oklch(0.178 0.028 278 / 20%);
+  --input: oklch(0.178 0.028 278 / 15%);
+  --ring: oklch(0.482 0.218 292);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
+}
+
+/* ─── Modern Minimal ──────────────────────────────────────── */
+
+:root.theme-minimal {
+  --radius: 0.25rem;
+  --background: oklch(0.108 0 0);
+  --foreground: oklch(0.975 0 0);
+  --card: oklch(0.158 0 0);
+  --card-foreground: oklch(0.975 0 0);
+  --popover: oklch(0.158 0 0);
+  --popover-foreground: oklch(0.975 0 0);
+  --primary: oklch(0.975 0 0);
+  --primary-foreground: oklch(0.158 0 0);
+  --secondary: oklch(0.218 0 0);
+  --secondary-foreground: oklch(0.975 0 0);
+  --muted: oklch(0.218 0 0);
+  --muted-foreground: oklch(0.615 0 0);
+  --accent: oklch(0.218 0 0);
+  --accent-foreground: oklch(0.975 0 0);
+  --destructive: oklch(0.648 0.218 22);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.615 0 0);
+  --cm-bar: oklch(0.218 0 0);
+  --cm-bar-foreground: oklch(0.975 0 0);
+}
+
+:root.theme-minimal.light {
+  --radius: 0.25rem;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.088 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.088 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.088 0 0);
+  --primary: oklch(0.088 0 0);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.962 0 0);
+  --secondary-foreground: oklch(0.088 0 0);
+  --muted: oklch(0.962 0 0);
+  --muted-foreground: oklch(0.448 0 0);
+  --accent: oklch(0.962 0 0);
+  --accent-foreground: oklch(0.088 0 0);
+  --destructive: oklch(0.528 0.242 27);
+  --border: oklch(0 0 0 / 12%);
+  --input: oklch(0 0 0 / 10%);
+  --ring: oklch(0.448 0 0);
+  --cm-bar: oklch(0.088 0 0);
+  --cm-bar-foreground: oklch(1 0 0);
+}
+
+/* ─── Solar Dusk ──────────────────────────────────────────── */
+
+:root.theme-solar {
+  --radius: 0.625rem;
+  --background: oklch(0.128 0.022 55);
+  --foreground: oklch(0.948 0.016 72);
+  --card: oklch(0.178 0.028 55);
+  --card-foreground: oklch(0.948 0.016 72);
+  --popover: oklch(0.178 0.028 55);
+  --popover-foreground: oklch(0.948 0.016 72);
+  --primary: oklch(0.758 0.168 56);
+  --primary-foreground: oklch(0.128 0.022 55);
+  --secondary: oklch(0.238 0.038 55);
+  --secondary-foreground: oklch(0.948 0.016 72);
+  --muted: oklch(0.238 0.038 55);
+  --muted-foreground: oklch(0.638 0.058 62);
+  --accent: oklch(0.238 0.038 55);
+  --accent-foreground: oklch(0.948 0.016 72);
+  --destructive: oklch(0.648 0.218 22);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.758 0.168 56);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
+}
+
+:root.theme-solar.light {
+  --radius: 0.625rem;
+  --background: oklch(0.978 0.012 78);
+  --foreground: oklch(0.178 0.028 55);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.178 0.028 55);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.178 0.028 55);
+  --primary: oklch(0.598 0.178 53);
+  --primary-foreground: oklch(0.978 0.012 78);
+  --secondary: oklch(0.928 0.032 72);
+  --secondary-foreground: oklch(0.178 0.028 55);
+  --muted: oklch(0.928 0.032 72);
+  --muted-foreground: oklch(0.518 0.068 58);
+  --accent: oklch(0.928 0.032 72);
+  --accent-foreground: oklch(0.178 0.028 55);
+  --destructive: oklch(0.528 0.242 27);
+  --border: oklch(0.178 0.028 55 / 18%);
+  --input: oklch(0.178 0.028 55 / 14%);
+  --ring: oklch(0.598 0.178 53);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   Scoped design tokens — safe to ship in the library dist.
+   These live on .constraint-modeler / .constraint-modeler-portal
+   instead of :root, so they never pollute a consuming app's
+   design system.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─── Default (dark) ──────────────────────────────────────── */
+
+.constraint-modeler,
+.constraint-modeler-portal {
+  --cm-radius: 0.625rem;
+  --cm-background: oklch(0.145 0 0);
+  --cm-foreground: oklch(0.985 0 0);
+  --cm-card: oklch(0.205 0 0);
+  --cm-card-foreground: oklch(0.985 0 0);
+  --cm-popover: oklch(0.205 0 0);
+  --cm-popover-foreground: oklch(0.985 0 0);
+  --cm-primary: oklch(0.922 0 0);
+  --cm-primary-foreground: oklch(0.205 0 0);
+  --cm-secondary: oklch(0.269 0 0);
+  --cm-secondary-foreground: oklch(0.985 0 0);
+  --cm-muted: oklch(0.269 0 0);
+  --cm-muted-foreground: oklch(0.708 0 0);
+  --cm-accent: oklch(0.269 0 0);
+  --cm-accent-foreground: oklch(0.985 0 0);
+  --cm-destructive: oklch(0.704 0.191 22.216);
+  --cm-border: oklch(1 0 0 / 10%);
+  --cm-input: oklch(1 0 0 / 15%);
+  --cm-ring: oklch(0.556 0 0);
+  --cm-bar: oklch(0.269 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
+}
+
+/* ─── Default (light) ─────────────────────────────────────── */
+
+.light .constraint-modeler,
+.light .constraint-modeler-portal {
+  --cm-background: oklch(1 0 0);
+  --cm-foreground: oklch(0.145 0 0);
+  --cm-card: oklch(1 0 0);
+  --cm-card-foreground: oklch(0.145 0 0);
+  --cm-popover: oklch(1 0 0);
+  --cm-popover-foreground: oklch(0.145 0 0);
+  --cm-primary: oklch(0.205 0 0);
+  --cm-primary-foreground: oklch(0.985 0 0);
+  --cm-secondary: oklch(0.961 0 0);
+  --cm-secondary-foreground: oklch(0.205 0 0);
+  --cm-muted: oklch(0.961 0 0);
+  --cm-muted-foreground: oklch(0.556 0 0);
+  --cm-accent: oklch(0.961 0 0);
+  --cm-accent-foreground: oklch(0.205 0 0);
+  --cm-destructive: oklch(0.577 0.245 27.325);
+  --cm-border: oklch(0.922 0 0);
+  --cm-input: oklch(0.922 0 0);
+  --cm-ring: oklch(0.708 0 0);
+  --cm-bar: oklch(0.205 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
+}
+
+/* ─── Midnight Bloom (dark) ───────────────────────────────── */
+
+.theme-midnight .constraint-modeler,
+.theme-midnight .constraint-modeler-portal {
+  --cm-radius: 0.75rem;
+  --cm-background: oklch(0.112 0.028 278);
+  --cm-foreground: oklch(0.942 0.013 278);
+  --cm-card: oklch(0.158 0.033 278);
+  --cm-card-foreground: oklch(0.942 0.013 278);
+  --cm-popover: oklch(0.158 0.033 278);
+  --cm-popover-foreground: oklch(0.942 0.013 278);
+  --cm-primary: oklch(0.698 0.196 292);
+  --cm-primary-foreground: oklch(0.112 0.028 278);
+  --cm-secondary: oklch(0.215 0.038 278);
+  --cm-secondary-foreground: oklch(0.942 0.013 278);
+  --cm-muted: oklch(0.215 0.038 278);
+  --cm-muted-foreground: oklch(0.618 0.065 278);
+  --cm-accent: oklch(0.215 0.038 278);
+  --cm-accent-foreground: oklch(0.942 0.013 278);
+  --cm-destructive: oklch(0.648 0.218 22);
+  --cm-border: oklch(1 0 0 / 10%);
+  --cm-input: oklch(1 0 0 / 15%);
+  --cm-ring: oklch(0.698 0.196 292);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
+}
+
+/* ─── Midnight Bloom (light) ──────────────────────────────── */
+
+.theme-midnight.light .constraint-modeler,
+.theme-midnight.light .constraint-modeler-portal {
+  --cm-radius: 0.75rem;
+  --cm-background: oklch(0.972 0.008 278);
+  --cm-foreground: oklch(0.178 0.028 278);
+  --cm-card: oklch(1 0 0);
+  --cm-card-foreground: oklch(0.178 0.028 278);
+  --cm-popover: oklch(1 0 0);
+  --cm-popover-foreground: oklch(0.178 0.028 278);
+  --cm-primary: oklch(0.482 0.218 292);
+  --cm-primary-foreground: oklch(0.972 0.008 278);
+  --cm-secondary: oklch(0.912 0.018 278);
+  --cm-secondary-foreground: oklch(0.178 0.028 278);
+  --cm-muted: oklch(0.912 0.018 278);
+  --cm-muted-foreground: oklch(0.518 0.058 278);
+  --cm-accent: oklch(0.912 0.018 278);
+  --cm-accent-foreground: oklch(0.178 0.028 278);
+  --cm-destructive: oklch(0.552 0.248 27);
+  --cm-border: oklch(0.178 0.028 278 / 20%);
+  --cm-input: oklch(0.178 0.028 278 / 15%);
+  --cm-ring: oklch(0.482 0.218 292);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
+}
+
+/* ─── Modern Minimal (dark) ───────────────────────────────── */
+
+.theme-minimal .constraint-modeler,
+.theme-minimal .constraint-modeler-portal {
+  --cm-radius: 0.25rem;
+  --cm-background: oklch(0.108 0 0);
+  --cm-foreground: oklch(0.975 0 0);
+  --cm-card: oklch(0.158 0 0);
+  --cm-card-foreground: oklch(0.975 0 0);
+  --cm-popover: oklch(0.158 0 0);
+  --cm-popover-foreground: oklch(0.975 0 0);
+  --cm-primary: oklch(0.975 0 0);
+  --cm-primary-foreground: oklch(0.158 0 0);
+  --cm-secondary: oklch(0.218 0 0);
+  --cm-secondary-foreground: oklch(0.975 0 0);
+  --cm-muted: oklch(0.218 0 0);
+  --cm-muted-foreground: oklch(0.615 0 0);
+  --cm-accent: oklch(0.218 0 0);
+  --cm-accent-foreground: oklch(0.975 0 0);
+  --cm-destructive: oklch(0.648 0.218 22);
+  --cm-border: oklch(1 0 0 / 8%);
+  --cm-input: oklch(1 0 0 / 12%);
+  --cm-ring: oklch(0.615 0 0);
+  --cm-bar: oklch(0.218 0 0);
+  --cm-bar-foreground: oklch(0.975 0 0);
+}
+
+/* ─── Modern Minimal (light) ──────────────────────────────── */
+
+.theme-minimal.light .constraint-modeler,
+.theme-minimal.light .constraint-modeler-portal {
+  --cm-radius: 0.25rem;
+  --cm-background: oklch(1 0 0);
+  --cm-foreground: oklch(0.088 0 0);
+  --cm-card: oklch(1 0 0);
+  --cm-card-foreground: oklch(0.088 0 0);
+  --cm-popover: oklch(1 0 0);
+  --cm-popover-foreground: oklch(0.088 0 0);
+  --cm-primary: oklch(0.088 0 0);
+  --cm-primary-foreground: oklch(1 0 0);
+  --cm-secondary: oklch(0.962 0 0);
+  --cm-secondary-foreground: oklch(0.088 0 0);
+  --cm-muted: oklch(0.962 0 0);
+  --cm-muted-foreground: oklch(0.448 0 0);
+  --cm-accent: oklch(0.962 0 0);
+  --cm-accent-foreground: oklch(0.088 0 0);
+  --cm-destructive: oklch(0.528 0.242 27);
+  --cm-border: oklch(0 0 0 / 12%);
+  --cm-input: oklch(0 0 0 / 10%);
+  --cm-ring: oklch(0.448 0 0);
+  --cm-bar: oklch(0.088 0 0);
+  --cm-bar-foreground: oklch(1 0 0);
+}
+
+/* ─── Solar Dusk (dark) ───────────────────────────────────── */
+
+.theme-solar .constraint-modeler,
+.theme-solar .constraint-modeler-portal {
+  --cm-radius: 0.625rem;
+  --cm-background: oklch(0.128 0.022 55);
+  --cm-foreground: oklch(0.948 0.016 72);
+  --cm-card: oklch(0.178 0.028 55);
+  --cm-card-foreground: oklch(0.948 0.016 72);
+  --cm-popover: oklch(0.178 0.028 55);
+  --cm-popover-foreground: oklch(0.948 0.016 72);
+  --cm-primary: oklch(0.758 0.168 56);
+  --cm-primary-foreground: oklch(0.128 0.022 55);
+  --cm-secondary: oklch(0.238 0.038 55);
+  --cm-secondary-foreground: oklch(0.948 0.016 72);
+  --cm-muted: oklch(0.238 0.038 55);
+  --cm-muted-foreground: oklch(0.638 0.058 62);
+  --cm-accent: oklch(0.238 0.038 55);
+  --cm-accent-foreground: oklch(0.948 0.016 72);
+  --cm-destructive: oklch(0.648 0.218 22);
+  --cm-border: oklch(1 0 0 / 10%);
+  --cm-input: oklch(1 0 0 / 15%);
+  --cm-ring: oklch(0.758 0.168 56);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
+}
+
+/* ─── Solar Dusk (light) ──────────────────────────────────── */
+
+.theme-solar.light .constraint-modeler,
+.theme-solar.light .constraint-modeler-portal {
+  --cm-radius: 0.625rem;
+  --cm-background: oklch(0.978 0.012 78);
+  --cm-foreground: oklch(0.178 0.028 55);
+  --cm-card: oklch(1 0 0);
+  --cm-card-foreground: oklch(0.178 0.028 55);
+  --cm-popover: oklch(1 0 0);
+  --cm-popover-foreground: oklch(0.178 0.028 55);
+  --cm-primary: oklch(0.598 0.178 53);
+  --cm-primary-foreground: oklch(0.978 0.012 78);
+  --cm-secondary: oklch(0.928 0.032 72);
+  --cm-secondary-foreground: oklch(0.178 0.028 55);
+  --cm-muted: oklch(0.928 0.032 72);
+  --cm-muted-foreground: oklch(0.518 0.068 58);
+  --cm-accent: oklch(0.928 0.032 72);
+  --cm-accent-foreground: oklch(0.178 0.028 55);
+  --cm-destructive: oklch(0.528 0.242 27);
+  --cm-border: oklch(0.178 0.028 55 / 18%);
+  --cm-input: oklch(0.178 0.028 55 / 14%);
+  --cm-ring: oklch(0.598 0.178 53);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
 }

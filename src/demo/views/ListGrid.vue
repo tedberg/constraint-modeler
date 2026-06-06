@@ -1,13 +1,13 @@
 <template>
-  <div class="overflow-x-auto">
-    <table class="w-full text-sm border-collapse border border-zinc-300">
+  <div class="cm:overflow-x-auto">
+    <table class="cm:w-full cm:text-sm cm:border-collapse cm:border cm:border-zinc-300">
       <thead>
-        <tr class="bg-zinc-100">
+        <tr class="cm:bg-zinc-100">
           <th
             v-for="field in normalizedFields"
             :key="field.key"
-            class="border border-zinc-300 px-3 py-2 text-left font-medium text-zinc-700"
-            :class="{ 'cursor-pointer select-none': field.sortable }"
+            class="cm:border cm:border-zinc-300 cm:px-3 cm:py-2 cm:text-left cm:font-medium cm:text-zinc-700"
+            :class="{ 'cm:cursor-pointer cm:select-none': field.sortable }"
             @click="field.sortable ? toggleSort(field.key) : undefined"
           >
             {{ field.label ?? field.key }}
@@ -19,12 +19,12 @@
         <tr
           v-for="(row, i) in sortedItems"
           :key="i"
-          class="odd:bg-white even:bg-zinc-50 hover:bg-zinc-100"
+          class="cm:odd:bg-white cm:even:bg-zinc-50 cm:hover:bg-zinc-100"
         >
           <td
             v-for="field in normalizedFields"
             :key="field.key"
-            class="border border-zinc-300 px-3 py-2 text-zinc-800"
+            class="cm:border cm:border-zinc-300 cm:px-3 cm:py-2 cm:text-zinc-800"
           >
             {{ field.formatter ? field.formatter(row[field.key]) : row[field.key] }}
           </td>

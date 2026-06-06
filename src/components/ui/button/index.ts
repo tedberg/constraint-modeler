@@ -4,26 +4,26 @@ import { cva } from "class-variance-authority";
 export { default as Button } from "./Button.vue";
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "cm:inline-flex cm:items-center cm:justify-center cm:gap-2 cm:whitespace-nowrap cm:rounded-md cm:text-sm cm:font-medium cm:ring-offset-background cm:transition-colors cm:focus-visible:outline-none cm:focus-visible:ring-2 cm:focus-visible:ring-ring cm:focus-visible:ring-offset-2 cm:disabled:pointer-events-none cm:disabled:opacity-50 cm:[&_svg]:pointer-events-none cm:[&_svg]:size-4 cm:[&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-zinc-500 text-white hover:bg-zinc-400",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        menu: "bg-transparent text-white hover:bg-white/10",
-        link: "text-primary underline-offset-4 hover:underline",
+        default: "cm:bg-primary cm:text-primary-foreground cm:hover:bg-primary/90",
+        destructive: "cm:bg-destructive cm:text-destructive-foreground cm:hover:bg-destructive/90",
+        outline: "cm:border cm:border-input cm:bg-background cm:hover:bg-accent cm:hover:text-accent-foreground",
+        secondary: "cm:bg-zinc-500 cm:text-white cm:hover:bg-zinc-400",
+        ghost: "cm:hover:bg-accent cm:hover:text-accent-foreground",
+        menu: "cm:bg-transparent cm:text-white cm:hover:bg-white/10",
+        link: "cm:text-primary cm:underline-offset-4 cm:hover:underline",
       },
       size: {
-        default: "h-10 px-4 py-2",
-        sm: "h-9 rounded-md px-3",
-        xs: "h-6 px-1.5 text-xs rounded",
-        lg: "h-11 rounded-md px-8",
-        icon: "h-10 w-10",
-        "icon-sm": "size-9",
-        "icon-lg": "size-11",
+        default: "cm:h-10 cm:px-4 cm:py-2",
+        sm: "cm:h-9 cm:rounded-md cm:px-3",
+        xs: "cm:h-6 cm:px-1.5 cm:text-xs cm:rounded",
+        lg: "cm:h-11 cm:rounded-md cm:px-8",
+        icon: "cm:h-10 cm:w-10",
+        "icon-sm": "cm:size-9",
+        "icon-lg": "cm:size-11",
       },
     },
     defaultVariants: {

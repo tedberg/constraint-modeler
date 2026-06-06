@@ -1,10 +1,10 @@
 <template>
   <div
-    class="flex items-center gap-1 bg-neutral-900 rounded-md mb-1 px-2 py-1 ml-4 constraint-bar"
+    class="cm:flex cm:items-center cm:gap-1 cm:bg-cm-bar cm:text-cm-bar-foreground cm:rounded-md cm:mb-1 cm:px-2 cm:py-1 cm:ml-4 constraint-bar"
     :id="constraintId"
     data-test="constraint"
   >
-    <div class="flex items-center gap-1">
+    <div class="cm:flex cm:items-center cm:gap-1">
       <div :id="aggregateId" data-test="query-function-menu">
         <query-function-menu
           :query-function="queryFunctionEnum"
@@ -44,11 +44,11 @@
       />
     </div>
 
-    <div class="ml-auto flex items-center gap-1">
+    <div class="cm:ml-auto cm:flex cm:items-center cm:gap-1">
       <div class="validity">
         <div v-if="isValid == null"></div>
-        <div v-else-if="isValid" class="text-green-500"><CheckCircle2 :size="16" /></div>
-        <div v-else class="text-red-500" :title="invalidReason"><XCircle :size="16" /></div>
+        <div v-else-if="isValid" class="cm:text-green-500"><CheckCircle2 :size="16" /></div>
+        <div v-else class="cm:text-red-500" :title="invalidReason"><XCircle :size="16" /></div>
       </div>
       <Button variant="secondary" size="xs" @click.prevent="removeConstraint">X</Button>
     </div>

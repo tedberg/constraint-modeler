@@ -4,13 +4,13 @@
       <Button variant="menu" size="xs">{{ propertyDisplay }} <ChevronDown :size="12" /></Button>
     </DropdownMenuTrigger>
     <DropdownMenuContent>
-      <DropdownMenuItem
+      <PropertyMenuItem
         v-for="prop in propertyList"
         :key="(prop as any).path"
-        @select="setProperty(prop)"
-      >
-        {{ (prop as any).displayName }}
-      </DropdownMenuItem>
+        :property="prop"
+        :template-prefix="templatePrefix"
+        @setProperty="setProperty"
+      />
       <template v-if="multiPropertyList?.length">
         <DropdownMenuSeparator />
         <DropdownMenuLabel>Multi Properties</DropdownMenuLabel>
@@ -33,7 +33,6 @@ import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";

@@ -31,7 +31,7 @@ const PROPERTIES_LIST = {
   multiPropertyList: [
     {
       path: "alert",
-      displayName: "alert",
+      displayName: "Alert",
       simpleDataType: "object",
       dataType: "com.xyz.Alert",
       expectedDataMagnitude: 10000,
@@ -44,6 +44,27 @@ const PROPERTIES_LIST = {
           displayName: "Message",
           simpleDataType: "string",
           dataType: "java.lang.String",
+        },
+        {
+          path: "alert.contact",
+          displayName: "Contact",
+          simpleDataType: "object",
+          dataType: "com.xyz.Contact",
+          relationship: true,
+          nestedPropertyList: [
+            {
+              path: "alert.contact.email",
+              displayName: "Email",
+              simpleDataType: "string",
+              dataType: "java.lang.String",
+            },
+            {
+              path: "alert.contact.phone",
+              displayName: "Phone",
+              simpleDataType: "string",
+              dataType: "java.lang.String",
+            },
+          ],
         },
       ],
     },

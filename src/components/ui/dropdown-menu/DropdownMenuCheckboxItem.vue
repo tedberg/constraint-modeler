@@ -19,14 +19,14 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits);
     v-bind="forwarded"
     :class="
       cn(
-        'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
+        'cm:relative cm:flex cm:cursor-default cm:select-none cm:items-center cm:rounded-sm cm:py-1.5 cm:pl-8 cm:pr-2 cm:text-sm cm:outline-none cm:transition-colors cm:focus:bg-accent cm:focus:text-accent-foreground cm:data-[disabled]:pointer-events-none cm:data-[disabled]:opacity-50',
         props.class,
       )
     "
   >
-    <span class="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span class="cm:absolute cm:left-2 cm:flex cm:h-3.5 cm:w-3.5 cm:items-center cm:justify-center">
       <DropdownMenuItemIndicator>
-        <Check class="w-4 h-4" />
+        <Check class="cm:w-4 cm:h-4" />
       </DropdownMenuItemIndicator>
     </span>
     <slot />

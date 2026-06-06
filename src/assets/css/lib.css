@@ -1,81 +1,92 @@
 /* Styles for @tedberg/constraint-modeler.
-   Utility classes used by this library's components are compiled in during the
-   lib build. Design tokens (--background, --primary, etc.) can be overridden by
-   the consumer to apply a custom theme. */
+   Design tokens are scoped to .constraint-modeler and .constraint-modeler-portal
+   so they never pollute the consuming app's :root. Override --cm-* variables on
+   .constraint-modeler to bridge your design system (see docs/plans/2026-06-05-library-css-isolation.md). */
 
-@import "tailwindcss/theme" layer(utilities);
-@import "tailwindcss/utilities";
+@import "tailwindcss" prefix(cm);
 @import "tw-animate-css";
 
 @source "../../components/**/*.vue";
-@source inline("bg-neutral-900 border-zinc-600 text-zinc-400");
+@source inline("cm:bg-neutral-900 cm:border-zinc-600 cm:text-zinc-400");
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  --radius-sm: calc(var(--cm-radius) - 4px);
+  --radius-md: calc(var(--cm-radius) - 2px);
+  --radius-lg: var(--cm-radius);
+  --radius-xl: calc(var(--cm-radius) + 4px);
+  --color-background: var(--cm-background);
+  --color-foreground: var(--cm-foreground);
+  --color-card: var(--cm-card);
+  --color-card-foreground: var(--cm-card-foreground);
+  --color-popover: var(--cm-popover);
+  --color-popover-foreground: var(--cm-popover-foreground);
+  --color-primary: var(--cm-primary);
+  --color-primary-foreground: var(--cm-primary-foreground);
+  --color-secondary: var(--cm-secondary);
+  --color-secondary-foreground: var(--cm-secondary-foreground);
+  --color-muted: var(--cm-muted);
+  --color-muted-foreground: var(--cm-muted-foreground);
+  --color-accent: var(--cm-accent);
+  --color-accent-foreground: var(--cm-accent-foreground);
+  --color-destructive: var(--cm-destructive);
+  --color-border: var(--cm-border);
+  --color-input: var(--cm-input);
+  --color-ring: var(--cm-ring);
+  --color-cm-bar: var(--cm-bar);
+  --color-cm-bar-foreground: var(--cm-bar-foreground);
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+/* ─── Default (dark) ──────────────────────────────────────── */
+
+.constraint-modeler,
+.constraint-modeler-portal {
+  --cm-radius: 0.625rem;
+  --cm-background: oklch(0.145 0 0);
+  --cm-foreground: oklch(0.985 0 0);
+  --cm-card: oklch(0.205 0 0);
+  --cm-card-foreground: oklch(0.985 0 0);
+  --cm-popover: oklch(0.205 0 0);
+  --cm-popover-foreground: oklch(0.985 0 0);
+  --cm-primary: oklch(0.922 0 0);
+  --cm-primary-foreground: oklch(0.205 0 0);
+  --cm-secondary: oklch(0.269 0 0);
+  --cm-secondary-foreground: oklch(0.985 0 0);
+  --cm-muted: oklch(0.269 0 0);
+  --cm-muted-foreground: oklch(0.708 0 0);
+  --cm-accent: oklch(0.269 0 0);
+  --cm-accent-foreground: oklch(0.985 0 0);
+  --cm-destructive: oklch(0.704 0.191 22.216);
+  --cm-border: oklch(1 0 0 / 10%);
+  --cm-input: oklch(1 0 0 / 15%);
+  --cm-ring: oklch(0.556 0 0);
+  --cm-bar: oklch(0.269 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
 }
 
-.light {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.961 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.961 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.961 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+/* ─── Default (light) ─────────────────────────────────────── */
+
+.light .constraint-modeler,
+.light .constraint-modeler-portal {
+  --cm-background: oklch(1 0 0);
+  --cm-foreground: oklch(0.145 0 0);
+  --cm-card: oklch(1 0 0);
+  --cm-card-foreground: oklch(0.145 0 0);
+  --cm-popover: oklch(1 0 0);
+  --cm-popover-foreground: oklch(0.145 0 0);
+  --cm-primary: oklch(0.205 0 0);
+  --cm-primary-foreground: oklch(0.985 0 0);
+  --cm-secondary: oklch(0.961 0 0);
+  --cm-secondary-foreground: oklch(0.205 0 0);
+  --cm-muted: oklch(0.961 0 0);
+  --cm-muted-foreground: oklch(0.556 0 0);
+  --cm-accent: oklch(0.961 0 0);
+  --cm-accent-foreground: oklch(0.205 0 0);
+  --cm-destructive: oklch(0.577 0.245 27.325);
+  --cm-border: oklch(0.922 0 0);
+  --cm-input: oklch(0.922 0 0);
+  --cm-ring: oklch(0.708 0 0);
+  --cm-bar: oklch(0.205 0 0);
+  --cm-bar-foreground: oklch(0.985 0 0);
 }

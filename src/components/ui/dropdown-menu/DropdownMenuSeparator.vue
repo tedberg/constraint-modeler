@@ -17,6 +17,6 @@ const delegatedProps = reactiveOmit(props, "class");
 <template>
   <DropdownMenuSeparator
     v-bind="delegatedProps"
-    :class="cn('-mx-1 my-1 h-px bg-muted', props.class)"
+    :class="cn('cm:-mx-1 cm:my-1 cm:h-px cm:bg-muted', props.class)"
   />
 </template>

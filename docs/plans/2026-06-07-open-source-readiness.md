@@ -138,40 +138,70 @@ Decision:
 - Removed `all: revert-layer` from the modeler root. It was too broad for a library component because it silently reset all inherited host styles and made the isolation behavior hard to reason about.
 - Replaced it with explicit component isolation on `.constraint-modeler`: `box-sizing`, `font-family`, `color`, `background-color`, `line-height`, and descendant `box-sizing: border-box`.
 - Kept the component as a themed tool surface/panel using `--cm-card` / `--cm-card-foreground`; it is not treated as a ShadCN `Card` component API.
-- Fixed the layout regression found during 4.3: the root `min-width` is now responsive, and projection bars account for their left indent so they do not spill outside the modeler at narrow widths.
+- Fixed the layout regression found during 4.3: bars account for their left indent so they do not spill outside the modeler. Constraint/projection bars intentionally do not wrap; the modeler surface expands horizontally with dense rows.
 - Verification for 4.3: `npm run format`, `npm run typecheck`, `npm run lint`, `npm run build:lib`, `npm run test:e2e -- --project=chromium`, hostile host-CSS browser probe, `npm run publish:local`, and Reef `constraint-modeler-theme.spec.ts`.
 
 ### 4.4 - Form Primitive Decision
 
-- [ ] Decide whether `ValueInput.vue` gets a light tokenized cleanup or a proper local `Input` / `Select` primitive.
-- [ ] If adding primitives, keep them local and consistent with the copied ShadCN-style component pattern.
-- [ ] Avoid a broad form rewrite unless it removes real duplication or fixes a concrete visual/accessibility problem.
+- [x] Decide whether `ValueInput.vue` gets a light tokenized cleanup or a proper local `Input` / `Select` primitive.
+- [x] If adding primitives, keep them local and consistent with the copied ShadCN-style component pattern.
+- [x] Avoid a broad form rewrite unless it removes real duplication or fixes a concrete visual/accessibility problem.
+
+Decision:
+
+- Do not add local `Input` / `Select` primitives yet. `ValueInput.vue` is the only current consumer, so primitives would add indirection without removing meaningful duplication.
+- Keep native inputs/selects for now and do a light cleanup: tokenized radius/font/line-height, responsive width caps, and no shrinking below useful field widths in dense rows.
+- Constraint/projection bars remain single-line rows; dense modelers may expand horizontally instead of wrapping field controls.
+- Verification for 4.4: `npm run format`, `npm run typecheck`, `npm run lint`, `npm run build:lib`, focused Playwright specs for simple/operators/projection flows, and narrow-viewport layout measurement.
 
 ### 4.5 - Remaining Component Cleanup
 
 - [x] Replace hard-coded button/menu colors with semantic tokens where practical.
 - [x] Replace text `x` close buttons with lucide `X` icon buttons and accessible labels.
 - [x] Remove stray `console.log` calls from public components.
-- [ ] Reduce Bootstrap-era raw CSS and fixed widths where it can be done without layout regressions.
-  - [x] Made the root modeler minimum width responsive.
+- [x] Reduce Bootstrap-era raw CSS and fixed widths where it can be done without layout regressions.
   - [x] Made projection rows account for left indent instead of overflowing the modeler container.
-- [ ] Consider local `Input` / `Select` primitives before deeply rewriting `ValueInput.vue`.
+  - [x] Preserved natural horizontal expansion for dense, single-line constraint/projection rows.
+  - [x] Removed the inline debug panel width and moved it to scoped CSS.
+  - [x] Converted remaining modeler UI pixel-era spacing, radii, margins, and minimum widths to rem/token-based values.
+  - [x] Changed constraint/projection rows to `max-content` rows with a group-width minimum, so bars expand with dense content instead of wrapping.
+- [x] Consider local `Input` / `Select` primitives before deeply rewriting `ValueInput.vue`.
+
+Verification for 4.5:
+
+- [x] `npm run format`
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run build:lib`
+- [x] Focused Playwright specs: `simple`, `operators`, `with-projection`, and `everything`.
+- [x] Narrow-viewport layout measurement on `/simple`, `/projection`, and `/everything`.
 
 ### 4.6 - Visual Verification
 
 - [x] Run local e2e after each small Phase 4 slice.
 - [x] Manually inspect key demo routes when changing layout or tokens.
-- [x] Run `npm run publish:local` and the Reef focused spec before considering Phase 4 complete.
+- [x] Run `npm run publish:local` and the Reef focused spec against the final Phase 4 state before considering Phase 4 complete.
+
+Final Phase 4 verification:
+
+- [x] `npm run test:e2e -- --project=chromium` - 43 passed.
+- [x] `npm run build:lib`.
+- [x] `npm run publish:local`.
+- [x] Reef `npx playwright test tests/e2e/specs/constraint-modeler-theme.spec.ts --project=chromium` - 7 passed.
 
 ## Phase 5 - Demo Cleanup
 
 - [x] Fix `ListGrid items=undefined` warnings.
 - [x] Keep e2e logs warning-free where practical.
+  - [x] Browser console route probe showed no warnings, errors, or page errors for `/`, `/simple`, `/debug`, `/projection`, `/persistent`, and `/everything`.
+  - [x] Removed the Node `NO_COLOR` / `FORCE_COLOR` warning from Playwright runs by clearing `NO_COLOR` in `playwright.config.ts`.
 - [x] Verify all demo routes still render after package/API changes.
+  - [x] Route probe confirmed every nav route returned HTTP 200 and expected page titles/modeler presence.
+  - [x] `npm run test:e2e -- --project=chromium` - 43 passed with clean runner output.
 
 ## Phase 6 - Verification
 
-Run after each substantial phase:
+Final verification gate. Run after Phase 4 and Phase 5 are complete:
 
 - [x] `npm run format`
 - [x] `npm run lint`
@@ -189,6 +219,8 @@ Consumer verification:
 ```bash
 npx playwright test tests/e2e/specs/constraint-modeler-theme.spec.ts --project=chromium
 ```
+
+Result: 7 passed. The Reef run still emits its own Node `NO_COLOR` / `FORCE_COLOR` environment warning; the constraint modeler package verification passed.
 
 ---
 

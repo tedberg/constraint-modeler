@@ -24,7 +24,7 @@
         @removeProjection="removeProjection"
       />
 
-      <div v-if="showDebug" style="width: 250px" class="debug-panel">
+      <div v-if="showDebug" class="debug-panel">
         <div class="header" id="toggle-constraintModelerDebug">Debug Options</div>
         <ul class="constraintModelerDebug">
           <li><a @click.prevent="renderQueryString()">Render Query String</a></li>
@@ -276,7 +276,7 @@ function renderStructuredObjectList() {
 
 <style scoped>
 :deep(div.nest) {
-  margin-left: 25px;
+  margin-left: 1.5625rem;
 }
 
 :deep(.constraint-group-bar button),
@@ -305,28 +305,31 @@ div.constraint-modeler {
   font-family: system-ui, sans-serif;
   color: var(--cm-card-foreground);
   background-color: var(--cm-card);
-  border-radius: 7px;
+  border-radius: var(--cm-radius);
   font-size: 0.9em;
   line-height: normal;
-  padding: 10px;
-  margin: 0 0 15px;
+  padding: 0.625rem;
+  margin: 0 0 0.9375rem;
   width: max-content;
-  max-width: 100%;
   height: fit-content;
-  min-width: min(400px, 100%);
+  min-width: 25rem;
 
   & :deep(.buttons) {
     text-align: center;
   }
 
   & :deep(.title) {
-    border-radius: 7px;
+    border-radius: var(--cm-radius);
     font-size: 1.2em;
     font-weight: bold;
-    padding: 5px 0 6px;
-    margin: 0 0 5px;
+    padding: 0.3125rem 0 0.375rem;
+    margin: 0 0 0.3125rem;
     text-align: center;
   }
+}
+
+.debug-panel {
+  width: 15.625rem;
 }
 
 div.constraint-modeler,

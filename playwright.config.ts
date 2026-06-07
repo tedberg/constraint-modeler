@@ -1,5 +1,15 @@
 import { defineConfig, devices } from '@playwright/test';
 
+declare const process: {
+  env: {
+    CI?: string;
+    NO_COLOR?: string;
+  };
+};
+
+delete process.env.NO_COLOR;
+
+// noinspection JSUnusedGlobalSymbols
 export default defineConfig({
   testDir: './tests/playwright',
   fullyParallel: false,

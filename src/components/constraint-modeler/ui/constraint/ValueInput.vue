@@ -189,26 +189,37 @@ select {
   background-color: var(--cm-background);
   color: var(--cm-foreground);
   border: 1px solid var(--cm-border);
-  border-radius: 4px;
-  padding: 1px 4px;
+  border-radius: calc(var(--cm-radius) - 4px);
+  min-height: 1.5rem;
+  padding: 1px 0.25rem;
+  font: inherit;
+  line-height: 1.25;
+  max-width: 100%;
+  flex-shrink: 0;
 }
+
 input {
-  width: 250px;
+  width: min(15.625rem, 100%);
 }
+
 input.number {
-  width: 125px;
+  width: min(7.8125rem, 100%);
 }
+
 input.date {
-  width: 100px;
+  width: min(7.5rem, 100%);
 }
+
 div.in_clause {
-  width: 515px;
-  margin-bottom: 5px;
+  width: min(32.1875rem, 100%);
+  margin-bottom: 0.3125rem;
 }
+
 input.in_clause_value {
-  width: 96px;
+  width: min(6rem, 100%);
 }
+
 input.in_clause_value.date {
-  width: 80px;
+  width: min(5rem, 100%);
 }
 </style>

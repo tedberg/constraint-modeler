@@ -120,10 +120,10 @@ function removeSelf() {
 
 <style scoped>
 div.constraint-group:not(.root) {
-  margin-left: 15px;
+  margin-left: 0.9375rem;
 }
 .constraint-group-bar {
   width: 100%;
-  min-width: 225px;
+  min-width: 14.0625rem;
 }
 </style>

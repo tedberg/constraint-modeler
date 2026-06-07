@@ -136,7 +136,8 @@ function removeConstraint() {
 
 <style scoped>
 .constraint-bar {
-  max-width: 800px;
+  width: max-content;
+  min-width: calc(100% - 1rem);
 }
 
 .validity-icon {

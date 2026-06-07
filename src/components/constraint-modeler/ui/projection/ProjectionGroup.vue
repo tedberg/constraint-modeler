@@ -63,6 +63,6 @@ function removeProjection(projection: any, index: string | number) {
 <style scoped>
 .projection-group-bar {
   width: 100%;
-  min-width: 225px;
+  min-width: 14.0625rem;
 }
 </style>

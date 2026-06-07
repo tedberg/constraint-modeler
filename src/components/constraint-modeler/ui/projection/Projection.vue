@@ -85,7 +85,7 @@ function removeProjection() {
 
 <style scoped>
 .projection-bar {
-  width: calc(100% - 1rem);
-  min-width: min(400px, calc(100% - 1rem));
+  width: max-content;
+  min-width: calc(100% - 1rem);
 }
 </style>

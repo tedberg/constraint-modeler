@@ -60,6 +60,21 @@ test('Loads a predefined constraint definition with projections', async ({ page 
   }
 });
 
+test('Debug object-list render links do not throw', async ({ page }) => {
+  const pageErrors = [];
+  page.on('pageerror', (error) => pageErrors.push(error.message));
+
+  await page.goto('/everything');
+
+  await page.getByText('Render Flattened Object List').click();
+  await expect(page.locator('div.alerts span.syntaxDisplay')).toContainText('status:eq:ENABLED');
+
+  await page.getByText('Render Structured Object List').click();
+  await expect(page.locator('div.alerts span.syntaxDisplay')).toContainText('status:eq:ENABLED');
+
+  expect(pageErrors).toEqual([]);
+});
+
 async function measureModelerLayout(page) {
   return page.locator('.constraint-modeler').evaluate((modeler) => {
     const modelerRect = modeler.getBoundingClientRect();

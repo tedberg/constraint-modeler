@@ -311,7 +311,6 @@ export default class Model {
   renderFlattenedObjectList() {
     const applySpecialHandlerConversions = false;
     const list = this.rootConstraintGroup.renderFlattenedObjectList(applySpecialHandlerConversions);
-    log.dir(list);
     return this.renderObjectArray(list);
   }
 
@@ -320,7 +319,6 @@ export default class Model {
     const list = this.rootConstraintGroup.renderStructuredObjectList(
       applySpecialHandlerConversions,
     );
-    log.dir(list);
     return this.renderObjectArray(list);
   }
 

@@ -86,27 +86,12 @@
         </Alert>
       </div>
 
-      <div class="buttons">
-        <Button
-          variant="default"
-          size="compact"
-          class="cm:mt-2 cm:me-2"
-          @click.prevent="validateAndApply()"
-          >Apply</Button
-        >
-        <Button
-          variant="default"
-          size="compact"
-          class="cm:mt-2 cm:me-2"
-          @click.prevent="renderSyntax()"
+      <div class="constraint-modeler-actions">
+        <Button variant="default" size="compact" @click.prevent="validateAndApply()">Apply</Button>
+        <Button variant="default" size="compact" @click.prevent="renderSyntax()"
           >Render Syntax</Button
         >
-        <Button
-          v-if="isSaveSupported"
-          variant="default"
-          size="compact"
-          class="cm:mt-2 cm:me-2"
-          @click.prevent="save()"
+        <Button v-if="isSaveSupported" variant="default" size="compact" @click.prevent="save()"
           >Save</Button
         >
       </div>
@@ -314,10 +299,6 @@ div.constraint-modeler {
   height: fit-content;
   min-width: 25rem;
 
-  & :deep(.buttons) {
-    text-align: center;
-  }
-
   & :deep(.title) {
     border-radius: var(--cm-radius);
     font-size: 1.2em;
@@ -326,6 +307,13 @@ div.constraint-modeler {
     margin: 0 0 0.3125rem;
     text-align: center;
   }
+}
+
+.constraint-modeler-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
 }
 
 .debug-panel {

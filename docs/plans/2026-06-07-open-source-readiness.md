@@ -227,5 +227,7 @@ Result: 7 passed. The Reef run still emits its own Node `NO_COLOR` / `FORCE_COLO
 ## Notes
 
 - CommonJS is not a current goal. Do not advertise CJS support unless a real CJS build is added and smoke-tested.
-- Consumers that import CSS in TypeScript projects may need their own `declare module "*.css"` unless their app framework already provides one.
+- Package declarations are hand-authored in `types/index.d.ts` to keep the public type surface stable and avoid exposing internal generated SFC/model declarations.
+- The CSS export subpath has `types/css.d.ts`, so TypeScript consumers can import `@tedberg/constraint-modeler/dist/constraint-modeler.css` without their own CSS module shim.
+- Packed consumer smoke test passed in `/private/tmp/cm-consumer-review` with Vue `3.5.0` and `tsc --noEmit`.
 - Keep `docs/tweak-cn.png` untouched unless its purpose is clarified.

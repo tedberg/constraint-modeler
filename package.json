@@ -24,23 +24,25 @@
     "test:e2e:ui": "playwright test --ui",
     "publish:local": "npm run build:lib && yalc push"
   },
-  "main": "./dist/constraint-modeler.umd.js",
   "module": "./dist/constraint-modeler.es.js",
-  "types": "./dist/src/components/entry.d.ts",
+  "types": "./types/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/src/components/entry.d.ts",
+      "types": "./types/index.d.ts",
       "import": "./dist/constraint-modeler.es.js"
     },
-    "./dist/constraint-modeler.css": "./dist/constraint-modeler.css"
+    "./dist/constraint-modeler.css": {
+      "types": "./types/css.d.ts",
+      "default": "./dist/constraint-modeler.css"
+    }
   },
   "unpkg": "./dist/constraint-modeler.umd.js",
   "sideEffects": [
-    "*.css",
     "**/*.css"
   ],
   "files": [
     "dist",
+    "types",
     "LICENSE",
     "README.md"
   ],

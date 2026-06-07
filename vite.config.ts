@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
-import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
 function suppressNodeModuleAnnotations(warning: any, warn: any) {
@@ -15,13 +14,6 @@ export default defineConfig(({ mode }) => {
       plugins: [
         tailwindcss(),
         vue(),
-        dts({
-          include: ['src/components/**/*.ts', 'src/components/**/*.vue', 'src/env.d.ts'],
-          exclude: ['src/demo/**', 'tests/**'],
-          outDir: 'dist',
-          processor: 'vue',
-          cleanVueFileName: true,
-        }),
       ],
       resolve: {
         alias: {

@@ -37,13 +37,13 @@
       </div>
 
       <div class="alerts">
-        <Alert v-if="syntaxDisplay !== ''" variant="default" class="cm:mb-2">
-          <AlertDescription>
-            <span class="syntaxDisplay">{{ syntaxDisplay }}</span>
+        <Alert v-if="syntaxDisplay !== ''" variant="default" class="constraint-modeler-alert cm:mb-2">
+          <AlertDescription class="constraint-modeler-alert-content">
+            <span class="constraint-modeler-alert-message syntaxDisplay">{{ syntaxDisplay }}</span>
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon-xs"
-              class="cm:ml-2"
+              class="constraint-modeler-alert-dismiss"
               aria-label="Dismiss syntax message"
               title="Dismiss syntax message"
               @click="syntaxDisplay = ''"
@@ -53,13 +53,13 @@
           </AlertDescription>
         </Alert>
 
-        <Alert v-if="successDisplay !== ''" class="success-alert cm:mb-2">
-          <AlertDescription>
-            {{ successDisplay }}
+        <Alert v-if="successDisplay !== ''" class="constraint-modeler-alert success-alert cm:mb-2">
+          <AlertDescription class="constraint-modeler-alert-content">
+            <span class="constraint-modeler-alert-message">{{ successDisplay }}</span>
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon-xs"
-              class="cm:ml-2"
+              class="constraint-modeler-alert-dismiss"
               aria-label="Dismiss success message"
               title="Dismiss success message"
               @click="successDisplay = ''"
@@ -69,13 +69,17 @@
           </AlertDescription>
         </Alert>
 
-        <Alert v-if="errorDisplay !== ''" variant="destructive" class="cm:mb-2">
-          <AlertDescription>
-            {{ errorDisplay }}
+        <Alert
+          v-if="errorDisplay !== ''"
+          variant="destructive"
+          class="constraint-modeler-alert cm:mb-2"
+        >
+          <AlertDescription class="constraint-modeler-alert-content">
+            <span class="constraint-modeler-alert-message">{{ errorDisplay }}</span>
             <Button
-              variant="ghost"
+              variant="secondary"
               size="icon-xs"
-              class="cm:ml-2"
+              class="constraint-modeler-alert-dismiss"
               aria-label="Dismiss error message"
               title="Dismiss error message"
               @click="errorDisplay = ''"
@@ -283,6 +287,38 @@ function renderStructuredObjectList() {
 .success-alert {
   border-color: var(--cm-success);
   color: var(--cm-success);
+}
+
+.alerts {
+  width: 100%;
+  max-width: 100%;
+  contain: inline-size;
+}
+
+.constraint-modeler-alert {
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.constraint-modeler-alert-content {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.constraint-modeler-alert-message {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+.constraint-modeler-alert-dismiss {
+  flex: 0 0 auto;
+  margin-left: auto;
 }
 
 div.constraint-modeler {

@@ -147,11 +147,7 @@ Override `--cm-*` variables to match your app:
 }
 ```
 
-TypeScript consumers that import CSS directly may need a project shim if their framework does not already provide one:
-
-```ts
-declare module "*.css";
-```
+The published CSS subpath includes its own declaration, so TypeScript consumers can import it without adding a local CSS module shim.
 
 ## Examples
 

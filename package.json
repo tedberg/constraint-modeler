@@ -1,7 +1,7 @@
 {
   "name": "@tedberg/constraint-modeler",
   "version": "0.2.0",
-  "description": "",
+  "description": "A Vue 3 component for building constraint and projection query models.",
   "type": "module",
   "author": {
     "name": "Ted Bergeron"
@@ -24,15 +24,21 @@
     "test:e2e:ui": "playwright test --ui",
     "publish:local": "npm run build:lib && yalc push"
   },
-  "main": "dist/constraint-modeler.umd.js",
+  "main": "./dist/constraint-modeler.umd.js",
+  "module": "./dist/constraint-modeler.es.js",
+  "types": "./dist/src/components/entry.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/constraint-modeler.common.js",
-      "require": "./dist/constraint-modeler.umd.js"
+      "types": "./dist/src/components/entry.d.ts",
+      "import": "./dist/constraint-modeler.es.js"
     },
     "./dist/constraint-modeler.css": "./dist/constraint-modeler.css"
   },
-  "unpkg": "dist/constraint-modeler.umd.js",
+  "unpkg": "./dist/constraint-modeler.umd.js",
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
   "files": [
     "dist",
     "LICENSE",
@@ -45,10 +51,7 @@
     "clsx": "^2.1.1",
     "mitt": "^3.0.1",
     "reka-ui": "^2.9.9",
-    "shadcn-vue": "^2.7.4",
-    "tailwind-merge": "^3.6.0",
-    "vue": "^3.5.0",
-    "vue-router": "^5.0.0"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",
@@ -69,12 +72,14 @@
     "tw-animate-css": "^1.4.0",
     "typescript": "^6.0.3",
     "vite": "^8.0.12",
+    "vite-plugin-dts": "^5.0.2",
     "vitest": "^4.1.8",
+    "vue": "^3.5.0",
+    "vue-router": "^5.0.0",
     "vue-tsc": "^3.3.3"
   },
   "peerDependencies": {
-    "vue": "^3.5.0",
-    "vue-router": "^5.0.0"
+    "vue": "^3.5.0"
   },
   "bugs": {
     "url": "https://github.com/tedberg/constraint-modeler/issues"
@@ -83,11 +88,14 @@
     "node": ">=24.13.1",
     "npm": ">=11.8.0"
   },
-  "gitHooksX": {
-    "pre-commit": "foo"
-  },
   "homepage": "https://github.com/tedberg/constraint-modeler#readme",
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "vue3",
+    "constraint-builder",
+    "query-builder",
+    "filter-builder"
+  ],
   "license": "Apache-2.0",
   "repository": {
     "type": "git",

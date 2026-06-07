@@ -50,8 +50,8 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --cm-bar: oklch(0.269 0 0);
-  --cm-bar-foreground: oklch(0.985 0 0);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
 }
 
 .light {
@@ -73,8 +73,8 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --cm-bar: oklch(0.205 0 0);
-  --cm-bar-foreground: oklch(0.985 0 0);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
 }
 
 /* ─── Midnight Bloom ──────────────────────────────────────── */
@@ -149,8 +149,8 @@
   --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 12%);
   --ring: oklch(0.615 0 0);
-  --cm-bar: oklch(0.218 0 0);
-  --cm-bar-foreground: oklch(0.975 0 0);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
 }
 
 :root.theme-minimal.light {
@@ -173,8 +173,8 @@
   --border: oklch(0 0 0 / 12%);
   --input: oklch(0 0 0 / 10%);
   --ring: oklch(0.448 0 0);
-  --cm-bar: oklch(0.088 0 0);
-  --cm-bar-foreground: oklch(1 0 0);
+  --cm-bar: var(--primary);
+  --cm-bar-foreground: var(--primary-foreground);
 }
 
 /* ─── Solar Dusk ──────────────────────────────────────────── */
@@ -253,12 +253,13 @@
   --cm-muted-foreground: oklch(0.708 0 0);
   --cm-accent: oklch(0.269 0 0);
   --cm-accent-foreground: oklch(0.985 0 0);
+  --cm-success: oklch(0.723 0.219 149.579);
   --cm-destructive: oklch(0.704 0.191 22.216);
   --cm-border: oklch(1 0 0 / 10%);
   --cm-input: oklch(1 0 0 / 15%);
   --cm-ring: oklch(0.556 0 0);
-  --cm-bar: oklch(0.269 0 0);
-  --cm-bar-foreground: oklch(0.985 0 0);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
 }
 
 /* ─── Default (light) ─────────────────────────────────────── */
@@ -279,12 +280,13 @@
   --cm-muted-foreground: oklch(0.556 0 0);
   --cm-accent: oklch(0.961 0 0);
   --cm-accent-foreground: oklch(0.205 0 0);
+  --cm-success: oklch(0.627 0.194 149.214);
   --cm-destructive: oklch(0.577 0.245 27.325);
   --cm-border: oklch(0.922 0 0);
   --cm-input: oklch(0.922 0 0);
   --cm-ring: oklch(0.708 0 0);
-  --cm-bar: oklch(0.205 0 0);
-  --cm-bar-foreground: oklch(0.985 0 0);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
 }
 
 /* ─── Midnight Bloom (dark) ───────────────────────────────── */
@@ -364,8 +366,8 @@
   --cm-border: oklch(1 0 0 / 8%);
   --cm-input: oklch(1 0 0 / 12%);
   --cm-ring: oklch(0.615 0 0);
-  --cm-bar: oklch(0.218 0 0);
-  --cm-bar-foreground: oklch(0.975 0 0);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
 }
 
 /* ─── Modern Minimal (light) ──────────────────────────────── */
@@ -391,8 +393,8 @@
   --cm-border: oklch(0 0 0 / 12%);
   --cm-input: oklch(0 0 0 / 10%);
   --cm-ring: oklch(0.448 0 0);
-  --cm-bar: oklch(0.088 0 0);
-  --cm-bar-foreground: oklch(1 0 0);
+  --cm-bar: var(--cm-primary);
+  --cm-bar-foreground: var(--cm-primary-foreground);
 }
 
 /* ─── Solar Dusk (dark) ───────────────────────────────────── */

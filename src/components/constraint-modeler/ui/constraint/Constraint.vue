@@ -47,10 +47,22 @@
     <div class="cm:ml-auto cm:flex cm:items-center cm:gap-1">
       <div class="validity">
         <div v-if="isValid == null"></div>
-        <div v-else-if="isValid" class="cm:text-green-500"><CheckCircle2 :size="16" /></div>
-        <div v-else class="cm:text-red-500" :title="invalidReason"><XCircle :size="16" /></div>
+        <div v-else-if="isValid" class="validity-icon validity-icon--valid">
+          <CheckCircle2 :size="16" />
+        </div>
+        <div v-else class="validity-icon validity-icon--invalid" :title="invalidReason">
+          <XCircle :size="16" />
+        </div>
       </div>
-      <Button variant="secondary" size="xs" @click.prevent="removeConstraint">X</Button>
+      <Button
+        variant="secondary"
+        size="icon-xs"
+        aria-label="Remove constraint"
+        title="Remove constraint"
+        @click.prevent="removeConstraint"
+      >
+        <X :size="16" />
+      </Button>
     </div>
   </div>
 </template>
@@ -65,7 +77,7 @@ import PropertyMenu from "../shared/PropertyMenu.vue";
 import ConstraintModel from "../../model/ConstraintModel";
 import { emitterKey } from "../../keys";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle } from "@lucide/vue";
+import { CheckCircle2, X, XCircle } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
@@ -118,7 +130,6 @@ function updateValueArray(va: unknown[]) {
   emitter.emit("updateValueArray", [props.constraintModel as ConstraintModel, va]);
 }
 function removeConstraint() {
-  console.log("removeConstraint");
   emit("removeConstraint", props.constraintModel);
 }
 </script>
@@ -126,5 +137,18 @@ function removeConstraint() {
 <style scoped>
 .constraint-bar {
   max-width: 800px;
+}
+
+.validity-icon {
+  display: flex;
+  align-items: center;
+}
+
+.validity-icon--valid {
+  color: var(--cm-success);
+}
+
+.validity-icon--invalid {
+  color: var(--cm-destructive);
 }
 </style>

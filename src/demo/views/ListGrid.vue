@@ -44,13 +44,18 @@ type FieldDef = {
   formatter?: (value: unknown) => string;
 };
 
-const props = defineProps<{
-  objectName: string;
-  maxRowsPerPage?: number;
-  name?: string;
-  fields: (string | FieldDef)[];
-  items: Record<string, unknown>[];
-}>();
+const props = withDefaults(
+  defineProps<{
+    objectName: string;
+    maxRowsPerPage?: number;
+    name?: string;
+    fields: (string | FieldDef)[];
+    items?: Record<string, unknown>[];
+  }>(),
+  {
+    items: () => [],
+  },
+);
 
 const normalizedFields = computed<FieldDef[]>(() =>
   props.fields.map((f) => (typeof f === "string" ? { key: f } : f)),

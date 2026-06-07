@@ -40,23 +40,48 @@
         <Alert v-if="syntaxDisplay !== ''" variant="default" class="cm:mb-2">
           <AlertDescription>
             <span class="syntaxDisplay">{{ syntaxDisplay }}</span>
-            <Button variant="ghost" size="sm" class="cm:ml-2" @click="syntaxDisplay = ''">x</Button>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              class="cm:ml-2"
+              aria-label="Dismiss syntax message"
+              title="Dismiss syntax message"
+              @click="syntaxDisplay = ''"
+            >
+              <X :size="16" />
+            </Button>
           </AlertDescription>
         </Alert>
 
-        <Alert v-if="successDisplay !== ''" class="cm:mb-2 cm:border-green-600 cm:text-green-400">
+        <Alert v-if="successDisplay !== ''" class="success-alert cm:mb-2">
           <AlertDescription>
             {{ successDisplay }}
-            <Button variant="ghost" size="sm" class="cm:ml-2" @click="successDisplay = ''"
-              >x</Button
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              class="cm:ml-2"
+              aria-label="Dismiss success message"
+              title="Dismiss success message"
+              @click="successDisplay = ''"
             >
+              <X :size="16" />
+            </Button>
           </AlertDescription>
         </Alert>
 
         <Alert v-if="errorDisplay !== ''" variant="destructive" class="cm:mb-2">
           <AlertDescription>
             {{ errorDisplay }}
-            <Button variant="ghost" size="sm" class="cm:ml-2" @click="errorDisplay = ''">x</Button>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              class="cm:ml-2"
+              aria-label="Dismiss error message"
+              title="Dismiss error message"
+              @click="errorDisplay = ''"
+            >
+              <X :size="16" />
+            </Button>
           </AlertDescription>
         </Alert>
       </div>
@@ -64,18 +89,22 @@
       <div class="buttons">
         <Button
           variant="default"
-          size="sm"
+          size="compact"
           class="cm:mt-2 cm:me-2"
           @click.prevent="validateAndApply()"
           >Apply</Button
         >
-        <Button variant="default" size="sm" class="cm:mt-2 cm:me-2" @click.prevent="renderSyntax()"
+        <Button
+          variant="default"
+          size="compact"
+          class="cm:mt-2 cm:me-2"
+          @click.prevent="renderSyntax()"
           >Render Syntax</Button
         >
         <Button
           v-if="isSaveSupported"
           variant="default"
-          size="sm"
+          size="compact"
           class="cm:mt-2 cm:me-2"
           @click.prevent="save()"
           >Save</Button
@@ -103,6 +132,7 @@ import { emitterKey, resourceKey, dropdownPortalKey } from "../keys";
 import type { Events } from "../events";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { X } from "@lucide/vue";
 
 const props = defineProps({
   title: { type: String, default: null },
@@ -140,7 +170,6 @@ model.loadProperties().then(() => {
   if (props.exposeProjectionModeler) {
     model.addProjectionGroup();
   }
-  console.log("Finished Model...", model);
   componentReady.value = true;
 });
 
@@ -190,7 +219,6 @@ const pathToPropertyMap = computed(() => model.getPathToPropertyMap());
 const isSaveSupported = computed(() => typeof props.saveFunction === "function");
 
 function validateAndApply() {
-  console.log("validateAndApply");
   return model.validate().then((result: any) => {
     if (result?.success) {
       return model.apply().then((applyResult: any) => {
@@ -267,18 +295,25 @@ function renderStructuredObjectList() {
   background-color: color-mix(in oklch, var(--cm-bar-foreground) 28%, transparent);
 }
 
+.success-alert {
+  border-color: var(--cm-success);
+  color: var(--cm-success);
+}
+
 div.constraint-modeler {
-  all: revert-layer;
   box-sizing: border-box;
   font-family: system-ui, sans-serif;
+  color: var(--cm-card-foreground);
+  background-color: var(--cm-card);
   border-radius: 7px;
   font-size: 0.9em;
+  line-height: normal;
   padding: 10px;
   margin: 0 0 15px;
   width: max-content;
   max-width: 100%;
   height: fit-content;
-  min-width: 400px;
+  min-width: min(400px, 100%);
 
   & :deep(.buttons) {
     text-align: center;
@@ -294,9 +329,15 @@ div.constraint-modeler {
   }
 }
 
+div.constraint-modeler,
+div.constraint-modeler :deep(*) {
+  box-sizing: border-box;
+}
+
 ul.constraintModelerDebug {
   & a {
-    text-decoration: #0000cc;
+    color: var(--cm-primary);
+    text-decoration-color: currentColor;
     text-decoration-line: underline;
     cursor: pointer;
   }

@@ -24,7 +24,15 @@
       </div>
     </div>
     <div class="cm:ml-auto">
-      <Button variant="secondary" size="xs" @click.prevent="removeProjection">X</Button>
+      <Button
+        variant="secondary"
+        size="icon-xs"
+        aria-label="Remove projection"
+        title="Remove projection"
+        @click.prevent="removeProjection"
+      >
+        <X :size="16" />
+      </Button>
     </div>
   </div>
 </template>
@@ -36,6 +44,7 @@ import PropertyMenu from "../shared/PropertyMenu.vue";
 import ProjectionModel from "../../model/ProjectionModel";
 import { emitterKey } from "../../keys";
 import { Button } from "@/components/ui/button";
+import { X } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
@@ -76,7 +85,7 @@ function removeProjection() {
 
 <style scoped>
 .projection-bar {
-  width: 100%;
-  min-width: 400px;
+  width: calc(100% - 1rem);
+  min-width: min(400px, calc(100% - 1rem));
 }
 </style>

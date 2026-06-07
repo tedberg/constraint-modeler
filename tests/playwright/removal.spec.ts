@@ -8,7 +8,11 @@ test('Removes a constraint row', async ({ page }) => {
   await expect(page.getByTestId('constraint')).toHaveCount(2);
 
   // Remove button is inside the constraint row
-  await page.getByTestId('constraint').first().getByRole('button', { name: 'X' }).click();
+  await page
+    .getByTestId('constraint')
+    .first()
+    .getByRole('button', { name: 'Remove constraint' })
+    .click();
   await expect(page.getByTestId('constraint')).toHaveCount(1);
 });
 
@@ -29,6 +33,10 @@ test('Removes a projection', async ({ page }) => {
   await page.getByTestId('add-projection').click();
   await expect(page.getByTestId('projection')).toHaveCount(2);
 
-  await page.getByTestId('projection').first().getByRole('button', { name: 'X' }).click();
+  await page
+    .getByTestId('projection')
+    .first()
+    .getByRole('button', { name: 'Remove projection' })
+    .click();
   await expect(page.getByTestId('projection')).toHaveCount(1);
 });

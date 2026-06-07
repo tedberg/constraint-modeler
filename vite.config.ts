@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import tailwindcss from '@tailwindcss/vite';
+import dts from 'vite-plugin-dts';
 import { resolve } from 'path';
 
 function suppressNodeModuleAnnotations(warning: any, warn: any) {
@@ -11,24 +12,33 @@ function suppressNodeModuleAnnotations(warning: any, warn: any) {
 export default defineConfig(({ mode }) => {
   if (mode === 'lib') {
     return {
-      plugins: [tailwindcss(), vue()],
+      plugins: [
+        tailwindcss(),
+        vue(),
+        dts({
+          include: ['src/components/**/*.ts', 'src/components/**/*.vue', 'src/env.d.ts'],
+          exclude: ['src/demo/**', 'tests/**'],
+          outDir: 'dist',
+          processor: 'vue',
+          cleanVueFileName: true,
+        }),
+      ],
       resolve: {
         alias: {
           '@': resolve(__dirname, 'src'),
         },
       },
+      publicDir: false,
       build: {
         lib: {
           entry: resolve(__dirname, 'src/components/entry.ts'),
           name: 'ConstraintModeler',
           formats: ['umd', 'es'],
           fileName: (format) =>
-            format === 'umd'
-              ? 'constraint-modeler.umd.js'
-              : 'constraint-modeler.common.js',
+            format === 'umd' ? 'constraint-modeler.umd.js' : 'constraint-modeler.es.js',
         },
         rollupOptions: {
-          external: ['vue', 'vue-router'],
+          external: ['vue'],
           onwarn: suppressNodeModuleAnnotations,
           output: {
             exports: 'named',

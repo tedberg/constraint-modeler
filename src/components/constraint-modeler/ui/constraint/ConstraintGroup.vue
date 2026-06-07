@@ -28,11 +28,14 @@
         <Button
           v-else
           variant="secondary"
-          size="xs"
+          size="icon-xs"
           data-test="remove-constraint"
+          aria-label="Remove constraint group"
+          title="Remove constraint group"
           @click.prevent="removeSelf"
-          >X</Button
         >
+          <X :size="16" />
+        </Button>
       </div>
     </div>
 
@@ -66,6 +69,7 @@ import Constraint from "./Constraint.vue";
 import ConstraintGroupModel from "../../model/ConstraintGroupModel";
 import { emitterKey } from "../../keys";
 import { Button } from "@/components/ui/button";
+import { X } from "@lucide/vue";
 
 const props = defineProps({
   templatePrefix: { type: String, default: "" },
